@@ -8,6 +8,6 @@ const defaultOptions = {animationData: animationData};
 storiesOf('Lottie Animation View', module)
   .add('Default', () => (
     <Lottie options={defaultOptions}/>
-  )).add('Size specified', () => (
+  )).add('Specify the size', () => (
   <Lottie options={defaultOptions} height={500} width={500}/>
 ));
