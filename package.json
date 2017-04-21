@@ -1,0 +1,59 @@
+{
+  "name": "react-lottie",
+  "version": "0.0.0",
+  "description": "React Lottie Component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/you/repo.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": ". ./.scripts/prepublish.sh",
+    "lint": "eslint src",
+    "lintfix": "eslint src --fix",
+    "testonly": "mocha --require .scripts/mocha_runner src/**/tests/**/*.js",
+    "test": "npm run lint && npm run testonly",
+    "test-watch": "npm run testonly -- --watch --watch-extensions js",
+    "storybook": "start-storybook -p 9010",
+    "publish-storybook": "bash .scripts/publish_storybook.sh"
+  },
+  "devDependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-react-app": "^0.2.1",
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+
+    "eslint": "^3.6.0",
+    "babel-eslint": "^6.1.2",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+
+    "mocha": "^3.0.2",
+    "chai": "^3.5.0",
+    "sinon": "^1.17.6",
+    "enzyme": "^2.2.0",
+    "react-addons-test-utils": "^15.3.2",
+    "jsdom": "^9.5.0",
+
+    "@kadira/storybook": "^2.18.1",
+    "git-url-parse": "^6.0.1"
+  },
+  "peerDependencies": {
+    "react": "^0.14.7 || ^15.0.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "bodymovin": "^4.5.6"
+  },
+  "main": "dist/index.js",
+  "engines": {
+    "npm": "^3.0.0"
+  }
+}
