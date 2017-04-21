@@ -3,9 +3,11 @@ import {storiesOf, action} from '@kadira/storybook';
 import Lottie from '../index';
 import * as animationData from './pinjump.json'
 
-const options = {animationData: animationData};
+const defaultOptions = {animationData: animationData};
 
 storiesOf('Lottie Animation View', module)
-  .add('default', () => (
-    <Lottie options={options}/>
-  ));
+  .add('Default', () => (
+    <Lottie options={defaultOptions}/>
+  )).add('Size specified', () => (
+  <Lottie options={defaultOptions} height={500} width={500}/>
+));

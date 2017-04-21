@@ -5,11 +5,12 @@ export default class Lottie extends React.Component {
 
   render() {
     const lottieStyles = {
-      width: '100%',
-      height: '100%',
+      width: `${this.props.width}px` || '100%',
+      height: `${this.props.height}px` || '100%',
       overflow: 'hidden',
       margin: '0 auto'
     };
+
     return <div ref='lavContainer' style={{...lottieStyles, ...this.props.style}}></div>;
   }
 
@@ -17,8 +18,8 @@ export default class Lottie extends React.Component {
     this._options = {
       container: this.refs.lavContainer,
       renderer: 'svg',
-      loop: true,
-      autoplay: true,
+      loop: this.props.options.loop !== false,
+      autoplay: this.props.options.autoplay !== false,
       animationData: this.props.options.animationData
     };
     bodymovin.loadAnimation(this._options);
@@ -27,5 +28,7 @@ export default class Lottie extends React.Component {
 
 Lottie.propTypes = {
   style: React.PropTypes.object,
-  options: React.PropTypes.object,
+  options: React.PropTypes.object.isRequired,
+  height: React.PropTypes.number,
+  width: React.PropTypes.number
 };
