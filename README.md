@@ -1,3 +1,4 @@
-# React Lottie Component
+# Lottie Animation View for React
 
-React Lottie Component
+##Demo
+https://chenqingspring.github.io/react-lottie/   
