@@ -1,10 +1,10 @@
 {
   "name": "react-lottie",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "React Lottie Component",
   "repository": {
     "type": "git",
-    "url": "https://github.com/you/repo.git"
+    "url": "https://github.com/chenqingspring/react-lottie"
   },
   "license": "MIT",
   "scripts": {
