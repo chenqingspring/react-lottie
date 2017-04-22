@@ -10,24 +10,23 @@ export default class Lottie extends React.Component {
       overflow: 'hidden',
       margin: '0 auto'
     };
-
-    return <div ref='lavContainer' style={{...lottieStyles, ...this.props.style}}></div>;
+    return <div ref='lavContainer' style={{lottieStyles}}></div>;
   }
 
   componentDidMount() {
-    this._options = {
+    this.options = {
       container: this.refs.lavContainer,
       renderer: 'svg',
       loop: this.props.options.loop !== false,
       autoplay: this.props.options.autoplay !== false,
       animationData: this.props.options.animationData
     };
-    bodymovin.loadAnimation(this._options);
+    bodymovin.loadAnimation(this.options);
   }
+
 }
 
 Lottie.propTypes = {
-  style: React.PropTypes.object,
   options: React.PropTypes.object.isRequired,
   height: React.PropTypes.number,
   width: React.PropTypes.number
