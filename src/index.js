@@ -10,7 +10,8 @@ export default class Lottie extends React.Component {
       overflow: 'hidden',
       margin: '0 auto'
     };
-    return <div ref='lavContainer' style={{lottieStyles}}></div>;
+
+    return <div ref='lavContainer' style={lottieStyles}></div>;
   }
 
   componentDidMount() {
