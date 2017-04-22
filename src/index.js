@@ -22,7 +22,19 @@ export default class Lottie extends React.Component {
       autoplay: this.props.options.autoplay !== false,
       animationData: this.props.options.animationData
     };
-    bodymovin.loadAnimation(this.options);
+    this.amin = bodymovin.loadAnimation(this.options);
+  }
+
+  componentDidUpdate() {
+    this.props.isStopped ? this.stop() : this.play();
+  }
+
+  stop() {
+    this.amin.stop();
+  }
+
+  play() {
+    this.amin.play();
   }
 
 }
@@ -30,5 +42,10 @@ export default class Lottie extends React.Component {
 Lottie.propTypes = {
   options: React.PropTypes.object.isRequired,
   height: React.PropTypes.number,
-  width: React.PropTypes.number
+  width: React.PropTypes.number,
+  isStopped: React.PropTypes.bool
+};
+
+Lottie.defaultProps = {
+  isStopped: false
 };
