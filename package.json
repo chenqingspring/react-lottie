@@ -1,7 +1,7 @@
 {
   "name": "react-lottie",
   "version": "0.0.4",
-  "description": "React Lottie Component",
+  "description": "lottie animation view for React",
   "repository": {
     "type": "git",
     "url": "https://github.com/chenqingspring/react-lottie"
