@@ -7,8 +7,8 @@ import LottieControl from './lottie-control'
 const defaultOptions = {animationData: animationData};
 
 storiesOf('Lottie Animation View', module)
-  .add('Usage: specify animation options & size', () => (
+  .add('specify animation options & size', () => (
     <Lottie options={defaultOptions} height={500} width={500}/>
-  )).add('Usage: control animation', () => (
+  )).add('control animation', () => (
   <LottieControl/>
 ));
