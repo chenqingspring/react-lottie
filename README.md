@@ -1,4 +1,4 @@
-# Lottie Animation View for React
+# Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie))
 
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
