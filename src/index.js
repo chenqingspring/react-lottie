@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import bodymovin from 'bodymovin';
 
 export default class Lottie extends React.Component {
@@ -22,30 +23,41 @@ export default class Lottie extends React.Component {
       autoplay: this.props.options.autoplay !== false,
       animationData: this.props.options.animationData
     };
-    this.amin = bodymovin.loadAnimation(this.options);
+    this.anim = bodymovin.loadAnimation(this.options);
   }
 
   componentDidUpdate() {
     this.props.isStopped ? this.stop() : this.play();
+    this.pause()
+  }
+
+  pause() {
+    if (this.props.isPaused && !this.anim.isPaused) {
+      this.anim.pause()
+    } else if (!this.props.isPaused && this.anim.isPaused) {
+      this.anim.pause()
+    }
   }
 
   stop() {
-    this.amin.stop();
+    this.anim.stop();
   }
 
   play() {
-    this.amin.play();
+    this.anim.play();
   }
 
 }
 
 Lottie.propTypes = {
-  options: React.PropTypes.object.isRequired,
-  height: React.PropTypes.number,
-  width: React.PropTypes.number,
-  isStopped: React.PropTypes.bool
+  options: PropTypes.object.isRequired,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  isStopped: PropTypes.bool,
+  isPaused: PropTypes.bool
 };
 
 Lottie.defaultProps = {
-  isStopped: false
+  isStopped: false,
+  isPaused: false
 };
