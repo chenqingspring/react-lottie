@@ -28,10 +28,11 @@ npm install --save react-lottie
 
 ## Usage
 
-Import react-lottie and after-effect.json as animation data
+Import pinjump.json.json as animation data
+
 ```
 import React from 'react'
-import Lottie from '../index';
+import Lottie from 'react-lottie';
 import * as animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {
