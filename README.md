@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
 ## Demo
-https://chenqingspring.github.io/react-lottie/
+https://chenqingspring.github.io/react-lottie/iframe.html
 
 ## Why Lottie?
 
