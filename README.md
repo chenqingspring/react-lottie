@@ -66,6 +66,9 @@ export default class LottieControl extends React.Component {
 }
 
 ```
+## Contribution
+Your contributions and suggestions are heartily welcome.
 
 ## License
 MIT
+
