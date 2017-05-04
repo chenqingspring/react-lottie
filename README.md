@@ -5,6 +5,10 @@
 ## Demo
 https://chenqingspring.github.io/react-lottie/iframe.html
 
+## Wapper of bodymovin.js
+
+[bodymovin](https://github.com/bodymovin/bodymovin) is [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) plugin for exporting animations as JSON, also it provide bodymovin.js for vender them as svg/canvas/html.
+
 ## Why Lottie?
 
 #### Flexible After Effects features
@@ -18,7 +22,6 @@ Bundle vector animations within your app without having to worry about multiple 
 
 [Learn more](http://airbnb.design/introducing-lottie/) › http://airbnb.design/lottie/
 
-
 ## Installation
 
 Install through npm:
@@ -30,7 +33,7 @@ npm install --save react-lottie
 
 Import pinjump.json.json as animation data
 
-```
+```jsx
 import React from 'react'
 import Lottie from 'react-lottie';
 import * as animationData from './pinjump.json'
