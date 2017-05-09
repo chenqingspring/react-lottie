@@ -66,6 +66,16 @@ export default class LottieControl extends React.Component {
 }
 
 ```
+
+## Related Projects
+
+* [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
+* [Angular Lottie](https://github.com/chenqingspring/ng-lottie) angular implementation
+* [Vue Lottie](https://github.com/chenqingspring/vue-lottie) vue implementation
+* [React Native Lottie](https://github.com/airbnb/lottie-react-native) react native implementation by airbnb
+* [IOS Lottie](https://github.com/airbnb/lottie-ios) ios implementation by airbnb
+* [Android Lottie](https://github.com/airbnb/lottie-android) android implementation by airbnb
+
 ## Contribution
 Your contributions and suggestions are heartily welcome.
 
