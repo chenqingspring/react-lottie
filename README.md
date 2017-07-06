@@ -51,7 +51,15 @@ export default class LottieControl extends React.Component {
       margin: '10px auto'
     };
 
-    const defaultOptions = {animationData: animationData};
+    const defaultOptions = {
+      loop: true,
+      autoplay: true, 
+      animationData: animationData,
+      rendererSettings: {
+        preserveAspectRatio: xMidYMid slice
+      }
+    };
+
     return <div>
       <Lottie options={defaultOptions}
               height={400}
