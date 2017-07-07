@@ -21,7 +21,8 @@ export default class Lottie extends React.Component {
       renderer: 'svg',
       loop: this.props.options.loop !== false,
       autoplay: this.props.options.autoplay !== false,
-      animationData: this.props.options.animationData
+      animationData: this.props.options.animationData,
+      rendererSettings: this.props.options.rendererSettings
     };
     this.anim = bodymovin.loadAnimation(this.options);
   }
