@@ -10,7 +10,8 @@ export default class LottieControl extends React.Component {
     this.state = {
       isStopped: false,
       isPaused: false,
-      speed: 1
+      speed: 1,
+      direction: 1,
     };
 
   }
@@ -32,7 +33,8 @@ export default class LottieControl extends React.Component {
               width={400}
               isStopped={this.state.isStopped}
               isPaused={this.state.isPaused}
-              speed={currentSpeed}/>
+              speed={currentSpeed}
+              direction={this.state.direction}/>
 
       <p style={centerStyle}>Speed: x{currentSpeed}</p>
       <input style={centerStyle}
@@ -41,6 +43,7 @@ export default class LottieControl extends React.Component {
       <button style={centerStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
       <button style={centerStyle} onClick={() => this.setState({isStopped: false})}>play</button>
       <button style={centerStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+      <button style={centerStyle} onClick={() => this.setState({direction: this.state.direction * -1})}>change direction</button>
     </div>
   }
 }
