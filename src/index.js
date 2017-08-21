@@ -31,6 +31,7 @@ export default class Lottie extends React.Component {
     this.props.isStopped ? this.stop() : this.play();
     this.pause();
     this.setSpeed();
+    this.setDirection();
   }
 
   pause() {
@@ -52,6 +53,10 @@ export default class Lottie extends React.Component {
   setSpeed() {
     this.anim.setSpeed(this.props.speed);
   }
+
+  setDirection() {
+    this.anim.setDirection(this.props.direction)
+  }
 }
 
 Lottie.propTypes = {
@@ -61,6 +66,7 @@ Lottie.propTypes = {
   isStopped: PropTypes.bool,
   isPaused: PropTypes.bool,
   speed: PropTypes.number,
+  direction: PropTypes.number,
 };
 
 Lottie.defaultProps = {
