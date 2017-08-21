@@ -41,7 +41,7 @@
     "enzyme": "^2.2.0",
     "react-addons-test-utils": "^15.3.2",
     "jsdom": "^9.5.0",
-    "@kadira/storybook": "^2.18.1",
+    "@kadira/storybook": "^2.35.3",
     "git-url-parse": "^6.0.1"
   },
   "peerDependencies": {
