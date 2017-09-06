@@ -24,7 +24,12 @@ export default class Lottie extends React.Component {
       animationData: this.props.options.animationData,
       rendererSettings: this.props.options.rendererSettings
     };
+
     this.anim = bodymovin.loadAnimation(this.options);
+
+    this.props.eventListeners.forEach((eventListener) => {
+      this.anim.addEventListener(eventListener.eventName, eventListener.callback);
+    });
   }
 
   componentDidUpdate() {
@@ -60,6 +65,7 @@ export default class Lottie extends React.Component {
 }
 
 Lottie.propTypes = {
+  eventListeners: PropTypes.arrayOf(PropTypes.object),
   options: PropTypes.object.isRequired,
   height: PropTypes.number,
   width: PropTypes.number,
@@ -70,6 +76,7 @@ Lottie.propTypes = {
 };
 
 Lottie.defaultProps = {
+  eventListeners: [],
   isStopped: false,
   isPaused: false,
   speed: 1,
