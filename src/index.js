@@ -27,6 +27,15 @@ export default class Lottie extends React.Component {
     this.anim = bodymovin.loadAnimation(this.options);
   }
 
+  componentWillUpdate( nextProps, nextState ) {
+    /* Recreate the animation handle if the data is changed */
+    if( this.options.animationData !== nextProps.options.animationData ) {
+      this.destroy();
+      this.options.animationData = nextProps.options.animationData;
+      this.anim = bodymovin.loadAnimation(this.options);
+    }
+  }
+
   componentDidUpdate() {
     this.props.isStopped ? this.stop() : this.play();
     this.pause();
@@ -56,6 +65,10 @@ export default class Lottie extends React.Component {
 
   setDirection() {
     this.anim.setDirection(this.props.direction)
+  }
+
+  destroy() {
+    this.anim.destroy();
   }
 }
 

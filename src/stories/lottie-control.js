@@ -1,6 +1,7 @@
 import React from 'react'
 import Lottie from '../index';
-import * as animationData from './pinjump.json'
+import * as animationDataA from './pinjump.json'
+import * as animationDataB from './TwitterHeart.json'
 
 export default class LottieControl extends React.Component {
 
@@ -12,6 +13,7 @@ export default class LottieControl extends React.Component {
       isPaused: false,
       speed: 1,
       direction: 1,
+      isDataA: true
     };
 
   }
@@ -23,7 +25,7 @@ export default class LottieControl extends React.Component {
       textAlign: 'center'
     };
 
-    const defaultOptions = {animationData: animationData};
+    const defaultOptions = {animationData: ( this.state.isDataA ? animationDataA : animationDataB ) };
 
     let currentSpeed = this.state.speed;
 
@@ -44,6 +46,7 @@ export default class LottieControl extends React.Component {
       <button style={centerStyle} onClick={() => this.setState({isStopped: false})}>play</button>
       <button style={centerStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
       <button style={centerStyle} onClick={() => this.setState({direction: this.state.direction * -1})}>change direction</button>
+      <button style={centerStyle} onClick={() => this.setState({isDataA:  !this.state.isDataA})}>toggle animation</button>
     </div>
   }
 }
