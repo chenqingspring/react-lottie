@@ -5,9 +5,10 @@ import bodymovin from 'bodymovin';
 export default class Lottie extends React.Component {
 
   render() {
+    const { width, height } = this.props;
     const lottieStyles = {
-      width: `${this.props.width}px` || '100%',
-      height: `${this.props.height}px` || '100%',
+      width: width ? `${width}px` : '100%',
+      height: height ? `${height}px` : '100%',
       overflow: 'hidden',
       margin: '0 auto'
     };
