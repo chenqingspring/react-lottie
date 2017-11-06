@@ -77,6 +77,45 @@ export default class LottieControl extends React.Component {
 
 ```
 
+### props
+The `<Lottie />` Component supports the following components:
+
+**options** *required*
+
+the object representing the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported:
+
+>**loop** *options* [default: `false`]
+>
+>**autoplay** *options* [default: `false`]
+>
+>**animationData** *required*
+>
+>**rendererSettings** *required* 
+
+**width** *optional* [default: `100%`]
+
+pixel value for containers width.
+
+**height** *optional* [default: `100%`]
+
+pixel value for containers height.
+
+**eventListeners** *optional* [default: `[]`]
+
+This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
+
+example:
+```jsx
+eventListeners={
+  [
+    {
+      eventName: 'complete',
+      callback: () => console.log('the animation completed:'),
+    },
+  ]
+}
+```
+
 ## Related Projects
 
 * [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
