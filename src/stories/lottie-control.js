@@ -24,29 +24,28 @@ export default class LottieControl extends React.Component {
       margin: '10px auto',
       textAlign: 'center'
     };
-
-    const defaultOptions = {animationData: ( this.state.isDataA ? animationDataA : animationDataB ) };
-
-    let currentSpeed = this.state.speed;
+    const {isStopped, isPaused, direction, speed, isDataA} = this.state;
+    const defaultOptions = {animationData: (isDataA ? animationDataA : animationDataB )};
 
     return <div>
       <Lottie options={defaultOptions}
               height={400}
               width={400}
-              isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}
-              speed={currentSpeed}
-              direction={this.state.direction}/>
+              isStopped={isStopped}
+              isPaused={isPaused}
+              speed={speed}
+              direction={direction}/>
 
-      <p style={centerStyle}>Speed: x{currentSpeed}</p>
+      <p style={centerStyle}>Speed: x{speed}</p>
       <input style={centerStyle}
-             type="range" value={currentSpeed} min="0" max="3" step="0.5"
+             type="range" value={speed} min="0" max="3" step="0.5"
              onChange={(e) => this.setState({speed: e.currentTarget.value})}/>
       <button style={centerStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
       <button style={centerStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-      <button style={centerStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
-      <button style={centerStyle} onClick={() => this.setState({direction: this.state.direction * -1})}>change direction</button>
-      <button style={centerStyle} onClick={() => this.setState({isDataA:  !this.state.isDataA})}>toggle animation</button>
+      <button style={centerStyle} onClick={() => this.setState({isPaused: !isPaused})}>pause</button>
+      <button style={centerStyle} onClick={() => this.setState({direction: direction * -1})}>change direction</button>
+      <button style={centerStyle} onClick={() => this.setState({isDataA: !isDataA})}>toggle animation
+      </button>
     </div>
   }
 }
