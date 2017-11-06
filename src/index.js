@@ -4,35 +4,45 @@ import bodymovin from 'bodymovin';
 
 export default class Lottie extends React.Component {
   render() {
-    const { width, height } = this.props;
+    const {width, height} = this.props;
     const lottieStyles = {
       width: width ? `${width}px` : '100%',
       height: height ? `${height}px` : '100%',
       overflow: 'hidden',
       margin: '0 auto',
     };
-
-    return <div ref="lavContainer" style={lottieStyles} />;
+    return <div ref='lavContainer' style={lottieStyles}/>;
   }
 
   componentDidMount() {
+    const {
+      options: {
+        loop,
+        autoplay,
+        animationData,
+        rendererSettings,
+        eventListeners
+      }
+    } = this.props;
+
+    const {lavContainer} = this.refs;
     this.options = {
-      container: this.refs.lavContainer,
+      container: lavContainer,
       renderer: 'svg',
-      loop: this.props.options.loop !== false,
-      autoplay: this.props.options.autoplay !== false,
-      animationData: this.props.options.animationData,
-      rendererSettings: this.props.options.rendererSettings,
+      loop: loop !== false,
+      autoplay: autoplay !== false,
+      animationData: animationData,
+      rendererSettings: rendererSettings,
     };
 
     this.anim = bodymovin.loadAnimation(this.options);
-    this.registerEvents(this.props.eventListeners);
+    this.registerEvents(eventListeners);
   }
 
   componentWillUpdate(nextProps, nextState) {
     /* Recreate the animation handle if the data is changed */
     if (this.options.animationData !== nextProps.options.animationData) {
-      this.deregisterEvents(this.props.eventListeners);
+      this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
       this.options.animationData = nextProps.options.animationData;
       this.anim = bodymovin.loadAnimation(this.options);
@@ -76,13 +86,13 @@ export default class Lottie extends React.Component {
   }
 
   registerEvents(eventListeners) {
-    eventListeners.forEach((eventListener) => {
+    eventListeners && eventListeners.forEach((eventListener) => {
       this.anim.addEventListener(eventListener.eventName, eventListener.callback);
     });
   }
 
-  deregisterEvents(eventListeners) {
-    eventListeners.forEach((eventListener) => {
+  deRegisterEvents(eventListeners) {
+    eventListeners && eventListeners.forEach((eventListener) => {
       this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
     });
   }
