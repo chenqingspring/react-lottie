@@ -21,8 +21,8 @@ export default class Lottie extends React.Component {
         autoplay,
         animationData,
         rendererSettings,
-        eventListeners
-      }
+      },
+      eventListeners
     } = this.props;
 
     const {lavContainer} = this.refs;
@@ -86,13 +86,13 @@ export default class Lottie extends React.Component {
   }
 
   registerEvents(eventListeners) {
-    eventListeners && eventListeners.forEach((eventListener) => {
+    eventListeners.forEach((eventListener) => {
       this.anim.addEventListener(eventListener.eventName, eventListener.callback);
     });
   }
 
   deRegisterEvents(eventListeners) {
-    eventListeners && eventListeners.forEach((eventListener) => {
+    eventListeners.forEach((eventListener) => {
       this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
     });
   }
