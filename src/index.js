@@ -3,11 +3,24 @@ import PropTypes from 'prop-types';
 import bodymovin from 'bodymovin';
 
 export default class Lottie extends React.Component {
+
+  const getSize(initial) {
+    let size;
+
+    if (typeof initial === Number) {
+      size = `${initial}px`
+    } else {
+      size = initial ? initial : '100%'
+    }
+
+    return size;
+  };
+
   render() {
     const {width, height} = this.props;
     const lottieStyles = {
-      width: width ? `${width}px` : '100%',
-      height: height ? `${height}px` : '100%',
+      width: getSize(width),
+      height: getSize(height),
       overflow: 'hidden',
       margin: '0 auto',
     };
