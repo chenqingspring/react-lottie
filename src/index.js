@@ -9,9 +9,8 @@ export default class Lottie extends React.Component {
       eventListeners,
     } = this.props;
 
-    const { lavContainer } = this.el;
     this.options = {
-      container: lavContainer,
+      container: this.el,
       renderer: 'svg',
       loop: loop !== false,
       autoplay: autoplay !== false,
@@ -41,20 +40,20 @@ export default class Lottie extends React.Component {
     this.setDirection();
   }
 
-  stop() {
-    this.anim.stop();
-  }
-
-  play() {
-    this.anim.play();
-  }
-
   setSpeed() {
     this.anim.setSpeed(this.props.speed);
   }
 
   setDirection() {
     this.anim.setDirection(this.props.direction);
+  }
+
+  play() {
+    this.anim.play();
+  }
+
+  stop() {
+    this.anim.stop();
   }
 
   pause() {
@@ -102,6 +101,7 @@ export default class Lottie extends React.Component {
       overflow: 'hidden',
       margin: '0 auto',
     };
+
     return (
       <div
         ref={(c) => {
