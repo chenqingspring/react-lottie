@@ -5,7 +5,12 @@ import bodymovin from 'bodymovin';
 export default class Lottie extends React.Component {
   componentDidMount() {
     const {
-      options: { loop, autoplay, animationData, rendererSettings },
+      options: {
+        loop,
+        autoplay,
+        animationData,
+        rendererSettings
+      },
       eventListeners,
     } = this.props;
 
@@ -81,7 +86,7 @@ export default class Lottie extends React.Component {
   }
 
   render() {
-    const { width, height } = this.props;
+    const {width, height} = this.props;
 
     const getSize = (initial) => {
       let size;
@@ -116,8 +121,8 @@ export default class Lottie extends React.Component {
 Lottie.propTypes = {
   eventListeners: PropTypes.arrayOf(PropTypes.object),
   options: PropTypes.object.isRequired,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isStopped: PropTypes.bool,
   isPaused: PropTypes.bool,
   speed: PropTypes.number,
