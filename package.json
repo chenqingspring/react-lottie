@@ -1,6 +1,6 @@
 {
   "name": "react-lottie",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "lottie animation view for React",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "git-url-parse": "^6.0.1"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0"
+    "react": "^0.14.7 || ^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
