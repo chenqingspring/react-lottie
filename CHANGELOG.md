@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/chenqingspring/react-lottie/compare/v0.2.5...v1.0.0) (2018-01-17)
+
+
+
 <a name="0.2.5"></a>
 ## [0.2.5](https://github.com/chenqingspring/react-lottie/compare/v0.2.4...v0.2.5) (2017-12-12)
 
