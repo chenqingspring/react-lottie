@@ -6,7 +6,7 @@ import * as animationDataB from './beating-heart.json';
 /**
  * TransitionLoop, demonstrates the use of the eventListener Props.
  * NOTE: there appears to currently be a bug in either
- * react-lottie or bodymovin which results in a chance of the loop option not 
+ * react-lottie or lottie-web which results in a chance of the loop option not
  * taking effect accross different animations.
  */
 export default class TransitionLoop extends React.Component {

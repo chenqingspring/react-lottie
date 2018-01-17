@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import bodymovin from 'bodymovin';
+import lottie from 'lottie-web';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ export default class Lottie extends React.Component {
       rendererSettings,
     };
 
-    this.anim = bodymovin.loadAnimation(this.options);
+    this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
   }
 
@@ -33,7 +33,7 @@ export default class Lottie extends React.Component {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
       this.options.animationData = nextProps.options.animationData;
-      this.anim = bodymovin.loadAnimation(this.options);
+      this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
   }
