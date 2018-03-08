@@ -45,6 +45,13 @@ export default class Lottie extends React.Component {
     this.setDirection();
   }
 
+  componentWillUnmount() {
+    this.deRegisterEvents(this.props.eventListeners);
+    this.destroy();
+    this.options.animationData = null;
+    this.anim = null;
+  }
+
   setSpeed() {
     this.anim.setSpeed(this.props.speed);
   }
