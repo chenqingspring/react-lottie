@@ -55,7 +55,7 @@ export default class LottieControl extends React.Component {
 
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
+      autoplay: true,
       animationData: animationData,
       rendererSettings: {
         preserveAspectRatio: xMidYMid slice
@@ -78,7 +78,7 @@ export default class LottieControl extends React.Component {
 ```
 
 ### props
-The `<Lottie />` Component supports the following components:
+The `<Lottie />` Component supports the following props:
 
 **options** *required*
 
@@ -90,7 +90,7 @@ the object representing the animation settings that will be instantiated by body
 >
 >**animationData** *required*
 >
->**rendererSettings** *required* 
+>**rendererSettings** *required*
 
 **width** *optional* [default: `100%`]
 
@@ -102,7 +102,7 @@ pixel value for containers height.
 
 **eventListeners** *optional* [default: `[]`]
 
-This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
+This is an array of objects containing a `eventName` and `callback` function that will be registered as  event listeners on the animation object. Refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
 
 example:
 ```jsx
