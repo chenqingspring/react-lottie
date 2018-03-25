@@ -55,7 +55,7 @@ export default class LottieControl extends React.Component {
 
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
+      autoplay: true,
       animationData: animationData,
       rendererSettings: {
         preserveAspectRatio: xMidYMid slice
@@ -88,9 +88,11 @@ the object representing the animation settings that will be instantiated by body
 >
 >**autoplay** *options* [default: `false`]
 >
->**animationData** *required*
+>**animationData**: an Object with the exported animation data.
 >
->**rendererSettings** *required* 
+>**path**: the relative path to the animation object. (animationData and path are mutually exclusive)
+>
+>**rendererSettings** *required*
 
 **width** *optional* [default: `100%`]
 

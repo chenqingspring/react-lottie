@@ -9,7 +9,8 @@ export default class Lottie extends React.Component {
         loop,
         autoplay,
         animationData,
-        rendererSettings
+        rendererSettings,
+        path,
       },
       eventListeners,
     } = this.props;
@@ -21,6 +22,7 @@ export default class Lottie extends React.Component {
       autoplay: autoplay !== false,
       animationData,
       rendererSettings,
+      path,
     };
 
     this.anim = lottie.loadAnimation(this.options);
