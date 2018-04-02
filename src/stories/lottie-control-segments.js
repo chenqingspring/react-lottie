@@ -3,7 +3,7 @@ import Lottie from '../index';
 import * as animationDataA from './pinjump.json'
 import * as animationDataB from './TwitterHeart.json'
 
-export default class LottieControl extends React.Component {
+export default class LottieControlSegment extends React.Component {
 
     constructor(props) {
         super(props);
