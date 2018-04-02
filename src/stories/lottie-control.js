@@ -34,6 +34,7 @@ export default class LottieControl extends React.Component {
               isStopped={isStopped}
               isPaused={isPaused}
               speed={speed}
+              segments={[10, 25]}
               direction={direction}/>
 
       <p style={centerStyle}>Speed: x{speed}</p>
