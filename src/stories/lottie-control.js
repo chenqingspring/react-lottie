@@ -46,10 +46,10 @@ export default class LottieControl extends React.Component {
       <p style={centerStyle}>Segment range: [{startFrame}, {endFrame}]</p>
       <input style={centerStyle}
         type="text" value={startFrame}
-        onChange={(e) => this.setState({ startFrame: e.currentTarget.value })} />
+        onChange={(e) => this.setState({ startFrame: parseInt(e.currentTarget.value) || 0 })} />
       <input style={centerStyle}
         type="text" value={endFrame}
-        onChange={(e) => this.setState({ endFrame: e.currentTarget.value })} />
+        onChange={(e) => this.setState({ endFrame: parseInt(e.currentTarget.value) || 0 })} />
       <button style={centerStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
       <button style={centerStyle} onClick={() => this.setState({isStopped: false})}>play</button>
       <button style={centerStyle} onClick={() => this.setState({isPaused: !isPaused})}>pause</button>
