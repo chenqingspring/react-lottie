@@ -122,7 +122,7 @@ export default class Lottie extends React.Component {
       ariaRole,
       ariaLabel,
       isClickToPauseDisabled,
-      title
+      title,
     } = this.props;
 
     const getSize = (initial) => {
