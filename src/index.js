@@ -9,7 +9,8 @@ export default class Lottie extends React.Component {
         loop,
         autoplay,
         animationData,
-        rendererSettings
+        rendererSettings,
+        segments,
       },
       eventListeners,
     } = this.props;
@@ -19,6 +20,7 @@ export default class Lottie extends React.Component {
       renderer: 'svg',
       loop: loop !== false,
       autoplay: autoplay !== false,
+      segments: segments !== false,
       animationData,
       rendererSettings,
     };
@@ -39,7 +41,14 @@ export default class Lottie extends React.Component {
   }
 
   componentDidUpdate() {
-    this.props.isStopped ? this.stop() : this.play();
+    if (this.props.isStopped) {
+      this.stop();
+    } else if (this.props.segments) {
+      this.playSegments();
+    } else {
+      this.play();
+    }
+
     this.pause();
     this.setSpeed();
     this.setDirection();
@@ -62,6 +71,10 @@ export default class Lottie extends React.Component {
 
   play() {
     this.anim.play();
+  }
+
+  playSegments() {
+    this.anim.playSegments(this.props.segments);
   }
 
   stop() {
@@ -92,8 +105,25 @@ export default class Lottie extends React.Component {
     });
   }
 
+  handleClickToPause = () => {
+    // The pause() method is for handling pausing by passing a prop isPaused
+    // This method is for handling the ability to pause by clicking on the animation
+    if (this.anim.isPaused) {
+      this.anim.play();
+    } else {
+      this.anim.pause();
+    }
+  }
+
   render() {
-    const {width, height} = this.props;
+    const {
+      width,
+      height,
+      ariaRole,
+      ariaLabel,
+      isClickToPauseDisabled,
+      title,
+    } = this.props;
 
     const getSize = (initial) => {
       let size;
@@ -114,12 +144,21 @@ export default class Lottie extends React.Component {
       margin: '0 auto',
     };
 
+    const onClickHandler = isClickToPauseDisabled ? () => null : this.handleClickToPause;
+
     return (
+      // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         ref={(c) => {
           this.el = c;
         }}
         style={lottieStyles}
+        onClick={onClickHandler}
+        title={title}
+        role={ariaRole}
+        aria-label={ariaLabel}
+        tabIndex="0"
       />
     );
   }
@@ -133,7 +172,12 @@ Lottie.propTypes = {
   isStopped: PropTypes.bool,
   isPaused: PropTypes.bool,
   speed: PropTypes.number,
+  segments: PropTypes.arrayOf(PropTypes.number),
   direction: PropTypes.number,
+  ariaRole: PropTypes.string,
+  ariaLabel: PropTypes.string,
+  isClickToPauseDisabled: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 Lottie.defaultProps = {
@@ -141,4 +185,8 @@ Lottie.defaultProps = {
   isStopped: false,
   isPaused: false,
   speed: 1,
+  ariaRole: 'button',
+  ariaLabel: 'animation',
+  isClickToPauseDisabled: false,
+  title: '',
 };
