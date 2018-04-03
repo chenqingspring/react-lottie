@@ -24,7 +24,6 @@ export default class TransitionLoop extends React.Component {
   }
 
   transition() {
-    console.log('transition:');
     this.setState({ isTransitioned: true });
   }
 

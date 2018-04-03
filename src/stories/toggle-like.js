@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import Lottie from '../index';
-import * as animationDataA from './TwitterHeart.json'
+import * as animationDataA from './TwitterHeart.json';
 
 export default class ToggleLike extends React.Component {
 
@@ -12,7 +12,7 @@ export default class ToggleLike extends React.Component {
       isPaused: false,
       speed: 1,
       direction: 1,
-      isLike: false
+      isLike: false,
     };
   }
 
@@ -20,28 +20,29 @@ export default class ToggleLike extends React.Component {
     const centerStyle = {
       display: 'block',
       margin: '10px auto',
-      textAlign: 'center'
+      textAlign: 'center',
     };
-    const {isStopped, isPaused, direction, speed, isLike} = this.state;
-    const defaultOptions = {animationData: animationDataA, loop: false, autoplay: false};
+    const { isStopped, isPaused, direction, speed, isLike } = this.state;
+    const defaultOptions = { animationData: animationDataA, loop: false, autoplay: false };
 
     const clickHandler = () => {
-      const {isStopped, direction, isLike} = this.state;
       if (!isStopped) {
-        this.setState({direction: direction * -1})
+        this.setState({ direction: direction * -1 });
       }
-      this.setState({isStopped: false, isLike: !isLike})
-    }
+      this.setState({ isStopped: false, isLike: !isLike });
+    };
 
-    return <div>
-      <Lottie options={defaultOptions}
-              height={400}
-              width={400}
-              isStopped={isStopped}
-              isPaused={isPaused}
-              speed={speed}
-              direction={direction}/>
+    return (<div>
+      <Lottie
+        options={defaultOptions}
+        height={400}
+        width={400}
+        isStopped={isStopped}
+        isPaused={isPaused}
+        speed={speed}
+        direction={direction}
+      />
       <button style={centerStyle} onClick={clickHandler}>{isLike ? 'unlike' : 'like'}</button>
-    </div>
+    </div>);
   }
 }
