@@ -58,7 +58,7 @@ export default class LottieControl extends React.Component {
       autoplay: true, 
       animationData: animationData,
       rendererSettings: {
-        preserveAspectRatio: xMidYMid slice
+        preserveAspectRatio: 'xMidYMid slice'
       }
     };
 
@@ -106,14 +106,12 @@ This is an array of objects containing a `eventName` and `callback` function tha
 
 example:
 ```jsx
-eventListeners={
-  [
-    {
-      eventName: 'complete',
-      callback: () => console.log('the animation completed:'),
-    },
-  ]
-}
+eventListeners=[
+  {
+    eventName: 'complete',
+    callback: () => console.log('the animation completed:'),
+  },
+]
 ```
 
 ## Related Projects
