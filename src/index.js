@@ -4,16 +4,18 @@ import lottie from 'lottie-web';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
-    const {
-      options: {
-        loop,
-        autoplay,
-        animationData,
-        rendererSettings,
-        segments,
-      },
+    const { 
+      options,
       eventListeners,
     } = this.props;
+    
+    const {
+      loop,
+      autoplay,
+      animationData,
+      rendererSettings,
+      segments,
+    } = options;
 
     this.options = {
       container: this.el,
@@ -24,6 +26,8 @@ export default class Lottie extends React.Component {
       animationData,
       rendererSettings,
     };
+    
+    this.options = {...this.options, ...options};
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
