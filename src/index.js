@@ -4,11 +4,11 @@ import lottie from 'lottie-web';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
-    const { 
+    const {
       options,
       eventListeners,
     } = this.props;
-    
+
     const {
       loop,
       autoplay,
@@ -26,8 +26,8 @@ export default class Lottie extends React.Component {
       animationData,
       rendererSettings,
     };
-    
-    this.options = {...this.options, ...options};
+
+    this.options = { ...this.options, ...options };
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
@@ -184,6 +184,7 @@ Lottie.propTypes = {
   ariaLabel: PropTypes.string,
   isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
+  style: PropTypes.string,
 };
 
 Lottie.defaultProps = {
