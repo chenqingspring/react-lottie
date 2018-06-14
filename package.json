@@ -42,7 +42,8 @@
     "react": "^15.6.2",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^15.6.2",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "standard-version": "^4.4.0"
   },
   "peerDependencies": {
     "react": "^0.14.7 || ^15.0.0 || ^16.0.0"
