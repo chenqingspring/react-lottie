@@ -90,6 +90,8 @@ the object representing the animation settings that will be instantiated by body
 >
 >**animationData** *required*
 >
+>**renderer** *options* [default: `svg`]
+>
 >**rendererSettings** *required* 
 
 **width** *optional* [default: `100%`]
