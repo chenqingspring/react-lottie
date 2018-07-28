@@ -29,6 +29,10 @@ export default class Lottie extends React.Component {
 
     this.options = { ...this.options, ...options };
 
+    if(this.props.gatsby) {
+      this.options.animationData = {...this.options.animationData.default};
+    }
+    
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
   }
@@ -39,6 +43,11 @@ export default class Lottie extends React.Component {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
       this.options = {...this.options, ...nextProps.options};
+      
+      if(this.props.gatsby) {
+        this.options.animationData = {...this.options.animationData.default};
+      }
+      
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
