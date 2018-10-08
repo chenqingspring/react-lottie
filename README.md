@@ -33,7 +33,7 @@ npm install --save react-lottie
 
 ## Usage
 
-Import pinjump.json.json as animation data
+Import pinjump.json as animation data
 
 ```jsx
 import React from 'react'
