@@ -114,6 +114,22 @@ eventListeners=[
 ]
 ```
 
+## Unit Testing
+
+This is based on what tool or framework are you using for testing, this configuration is for Jest, the one that is working out-of-the-box with [CRA](https://github.com/facebook/create-react-app). In order to properly work you must:
+
+* Install [`jest-canvas-mock` library](https://github.com/hustcc/jest-canvas-mock)
+* Go to your `setupTests.js` file, in the top of your file do as follows:
+```javascript
+...
+import 'jest-canvas-mock';
+
+...
+```
+* Once you imported the file, restart Jest on your console and you're ready to go
+
+For other frameworks besides Jest, you have to check if it uses JSDom or what JavaScript implementation is using, and check if that implementation mimics the `canvas` element, if not, you should do the same, probably.
+
 ## Related Projects
 
 * [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
