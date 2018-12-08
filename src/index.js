@@ -30,6 +30,7 @@ export default class Lottie extends React.Component {
     this.options = { ...this.options, ...options };
 
     this.anim = lottie.loadAnimation(this.options);
+    this.setSubframe();
     this.registerEvents(eventListeners);
   }
 
@@ -38,7 +39,7 @@ export default class Lottie extends React.Component {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
@@ -52,7 +53,6 @@ export default class Lottie extends React.Component {
     } else {
       this.play();
     }
-
     this.pause();
     this.setSpeed();
     this.setDirection();
@@ -67,6 +67,10 @@ export default class Lottie extends React.Component {
 
   setSpeed() {
     this.anim.setSpeed(this.props.speed);
+  }
+
+  setSubframe() {
+    this.anim.setSubframe(this.props.isSubframe);
   }
 
   setDirection() {
@@ -185,6 +189,7 @@ Lottie.propTypes = {
   isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
   style: PropTypes.string,
+  isSubframe: PropTypes.bool,
 };
 
 Lottie.defaultProps = {
@@ -196,4 +201,5 @@ Lottie.defaultProps = {
   ariaLabel: 'animation',
   isClickToPauseDisabled: false,
   title: '',
+  isSubframe: true,
 };
