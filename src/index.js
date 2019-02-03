@@ -15,6 +15,8 @@ export default class Lottie extends React.Component {
       animationData,
       rendererSettings,
       segments,
+      goToAndPlay,
+      goToAndStop,
     } = options;
 
     this.options = {
@@ -23,6 +25,8 @@ export default class Lottie extends React.Component {
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
+      goToAndPlay,
+      goToAndStop,
       animationData,
       rendererSettings,
     };
@@ -38,19 +42,27 @@ export default class Lottie extends React.Component {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.props.isStopped) {
       this.stop();
     } else if (this.props.segments) {
       this.playSegments();
     } else {
       this.play();
+    }
+
+    if (JSON.stringify(this.props.goToAndPlay) !== JSON.stringify(prevProps.goToAndPlay)) {
+      this.goToAndPlay();
+    }
+
+    if (JSON.stringify(this.props.goToAndStop) !== JSON.stringify(prevProps.goToAndStop)) {
+      this.goToAndStop();
     }
 
     this.pause();
@@ -91,6 +103,16 @@ export default class Lottie extends React.Component {
     } else if (!this.props.isPaused && this.anim.isPaused) {
       this.anim.pause();
     }
+  }
+
+  goToAndPlay() {
+    const { value, isFrame } = this.props.goToAndPlay;
+    this.anim.goToAndPlay(value, isFrame);
+  }
+
+  goToAndStop() {
+    const { value, isFrame } = this.props.goToAndStop;
+    this.anim.goToAndStop(value, isFrame);
   }
 
   destroy() {
@@ -177,6 +199,14 @@ Lottie.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isStopped: PropTypes.bool,
   isPaused: PropTypes.bool,
+  goToAndPlay: PropTypes.shape({
+    value: PropTypes.number,
+    isFrame: PropTypes.bool,
+  }),
+  goToAndStop: PropTypes.shape({
+    value: PropTypes.number,
+    isFrame: PropTypes.bool,
+  }),
   speed: PropTypes.number,
   segments: PropTypes.arrayOf(PropTypes.number),
   direction: PropTypes.number,
@@ -191,6 +221,14 @@ Lottie.defaultProps = {
   eventListeners: [],
   isStopped: false,
   isPaused: false,
+  goToAndPlay: {
+    value: null,
+    isFrame: false,
+  },
+  goToAndStop: {
+    value: null,
+    isFrame: false,
+  },
   speed: 1,
   ariaRole: 'button',
   ariaLabel: 'animation',
