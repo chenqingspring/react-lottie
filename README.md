@@ -3,7 +3,9 @@
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
 ## Demo
-https://chenqingspring.github.io/react-lottie
+https://chenqingspring.github.io/react-lottie  
+
+https://bit.dev/chenqingspring/react-lottie/lottie
 
 ## Wapper of bodymovin.js
 
