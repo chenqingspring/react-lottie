@@ -38,7 +38,7 @@ export default class Lottie extends React.Component {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
@@ -126,6 +126,7 @@ export default class Lottie extends React.Component {
       ariaRole,
       ariaLabel,
       isClickToPauseDisabled,
+      tabIndex,
       title,
     } = this.props;
 
@@ -164,7 +165,7 @@ export default class Lottie extends React.Component {
         title={title}
         role={ariaRole}
         aria-label={ariaLabel}
-        tabIndex="0"
+        tabIndex={tabIndex || '0'}
       />
     );
   }
@@ -183,6 +184,7 @@ Lottie.propTypes = {
   ariaRole: PropTypes.string,
   ariaLabel: PropTypes.string,
   isClickToPauseDisabled: PropTypes.bool,
+  tabIndex: PropTypes.string,
   title: PropTypes.string,
   style: PropTypes.string,
 };
