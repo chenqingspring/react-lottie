@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import lottie from 'lottie-web';
+import lottie from 'lottie-web/build/player/lottie_light';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
