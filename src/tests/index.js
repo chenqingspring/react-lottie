@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import ReactLottie from '../index';
+import lottie from 'lottie-web';
+import ReactLottie from '../component';
 import pinjump from '../stories/pinjump.json';
 import beatingHeart from '../stories/beating-heart.json';
 
@@ -20,7 +21,7 @@ describe('react-lottie', () => {
   describe('props', () => {
     describe('isClickToPauseDisabled', () => {
       it('should prevent handleClickToPause from being called when true', () => {
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
         const spy = sinon.stub();
 
         component.instance().handleClickToPause = spy;
@@ -61,6 +62,7 @@ describe('react-lottie', () => {
             options={defaultOptions}
             height={199}
             width={188}
+            lottie={lottie}
           />
         );
 
@@ -72,7 +74,7 @@ describe('react-lottie', () => {
 
   describe('when props change', () => {
     it('should change the animation that is being played', () => {
-      const component = mount(<ReactLottie options={defaultOptions} />);
+      const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
 
       expect(component.instance().anim.animationData).to.equal(pinjump);
 
@@ -91,7 +93,7 @@ describe('react-lottie', () => {
     describe('componentDidMount', () => {
       it('should register events', () => {
         const registerEventsSpy = sinon.stub();
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
 
         component.instance().registerEvents = registerEventsSpy;
         component.update();
@@ -102,7 +104,7 @@ describe('react-lottie', () => {
       });
 
       it('should load the animation', () => {
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
         const animation = component.instance().anim;
 
         expect(animation.animationData).to.equal(pinjump);
@@ -112,7 +114,7 @@ describe('react-lottie', () => {
     describe('componentWillUpdate', () => {
       it('should register events when animationData changes', () => {
         const registerEventsSpy = sinon.stub();
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
 
         component.instance().registerEvents = registerEventsSpy;
         component.update();
@@ -131,7 +133,7 @@ describe('react-lottie', () => {
     describe('componentDidUnmount', () => {
       it('should de-register events', () => {
         const spy = sinon.stub();
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
 
         component.instance().deRegisterEvents = spy;
         component.update();
@@ -142,7 +144,7 @@ describe('react-lottie', () => {
 
       it('should destroy the animation', () => {
         const spy = sinon.stub();
-        const component = mount(<ReactLottie options={defaultOptions} />);
+        const component = mount(<ReactLottie lottie={lottie} options={defaultOptions} />);
 
         component.instance().anim = {
           destroy: spy,
