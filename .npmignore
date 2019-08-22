@@ -1,2 +1,5 @@
 src
 .babelrc
+.idea
+.scripts
+.storybook
