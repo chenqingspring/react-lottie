@@ -7,6 +7,9 @@
     "url": "https://github.com/chenqingspring/react-lottie"
   },
   "license": "MIT",
+  "files":[
+    "dist"
+  ],
   "scripts": {
     "release": "git add package.json && git commit -m 'chore: bump version number' && standard-version --first-release && git push --follow-tags origin master && npm publish",
     "prepublish": ". ./.scripts/prepublish.sh",

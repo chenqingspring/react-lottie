@@ -1,7 +1,0 @@
-src
-.babelrc
-.idea/
-.scripts/
-.storybook/
-yarn.lock
-.eslintrc
