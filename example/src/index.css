@@ -6,9 +6,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: hsla(0, 0%, 32%, 1);
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.lottie-container {
+  background: white;
+  transition: background-color .6s;
+}
+
+.lottie-container.hoverable:hover{
+  background: rgba(255, 255, 255, 0.3);
 }
