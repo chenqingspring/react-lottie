@@ -1,35 +1,35 @@
 {
-  "name": "react-component-lib",
-  "version": "1.0.0",
+  "name": "@crello/react-lottie",
+  "version": "0.0.1-a",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "repository": {
-    "url": "https://github.com/michal-wrzosek/react-component-lib",
+    "url": "https://github.com/crello/react-lottie",
     "type": "git"
   },
   "license": "MIT",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "@types/react": "^16.8.25",
-    "@types/react-dom": "^16.8.5",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
-    "concurrently": "^4.1.1",
-    "eslint": "^6.2.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.3",
-    "prepend-file": "^1.3.1",
-    "prettier": "^1.18.2",
-    "rollup": "^1.19.4",
-    "rollup-plugin-typescript2": "^0.22.1",
-    "ts-node": "^8.3.0",
-    "tslib": "^1.10.0",
-    "typescript": "^3.5.3"
+    "@types/react": "16.8.25",
+    "@types/react-dom": "16.8.5",
+    "@typescript-eslint/eslint-plugin": "2.0.0",
+    "@typescript-eslint/parser": "2.0.0",
+    "concurrently": "4.1.1",
+    "eslint": "6.2.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-react": "7.14.3",
+    "prepend-file": "1.3.1",
+    "prettier": "1.18.2",
+    "rollup": "1.19.4",
+    "rollup-plugin-typescript2": "0.22.1",
+    "ts-node": "8.3.0",
+    "tslib": "1.10.0",
+    "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
   "scripts": {
     "build": "rollup -c",
@@ -47,6 +47,6 @@
     "dist"
   ],
   "dependencies": {
-    "lottie-web": "^5.5.9"
+    "lottie-web": "5.5.9"
   }
 }
