@@ -88,14 +88,14 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
     }
   }
 
-  addEventListeners(reactLottieEvent: ReactLottieEvent[]) {
-    reactLottieEvent.forEach(({ name, callback }) => {
+  addEventListeners(reactLottieEvents: ReactLottieEvent[]) {
+    reactLottieEvents.forEach(({ name, callback }) => {
       this.animationItem.addEventListener(name, callback);
     });
   }
 
-  removeEventListeners(reactLottieEvent: ReactLottieEvent[]) {
-    reactLottieEvent.forEach(({ name, callback }) => {
+  removeEventListeners(reactLottieEvents: ReactLottieEvent[]) {
+    reactLottieEvents.forEach(({ name, callback }) => {
       this.animationItem.removeEventListener(name, callback);
     });
   }
