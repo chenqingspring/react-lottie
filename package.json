@@ -1,59 +1,53 @@
 {
-  "name": "react-lottie",
-  "version": "1.2.3",
-  "description": "lottie animation view for React",
+  "name": "@crello/react-lottie",
+  "version": "0.0.1-a",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "private": false,
   "repository": {
-    "type": "git",
-    "url": "https://github.com/chenqingspring/react-lottie"
+    "url": "https://github.com/crello/react-lottie",
+    "type": "git"
   },
   "license": "MIT",
-  "scripts": {
-    "release": "git add package.json && git commit -m 'chore: bump version number' && standard-version --first-release && git push --follow-tags origin master && npm publish",
-    "prepublish": ". ./.scripts/prepublish.sh",
-    "lint": "eslint src",
-    "lintfix": "eslint src --fix",
-    "testonly": "mocha --require .scripts/mocha_runner src/**/tests/**/*.js",
-    "test": "npm run lint && npm run testonly",
-    "test-watch": "npm run testonly -- --watch --watch-extensions js",
-    "start": "start-storybook -p 9010",
-    "publish-storybook": "bash .scripts/publish_storybook.sh",
-    "postpublish": "npm run publish-storybook"
-  },
+  "types": "dist/index.d.ts",
   "devDependencies": {
-    "@kadira/storybook": "^2.35.3",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-react-app": "^0.2.1",
-    "chai": "^3.5.0",
-    "enzyme": "^2.2.0",
-    "eslint": "^3.6.0",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0",
-    "git-url-parse": "^6.0.1",
-    "jsdom": "^9.5.0",
-    "mocha": "^5.2.0",
-    "prop-types": "^15.6.1",
-    "react": "^15.6.2",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^15.6.2",
-    "sinon": "^1.17.6",
-    "standard-version": "^4.4.0"
+    "@types/react": "16.8.25",
+    "@types/react-dom": "16.8.5",
+    "@typescript-eslint/eslint-plugin": "2.0.0",
+    "@typescript-eslint/parser": "2.0.0",
+    "concurrently": "4.1.1",
+    "eslint": "6.2.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-react": "7.14.3",
+    "prepend-file": "1.3.1",
+    "prettier": "1.18.2",
+    "rollup": "1.19.4",
+    "rollup-plugin-typescript2": "0.22.1",
+    "ts-node": "8.3.0",
+    "tslib": "1.10.0",
+    "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0 || ^16.0.0"
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
+  "scripts": {
+    "build": "rollup -c",
+    "build-watch": "rollup -c -w",
+    "install-all": "npm i && cd example && npm i",
+    "start-example": "cd example && npm start",
+    "deploy-example": "cd example && npm run deploy",
+    "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
+    "test": "ts-node test/test.ts",
+    "pretest": "npm run build",
+    "test:lint": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
+    "test:lint:fix": "npm run test:lint -- --fix"
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "lottie-web": "^5.1.3"
-  },
-  "main": "dist/index.js",
-  "engines": {
-    "npm": "^3.0.0"
+    "lottie-web": "5.5.9"
   }
 }
