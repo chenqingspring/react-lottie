@@ -3,6 +3,7 @@
   "version": "0.0.1-a",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "private": false,
   "repository": {
     "url": "https://github.com/crello/react-lottie",
     "type": "git"

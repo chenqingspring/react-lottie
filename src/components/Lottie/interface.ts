@@ -18,10 +18,6 @@ export interface ReactLottieOwnProps extends React.ComponentProps<'div'> {
   segments?: AnimationSegment | AnimationSegment[];
   speed?: number;
   direction?: AnimationDirection;
-  ariaRole?: string | 'button';
-  ariaLabel?: string | 'animation';
-  isClickToPauseDisabled?: boolean;
-  title?: string;
 }
 
 export type ReactLottiePlayingState = 'playing' | 'paused' | 'stopped';
