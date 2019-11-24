@@ -87,7 +87,6 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
   private triggerPlayBasedOnSegments() {
     const { segments } = this.props;
     if (segments) {
-      console.log("SEGMENTS!!!")
       this.animationItem.playSegments(segments);
     } else {
       this.animationItem.play();
