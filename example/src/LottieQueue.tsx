@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import CSS from 'csstype';
-import spinnerLottieData from './lotties/spinner-animation.json';
-import vanLottieData from './lotties/11562-van-icon.json';
-import lightBulbLottieData from './lotties/3520-light-bulb.json';
-import loadingLottieData from './lotties/142-loading-animation.json';
 
 import { Lottie, ReactLottieOwnProps } from './reactComponentLib';
+import loadingLottieData from './lotties/142-loading-animation.json';
+import vanLottieData from './lotties/11562-van-icon.json';
+import spinnerLottieData from './lotties/spinner-animation.json';
+import lightBulbLottieData from './lotties/3520-light-bulb.json';
 
 export class LottieQueue extends Component<any, ReactLottieOwnProps> {
   private animationsQueue = [

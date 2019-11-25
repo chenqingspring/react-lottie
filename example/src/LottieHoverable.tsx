@@ -1,10 +1,10 @@
+import { AnimationDirection } from 'lottie-web';
 import React, { useState } from 'react';
-import spinnerLottieData from './lotties/spinner-animation.json';
-import CSS from 'csstype';
 import cs from 'classnames';
+import CSS from 'csstype';
 
 import { Lottie, ReactLottieConfig } from './reactComponentLib';
-import { AnimationDirection } from 'lottie-web';
+import spinnerLottieData from './lotties/spinner-animation.json';
 
 export const LottieHoverable = () => {
   const [direction, setDirection] = useState<AnimationDirection>(1);
