@@ -4,7 +4,7 @@ import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePl
 
 export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
   private config: ReactLottieConfig;
-  private el: Element;
+  private containerRef: Element;
   private animationItem: AnimationItem;
   private defaultLottieConfig: ReactLottieConfig = {
     renderer: 'svg',
@@ -25,7 +25,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
     this.config = {
       ...this.defaultLottieConfig,
       ...configFromProps,
-      container: this.el,
+      container: this.containerRef,
     };
     this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
     this.addEventListeners(eventListeners);
@@ -105,6 +105,10 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
     });
   }
 
+  private setContainerRef = (element: HTMLElement) => {
+    this.containerRef = element;
+  }
+
   render() {
     const {
       width,
@@ -113,7 +117,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
       className,
     } = this.props;
 
-    const lottieStyles = {
+    const lottieStyle = {
       width: width,
       height: height,
       ...style,
@@ -122,10 +126,8 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
     return (
       <div
         className={className || 'lottie-container'}
-        ref={(c) => {
-          this.el = c;
-        }}
-        style={lottieStyles}
+        ref={this.setContainerRef}
+        style={lottieStyle}
       />
     );
   }
