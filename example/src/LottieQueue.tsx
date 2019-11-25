@@ -8,8 +8,7 @@ import loadingLottieData from './lotties/142-loading-animation.json';
 import { Lottie, ReactLottieOwnProps } from './reactComponentLib';
 
 export class LottieQueue extends Component<any, ReactLottieOwnProps> {
-  prevSpeed: number;
-  animationsQueue = [
+  private animationsQueue = [
     spinnerLottieData,
     vanLottieData,
     loadingLottieData,
