@@ -33,14 +33,11 @@
     "react-dom": "~16.8.6"
   },
   "scripts": {
-    "build": "rollup -c",
-    "build-watch": "rollup -c -w",
-    "install-all": "npm i && cd example && npm i",
-    "start-example": "cd example && npm start",
-    "deploy-example": "cd example && npm run deploy",
     "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
-    "test": "ts-node test/test.ts",
-    "pretest": "npm run build",
+    "gh-pages-deploy": "cd example && npm run deploy",
+    "publish": "npm publish --access=public",
+    "build-watch": "rollup -c -w",
+    "start-example": "cd example && npm start",
     "test:lint": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
     "test:lint:fix": "npm run test:lint -- --fix"
   },

@@ -125,7 +125,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
 
     return (
       <div
-        className={className || 'lottie-container'}
+        className={className}
         ref={this.setContainerRef}
         style={lottieStyle}
       />

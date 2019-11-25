@@ -82,6 +82,7 @@ export class LottieQueue extends Component<any, ReactLottieOwnProps> {
           playingState={playingState}
           speed={speed}
           segments={segments}
+          className="lottie-container"
           direction={direction}
           eventListeners={[
             { callback: () => console.log('\'DOMLoaded\' event callback triggered '), name: 'DOMLoaded' },
