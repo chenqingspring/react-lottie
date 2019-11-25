@@ -1,6 +1,6 @@
 {
   "name": "@crello/react-lottie",
-  "version": "0.0.1-beta",
+  "version": "0.0.1-rc.1",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "private": false,
@@ -36,6 +36,7 @@
     "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
     "gh-pages-deploy": "cd example && npm run deploy",
     "publish": "npm publish --access=public",
+    "build": "rollup -c",
     "build-watch": "rollup -c -w",
     "start-example": "cd example && npm start",
     "test:lint": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
