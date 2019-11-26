@@ -2,11 +2,11 @@ import React from 'react';
 import lottiePlayer, { AnimationConfigWithData, AnimationItem } from 'lottie-web';
 import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePlayingState } from './interface'
 
-export class Lottie extends React.Component<ReactLottieOwnProps> {
-  config: ReactLottieConfig;
-  el: Element;
-  animationItem: AnimationItem;
-  defaultLottieConfig: ReactLottieConfig = {
+export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
+  private config: ReactLottieConfig;
+  private containerRef: Element;
+  private animationItem: AnimationItem;
+  private defaultLottieConfig: ReactLottieConfig = {
     renderer: 'svg',
     loop: false,
     autoplay: true
@@ -25,10 +25,11 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
     this.config = {
       ...this.defaultLottieConfig,
       ...configFromProps,
-      container: this.el,
+      container: this.containerRef,
     };
     this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
     this.addEventListeners(eventListeners);
+    this.configureAnimationItem();
   }
 
   UNSAFE_componentWillUpdate(nextProps: ReactLottieOwnProps) {//TODO: to be refactored
@@ -42,6 +43,17 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
   }
 
   componentDidUpdate() {
+    this.configureAnimationItem();
+  }
+
+  componentWillUnmount() {
+    this.removeEventListeners(this.props.eventListeners);
+    this.animationItem.destroy();
+    this.config.animationData = null;
+    this.animationItem = null;
+  }
+
+  private configureAnimationItem() {
     const {
       playingState,
       speed,
@@ -52,14 +64,7 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
     this.animationItem.setDirection(direction);
   }
 
-  componentWillUnmount() {
-    this.removeEventListeners(this.props.eventListeners);
-    this.animationItem.destroy();
-    this.config.animationData = null;
-    this.animationItem = null;
-  }
-
-  setAnimationPlayingState = (state: ReactLottiePlayingState) => {
+  private setAnimationPlayingState = (state: ReactLottiePlayingState) => {
     switch (state) {
       case 'playing': {
         this.triggerPlayBasedOnSegments();
@@ -79,7 +84,7 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
     }
   }
 
-  triggerPlayBasedOnSegments() {
+  private triggerPlayBasedOnSegments() {
     const { segments } = this.props;
     if (segments) {
       this.animationItem.playSegments(segments);
@@ -88,26 +93,31 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
     }
   }
 
-  addEventListeners(reactLottieEvent: ReactLottieEvent[]) {
-    reactLottieEvent.forEach(({ name, callback }) => {
+  private addEventListeners(reactLottieEvents: ReactLottieEvent[]) {
+    reactLottieEvents.forEach(({ name, callback }) => {
       this.animationItem.addEventListener(name, callback);
     });
   }
 
-  removeEventListeners(reactLottieEvent: ReactLottieEvent[]) {
-    reactLottieEvent.forEach(({ name, callback }) => {
+  private removeEventListeners(reactLottieEvents: ReactLottieEvent[]) {
+    reactLottieEvents.forEach(({ name, callback }) => {
       this.animationItem.removeEventListener(name, callback);
     });
+  }
+
+  private setContainerRef = (element: HTMLElement) => {
+    this.containerRef = element;
   }
 
   render() {
     const {
       width,
       height,
-      style
+      style,
+      className,
     } = this.props;
 
-    const lottieStyles = {
+    const lottieStyle = {
       width: width,
       height: height,
       ...style,
@@ -115,10 +125,9 @@ export class Lottie extends React.Component<ReactLottieOwnProps> {
 
     return (
       <div
-        ref={(c) => {
-          this.el = c;
-        }}
-        style={lottieStyles}
+        className={className}
+        ref={this.setContainerRef}
+        style={lottieStyle}
       />
     );
   }

@@ -1,4 +1,11 @@
-import { AnimationEventCallback, AnimationEventName, AnimationConfigWithData, AnimationDirection, AnimationSegment } from 'lottie-web';
+import {
+  AnimationEventCallback,
+  AnimationEventName,
+  AnimationConfigWithData,
+  AnimationDirection,
+  AnimationSegment
+} from 'lottie-web';
+import CSS from 'csstype';
 
 export interface ReactLottieEvent<T = any> {
   name: AnimationEventName;
@@ -17,6 +24,7 @@ export interface ReactLottieOwnProps extends React.ComponentProps<'div'> {
   playingState?: ReactLottiePlayingState;
   segments?: AnimationSegment | AnimationSegment[];
   speed?: number;
+  style?: CSS.Properties;
   direction?: AnimationDirection;
 }
 

@@ -1,4 +1,4 @@
 import { Lottie } from './components/Lottie';
-import { ReactLottieConfig, ReactLottieOwnProps } from './components/Lottie/interface';
+import { ReactLottieConfig, ReactLottieOwnProps, ReactLottiePlayingState } from './components/Lottie/interface';
 
-export { Lottie, ReactLottieConfig,  ReactLottieOwnProps };
+export { Lottie, ReactLottieConfig, ReactLottieOwnProps, ReactLottiePlayingState };
