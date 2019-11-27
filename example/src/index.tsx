@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {LottieQueue} from './LottieQueue';
-import {LottieHoverable} from './LottieHoverable';
+import { LottieBasic } from './LottieBasic';
+import { LottieQueue } from './LottieQueue';
+import { LottieHoverable } from './LottieHoverable';
 import './index.css';
 
-const App = ()=>(
+const App = () => (
     <>
-        <LottieQueue />
+        <LottieBasic />
         <LottieHoverable />
+        <LottieQueue />
     </>
 )
 
