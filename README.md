@@ -20,14 +20,15 @@ import { animationData } from './myAwesomeAnimation.json'
 export const BasicLottieComponent = () => <Lottie config={{animationData: animationData}}>
 ```
 
-Lottie component creates `<div>` and passes it to lottie config as a `container` param. This div contains renderer's output of choosen type: `'svg`| 'html' | 'canvas'`. `<Lottie>` accepts `style` and `className` props that will apply to the `container`. 
+Lottie component creates `<div>` and passes it to lottie config as the `container` param. This div contains renderer's output of choosen type: `'svg`| 'html' | 'canvas'`. `<Lottie>` accepts `style` and `className` props that will apply to the `container`. 
 
-Any mouse events to be put on elements wrapping actual `<Lottie>` e.g.:
+Any browser events to be added on elements wrapping actual `<Lottie>` e.g.:
 ```html
 <div onClick={..}>
     <Lottie/>
 <div>
 ```
+
 ## Params
 
 ### Props
