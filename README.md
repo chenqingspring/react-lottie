@@ -1,6 +1,6 @@
 # @crello/react-lottie
 
-React/Typescript wrapper for awesome Aribnb's [lottie-web](https://github.com/airbnb/lottie-web) lib.
+React/Typescript wrapper for awesome Airbnb's [lottie-web](https://github.com/airbnb/lottie-web) lib.
 
 ## Demo 
 [https://crello.github.io/react-lottie/](https://crello.github.io/react-lottie/)
