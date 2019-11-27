@@ -5,17 +5,17 @@ React/Typescript wrapper for awesome Aribnb's [lottie-web](https://github.com/ai
 ## Demo 
 [https://crello.github.io/react-lottie/](https://crello.github.io/react-lottie/)
 
-you can find demo files in `./examples` folder. run `yarn dev` to start
+you can find demo files in `./examples` folder -- launch with `yarn start`
 
 ## Installation
-`yarn add @crello/react-lottie` / `npm install --save @crello/react-lottie`
+`yarn add @crello/react-lottie` or `npm install --save @crello/react-lottie`
 
 ## Usage
 Most basic react-lottie example:
 ```typescript
 import React from 'react';
 import { Lottie } from '@crello/react-lottie'
-import { animationData } from './myAwesomeAnimation.json'
+import animationData from './myAwesomeAnimation.json'
 
 export const BasicLottieComponent = () => <Lottie config={{animationData: animationData}}>
 ```

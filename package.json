@@ -33,7 +33,7 @@
     "react-dom": "~16.9.0"
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
+    "start": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
     "gh-pages-deploy": "cd example && npm run deploy",
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
