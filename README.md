@@ -60,7 +60,7 @@ Any browser events to be added on elements wrapping actual `<Lottie>` e.g.:
 
 ## More
 
-See more details in @crello/react-lottie exports: `Lottie`, `ReactLottieConfig`, `ReactLottieOwnProps`, `ReactLottiePlayingState`
+See more details in @crello/react-lottie [exports](https://github.com/crello/react-lottie/blob/master/src/components/Lottie/interface.ts): `Lottie`, `ReactLottieConfig`, `ReactLottieOwnProps`, `ReactLottiePlayingState`
 
 Also check out the types provided by [`lottie-web`](https://github.com/airbnb/lottie-web/blob/master/index.d.ts) itself: `AnimationDirection`, `AnimationSegment`, `AnimationEventName`, `AnimationEventCallback`, `AnimationItem`, `BaseRendererConfig`, `SVGRendererConfig`, `CanvasRendererConfig`, `HTMLRendererConfig`, `AnimationConfig`, `AnimationConfigWithPath`, `AnimationConfigWithData`, `Lottie`
 
