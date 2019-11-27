@@ -12,11 +12,9 @@ export interface ReactLottieEvent<T = any> {
   callback: AnimationEventCallback<T>
 }
 
-export type ReactLottieConfig = Partial<AnimationConfigWithData> & {
-  segments?: AnimationSegment | AnimationSegment[];
-};
+export type ReactLottieConfig = Partial<AnimationConfigWithData>;
 
-export interface ReactLottieOwnProps extends React.ComponentProps<'div'> {
+export interface ReactLottieOwnProps {
   config?: ReactLottieConfig;
   eventListeners?: ReactLottieEvent[];
   height?: string;
@@ -25,6 +23,7 @@ export interface ReactLottieOwnProps extends React.ComponentProps<'div'> {
   segments?: AnimationSegment | AnimationSegment[];
   speed?: number;
   style?: CSS.Properties;
+  className?: string;
   direction?: AnimationDirection;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@crello/react-lottie",
-  "version": "0.0.1-rc.1",
+  "version": "0.0.1-rc.8",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "private": false,
@@ -29,15 +29,15 @@
     "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "~16.8.6",
-    "react-dom": "~16.8.6"
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0"
   },
   "scripts": {
     "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
     "gh-pages-deploy": "cd example && npm run deploy",
-    "publish": "npm publish --access=public",
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
+    "install-all": "npm i && cd example && npm i",
     "start-example": "cd example && npm start",
     "test:lint": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
     "test:lint:fix": "npm run test:lint -- --fix"
