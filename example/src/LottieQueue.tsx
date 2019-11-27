@@ -8,16 +8,17 @@ import spinnerLottieData from './lotties/spinner-animation.json';
 import lightBulbLottieData from './lotties/3520-light-bulb.json';
 
 export class LottieQueue extends Component<any, ReactLottieOwnProps> {
-  private animationsQueue = [
+  private animationsQueue!: any[];
+  private originalQueue = [
     spinnerLottieData,
     vanLottieData,
     loadingLottieData,
     vanLottieData,
     lightBulbLottieData,
   ];
-
   constructor(props: any) {
     super(props);
+    this.animationsQueue = [...this.originalQueue];
     this.state = {
       playingState: 'playing',
       speed: 1,
@@ -47,9 +48,8 @@ export class LottieQueue extends Component<any, ReactLottieOwnProps> {
   nextAnimation = () => {
     const next = this.animationsQueue.shift();
     if (!next) {
-      this.setState({
-        playingState: 'paused'
-      });
+      this.animationsQueue = [...this.originalQueue];
+      this.nextAnimation();
       return;
     }
     this.setState({
@@ -111,7 +111,7 @@ export class LottieQueue extends Component<any, ReactLottieOwnProps> {
           segments={segments}
           className="lottie-container"
           direction={direction}
-          eventListeners={[
+          lottieEventListeners={[
             { callback: () => console.log('\'DOMLoaded\' event callback triggered '), name: 'DOMLoaded' },
             { callback: () => { console.log('\'complete\' event callback triggered '); this.nextAnimation() }, name: 'complete' },
           ]}

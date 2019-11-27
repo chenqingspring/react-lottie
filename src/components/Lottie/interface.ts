@@ -16,7 +16,7 @@ export type ReactLottieConfig = Partial<AnimationConfigWithData>;
 
 export interface ReactLottieOwnProps {
   config?: ReactLottieConfig;
-  eventListeners?: ReactLottieEvent[];
+  lottieEventListeners?: ReactLottieEvent[];
   height?: string;
   width?: string;
   playingState?: ReactLottiePlayingState;

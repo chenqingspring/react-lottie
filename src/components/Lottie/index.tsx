@@ -13,7 +13,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
   }
 
   public static defaultProps: ReactLottieOwnProps = {
-    eventListeners: [],
+    lottieEventListeners: [],
     playingState: 'playing',
     speed: 1,
     height: '100%',
@@ -21,24 +21,24 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
   };
 
   componentDidMount() {
-    const { config: configFromProps, eventListeners, } = this.props;
+    const { config: configFromProps, lottieEventListeners } = this.props;
     this.config = {
       ...this.defaultLottieConfig,
       ...configFromProps,
       container: this.containerRef,
     };
     this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
-    this.addEventListeners(eventListeners);
+    this.addEventListeners(lottieEventListeners);
     this.configureAnimationItem();
   }
 
   UNSAFE_componentWillUpdate(nextProps: ReactLottieOwnProps) {//TODO: to be refactored
     if (this.config.animationData !== nextProps.config.animationData) {
-      this.removeEventListeners(this.props.eventListeners);
+      this.removeEventListeners(this.props.lottieEventListeners);
       this.animationItem.destroy();
       this.config = { ...this.config, ...nextProps.config };
       this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
-      this.addEventListeners(nextProps.eventListeners);
+      this.addEventListeners(nextProps.lottieEventListeners);
     }
   }
 
@@ -47,7 +47,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
   }
 
   componentWillUnmount() {
-    this.removeEventListeners(this.props.eventListeners);
+    this.removeEventListeners(this.props.lottieEventListeners);
     this.animationItem.destroy();
     this.config.animationData = null;
     this.animationItem = null;

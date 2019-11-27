@@ -41,7 +41,7 @@ Any browser events should be added on elements wrapping actual `<Lottie>` e.g.:
   speed: number - animation playback speed [default: `1`],
   style: styles passed to lottie container,
   direction: AnimationDirection - [default: `1`],
-  eventListeners: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web',
+  lottieEventListeners: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web',
   config: ReactLottieConfig - see below,
 }
 ```

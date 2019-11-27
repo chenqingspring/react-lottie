@@ -32,7 +32,7 @@ export const LottieHoverable = () => {
 
   return (
     <>
-      <h1>Mouse events example</h1>
+      <h1>Mouse events example:</h1>
       <div
         style={hoverableContainerStyle}
         onMouseEnter={handleLottieMouseEnter}
