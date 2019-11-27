@@ -22,7 +22,7 @@ export const BasicLottieComponent = () => <Lottie config={{animationData: animat
 
 Lottie component creates `<div>` and passes it to lottie config as the `container` param. This div contains renderer's output of choosen type: `'svg'| 'html' | 'canvas'`. `<Lottie>` accepts `style` and `className` props that will apply to the `container`. 
 
-Any browser events to be added on elements wrapping actual `<Lottie>` e.g.:
+Any browser events should be added on elements wrapping actual `<Lottie>` e.g.:
 ```html
 <div onClick={..}>
     <Lottie/>
