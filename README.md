@@ -33,15 +33,15 @@ Any mouse events to be put on elements wrapping actual `<Lottie>` e.g.:
 ### Props
 ```typescript
 {
-  config: ReactLottieConfig - params;
-  eventListeners: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web';
   height: string - valid css value e.g. '100px' [default: `100%`]
   width: string - valid css value e.g. '100px' [default: `100%`]
   playingState: 'playing' | 'stopped' | 'paused' [default: `playing`];
   segments: AnimationSegment | AnimationSegment[];
   speed: number - animation playback speed [default: `1`]
   style: styles passed to lottie container
-  direction: AnimationDirection - [default: `1`];
+  direction: AnimationDirection - [default: `1`]
+  eventListeners: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web'
+  config: ReactLottieConfig - params
 }
 ```
 
@@ -61,10 +61,9 @@ Any mouse events to be put on elements wrapping actual `<Lottie>` e.g.:
 
 See more details in @crello/react-lottie exports: `Lottie`, `ReactLottieConfig`, `ReactLottieOwnProps`, `ReactLottiePlayingState`
 
-Also check out the types provided by [`lottie-web`](https://github.com/airbnb/lottie-web/blob/master/index.d.ts) itself: `AnimationDirection`, `AnimationSegment`, `AnimationEventName`, `AnimationEventCallback`, `AnimationItem`, `BaseRendererConfig`, `SVGRendererConfig`, `CanvasRendererConfig`, `HTMLRendererConfig`, `AnimationConfig`, `AnimationConfigWithPath`, `AnimationConfigWithData`, `Lottie`, 
+Also check out the types provided by [`lottie-web`](https://github.com/airbnb/lottie-web/blob/master/index.d.ts) itself: `AnimationDirection`, `AnimationSegment`, `AnimationEventName`, `AnimationEventCallback`, `AnimationItem`, `BaseRendererConfig`, `SVGRendererConfig`, `CanvasRendererConfig`, `HTMLRendererConfig`, `AnimationConfig`, `AnimationConfigWithPath`, `AnimationConfigWithData`, `Lottie`
+
+More lottie animations you can find on [lottiefiles](https://www.lottiefiles.com/)
 
 ## License
 MIT
-
-## Extra
-you can find more animations on https://www.lottiefiles.com/
