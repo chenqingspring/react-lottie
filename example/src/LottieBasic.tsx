@@ -8,8 +8,7 @@ export const LottieBasic = () => (
         <Lottie
             width="350px"
             height="350px"
-            className="lottie-container"
-            style={{background: '#444'}}
+            className="lottie-container basic"
             config={{ animationData: animationData, loop: true, autoplay: true }}
         />
         <p>looped animation with autoplay</p>

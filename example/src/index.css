@@ -31,6 +31,29 @@ code {
   transition: background-color .3s linear;
 }
 
+.lottie-container.basic {
+  background: hsl(178, 34%, 10%);
+  transition: background-color .3s;
+  animation: hue 3s infinite;
+}
+
+.lottie-container.basic:hover {
+  background: hsl(178, 34%, 63%);
+}
+
+@keyframes hue{
+  0% {
+    filter: hue-rotate(0);
+  }
+  100%{
+    filter: hue-rotate(360deg);
+  }
+}
+
+.lottie-container.basic {
+  background: hsl(178, 34%, 13%);
+}
+
 .lottie-container.hoverable::before {
   left: 0;
   right: 0;
