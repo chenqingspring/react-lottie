@@ -8,7 +8,6 @@ export const LottieBasic = () => (
         <Lottie
             width="350px"
             height="350px"
-            // speed={0.5}
             className="lottie-container"
             style={{background: '#444'}}
             config={{ animationData: animationData, loop: true, autoplay: true }}
