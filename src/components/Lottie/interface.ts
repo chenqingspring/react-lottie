@@ -1,18 +1,19 @@
 import {
   AnimationEventCallback,
   AnimationEventName,
+  AnimationConfigWithPath,
   AnimationConfigWithData,
   AnimationDirection,
-  AnimationSegment
+  AnimationSegment,
 } from 'lottie-web';
 import CSS from 'csstype';
 
 export interface ReactLottieEvent<T = any> {
   name: AnimationEventName;
-  callback: AnimationEventCallback<T>
+  callback: AnimationEventCallback<T>;
 }
 
-export type ReactLottieConfig = Partial<AnimationConfigWithData>;
+export type ReactLottieConfig = Partial<AnimationConfigWithData> & { animationData: any }  | Partial<AnimationConfigWithPath> & { path: string };
 
 export interface ReactLottieOwnProps {
   config?: ReactLottieConfig;
