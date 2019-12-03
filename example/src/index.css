@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+a {
+  color: inherit;
+}
+
 #root {
   display: flex;
   flex-direction: column;
