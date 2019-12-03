@@ -1,6 +1,6 @@
 import React from 'react';
-import lottiePlayer, { AnimationConfigWithData, AnimationItem, AnimationConfig, AnimationConfigWithPath } from 'lottie-web';
-import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePlayingState, ReactLottieState } from './interface'
+import lottiePlayer, { AnimationItem, AnimationConfig } from 'lottie-web';
+import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePlayingState, ReactLottieState, ReactLottieConfigWithData, ReactLottieConfigWithPath  } from './interface'
 
 export class Lottie extends React.PureComponent<ReactLottieOwnProps, ReactLottieState> {
   private config: ReactLottieConfig;
@@ -27,19 +27,19 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps, ReactLottie
       ...configFromProps,
       container: this.containerRef,
     };
-    this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
+    this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfig);
     this.addEventListeners(lottieEventListeners);
     this.configureAnimationItem();
   }
 
   UNSAFE_componentWillUpdate(nextProps: ReactLottieOwnProps) {//TODO: to be refactored
-    const animationDataChanged = ((this.config as AnimationConfigWithData).animationData !== (nextProps.config as AnimationConfigWithData).animationData);
-    const animationPathChanged = ((this.config as AnimationConfigWithPath).path !== (nextProps.config as AnimationConfigWithPath).path);
+    const animationDataChanged = ((this.config as ReactLottieConfigWithData).animationData !== (nextProps.config as ReactLottieConfigWithData).animationData);
+    const animationPathChanged = ((this.config as ReactLottieConfigWithPath).path !== (nextProps.config as ReactLottieConfigWithPath).path);
     if (animationDataChanged || animationPathChanged) {
       this.removeEventListeners(this.props.lottieEventListeners);
       this.animationItem.destroy();
       this.config = { ...this.config, ...nextProps.config };
-      this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfigWithData);
+      this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfig);
       this.addEventListeners(nextProps.lottieEventListeners);
     }
   }
@@ -51,8 +51,8 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps, ReactLottie
   componentWillUnmount() {
     this.removeEventListeners(this.props.lottieEventListeners);
     this.animationItem.destroy();
-    (this.config as AnimationConfigWithData).animationData = null;
-    (this.config as AnimationConfigWithPath).path = null;
+    (this.config as ReactLottieConfigWithData).animationData = null;
+    (this.config as ReactLottieConfigWithPath).path = null;
     this.animationItem = null;
   }
 
