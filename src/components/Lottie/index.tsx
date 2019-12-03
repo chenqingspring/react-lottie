@@ -1,8 +1,8 @@
 import React from 'react';
 import lottiePlayer, { AnimationConfigWithData, AnimationItem, AnimationConfig, AnimationConfigWithPath } from 'lottie-web';
-import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePlayingState } from './interface'
+import { ReactLottieOwnProps, ReactLottieEvent, ReactLottieConfig, ReactLottiePlayingState, ReactLottieState } from './interface'
 
-export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
+export class Lottie extends React.PureComponent<ReactLottieOwnProps, ReactLottieState> {
   private config: ReactLottieConfig;
   private containerRef: Element;
   private animationItem: AnimationItem;
@@ -12,7 +12,7 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps> {
     autoplay: true
   }
 
-  public static defaultProps: ReactLottieOwnProps = {
+  public static defaultProps = {
     lottieEventListeners: [],
     playingState: 'playing',
     speed: 1,

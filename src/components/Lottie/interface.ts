@@ -13,9 +13,13 @@ export interface ReactLottieEvent<T = any> {
   callback: AnimationEventCallback<T>;
 }
 
-export type ReactLottieConfig = Partial<AnimationConfigWithData> & { animationData: any }  | Partial<AnimationConfigWithPath> & { path: string };
+export type ReactLottieConfigWithData = Partial<AnimationConfigWithData> & { animationData: any };
 
-export interface ReactLottieOwnProps {
+export type ReactLottieConfigWithPath = Partial<AnimationConfigWithPath> & { path: string };
+
+export type ReactLottieConfig = ReactLottieConfigWithData | ReactLottieConfigWithPath;
+
+export interface ReactLottieState {
   config?: ReactLottieConfig;
   lottieEventListeners?: ReactLottieEvent[];
   height?: string;
@@ -26,6 +30,10 @@ export interface ReactLottieOwnProps {
   style?: CSS.Properties;
   className?: string;
   direction?: AnimationDirection;
+}
+
+export interface ReactLottieOwnProps extends ReactLottieState {
+  config: ReactLottieConfig;
 }
 
 export type ReactLottiePlayingState = 'playing' | 'paused' | 'stopped';

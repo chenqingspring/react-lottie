@@ -34,15 +34,15 @@ Any browser events should be added on elements wrapping actual `<Lottie>` e.g.:
 ### Props
 ```typescript
 {
-  height: string - valid css value e.g. '100px' [default: `100%`],
-  width: string - valid css value e.g. '100px' [default: `100%`],
-  playingState: 'playing' | 'stopped' | 'paused' [default: `playing`],
-  segments: AnimationSegment | AnimationSegment[],
-  speed: number - animation playback speed [default: `1`],
-  style: styles passed to lottie container,
-  direction: AnimationDirection - [default: `1`],
-  lottieEventListeners: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web',
-  config: ReactLottieConfig - see below,
+  height?: string - valid css value e.g. '100px' [default: `100%`],
+  width?: string - valid css value e.g. '100px' [default: `100%`],
+  playingState?: 'playing' | 'stopped' | 'paused' [default: `playing`],
+  segments?: AnimationSegment | AnimationSegment[],
+  speed?: number - animation playback speed [default: `1`],
+  style?: styles passed to lottie container,
+  direction?: AnimationDirection - [default: `1`],
+  lottieEventListeners?: ReactLottieEvent[] - see available events in AnimationEventName from 'lottie-web',
+  config: ReactLottieConfig - config with mandatory `path` or `animationData`,
 }
 ```
 
@@ -50,11 +50,12 @@ Any browser events should be added on elements wrapping actual `<Lottie>` e.g.:
 ```typescript
 {
   animationData: any - an Object with the exported animation data,
-  renderer: 'svg' | 'canvas' | 'html' - choose renderer [default: `svg`],
-  loop: boolean | number - loop boolean or count [default: `false`],
-  autoplay: boolean - it will start playing as soon as it is ready [default: `true`],
-  name: string - animation name for future reference,
-  rendererSettings: SVGRendererConfig | CanvasRendererConfig | HTMLRendererConfig,
+  path: string - remote data,
+  renderer?: 'svg' | 'canvas' | 'html' - choose renderer [default: `svg`],
+  loop?: boolean | number - loop boolean or count [default: `false`],
+  autoplay?: boolean - it will start playing as soon as it is ready [default: `true`],
+  name?: string - animation name for future reference,
+  rendererSettings?: SVGRendererConfig | CanvasRendererConfig | HTMLRendererConfig,
 }
 ```
 
