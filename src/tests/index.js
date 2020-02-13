@@ -109,7 +109,7 @@ describe('react-lottie', () => {
       });
     });
 
-    describe('componentWillUpdate', () => {
+    describe('componentDidUpdate', () => {
       it('should register events when animationData changes', () => {
         const registerEventsSpy = sinon.stub();
         const component = mount(<ReactLottie options={defaultOptions} />);
@@ -117,7 +117,7 @@ describe('react-lottie', () => {
         component.instance().registerEvents = registerEventsSpy;
         component.update();
 
-        component.instance().componentWillUpdate({
+        component.setProps({
           options: {
             ...defaultOptions,
             animationData: beatingHeart,
