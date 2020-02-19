@@ -5,6 +5,7 @@ import {
   AnimationConfigWithData,
   AnimationDirection,
   AnimationSegment,
+  AnimationItem,
 } from 'lottie-web';
 import CSS from 'csstype';
 
@@ -33,6 +34,7 @@ export interface ReactLottieState {
 }
 
 export interface ReactLottieOwnProps extends ReactLottieState {
+  animationRef?: React.MutableRef<AnimationItem>
   config: ReactLottieConfig;
 }
 
