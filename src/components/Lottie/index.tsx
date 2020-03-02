@@ -21,13 +21,16 @@ export class Lottie extends React.PureComponent<ReactLottieOwnProps, ReactLottie
   };
 
   componentDidMount() {
-    const { config: configFromProps, lottieEventListeners } = this.props;
+    const { config: configFromProps, animationRef, lottieEventListeners } = this.props;
     this.config = {
       ...this.defaultLottieConfig,
       ...configFromProps,
       container: this.containerRef,
     };
     this.animationItem = lottiePlayer.loadAnimation(this.config as AnimationConfig);
+    if (animationRef) {
+      animationRef.current = this.animationItem;
+    }
     this.addEventListeners(lottieEventListeners);
     this.configureAnimationItem();
   }
