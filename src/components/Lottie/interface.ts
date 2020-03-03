@@ -34,7 +34,7 @@ export interface ReactLottieState {
 }
 
 export interface ReactLottieOwnProps extends ReactLottieState {
-  animationRef?: React.MutableRef<AnimationItem>
+  animationRef?: React.MutableRefObject<AnimationItem>;
   config: ReactLottieConfig;
 }
 
