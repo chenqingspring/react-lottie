@@ -35,7 +35,7 @@ Import pinjump.json.json as animation data
 
 ```jsx
 import React from 'react'
-import Lottie from 'react-lottie';
+import Lottie from 'react-lottie-wrapper';
 import * as animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {
