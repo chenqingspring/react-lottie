@@ -1,9 +1,7 @@
-# Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie), [Vue](https://github.com/chenqingspring/vue-lottie))
-
-[![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
+# Lottie Animation View Wrapper for React
 
 ## Demo
-https://chenqingspring.github.io/react-lottie
+https://github.com/donovanclarke/react-lottie
 
 ## Wapper of bodymovin.js
 
@@ -28,7 +26,7 @@ Looking for lottie files › https://www.lottiefiles.com/
 
 Install through npm:
 ```
-npm install --save react-lottie
+npm install --save react-lottie-wrapper
 ```
 
 ## Usage
@@ -56,7 +54,7 @@ export default class LottieControl extends React.Component {
     const defaultOptions = {
       loop: true,
       autoplay: true, 
-      animationData: animationData,
+      animationData: animationData.default,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -117,8 +115,6 @@ eventListeners=[
 ## Related Projects
 
 * [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
-* [Angular Lottie](https://github.com/chenqingspring/ng-lottie) angular implementation
-* [Vue Lottie](https://github.com/chenqingspring/vue-lottie) vue implementation
 * [React Native Lottie](https://github.com/airbnb/lottie-react-native) react native implementation by airbnb
 * [IOS Lottie](https://github.com/airbnb/lottie-ios) ios implementation by airbnb
 * [Android Lottie](https://github.com/airbnb/lottie-android) android implementation by airbnb
