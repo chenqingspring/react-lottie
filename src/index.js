@@ -10,6 +10,7 @@ export default class Lottie extends Component {
     eventListeners: PropTypes.arrayOf(PropTypes.object),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    renderAs: PropTypes.oneOf(["div", "span"]),
     isStopped: PropTypes.bool,
     isPaused: PropTypes.bool,
     speed: PropTypes.number,
@@ -19,11 +20,12 @@ export default class Lottie extends Component {
     ariaLabel: PropTypes.string,
     isClickToPauseDisabled: PropTypes.bool,
     title: PropTypes.string,
-    style: PropTypes.string,
+    style: PropTypes.object,
     className: PropTypes.string
   };
 
   static defaultProps = {
+    renderAs: "div",
     eventListeners: [],
     isStopped: false,
     isPaused: false,
@@ -152,6 +154,7 @@ export default class Lottie extends Component {
 
   render() {
     const {
+      renderAs,
       width,
       height,
       ariaRole,
@@ -173,11 +176,11 @@ export default class Lottie extends Component {
       isClickToPauseDisabled
         ? () => null
         : this.handleClickToPause;
-
+    const Element = renderAs;
     return (
       // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div
+      <Element
         ref={(c) => {
           this.el = c;
         }}

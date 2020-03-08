@@ -139,6 +139,9 @@ options = {
   }
 }
 ```
+**renderAs** *optional* [default: `div`]
+
+You are given the option of either a `div` or `span` element. 
 
 **styles** *optional* [default: `{{height: 100%, width: 100%, outline: none}}`]
 

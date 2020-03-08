@@ -37,6 +37,7 @@ export default class TransitionLoop extends React.Component {
       margin: '10px auto',
       textAlign: 'center',
     };
+    const elementStyle = { margin: "0px auto" };
     const { isTransitioned } = this.state;
     const defaultOptions = {
       animationData: !isTransitioned ? animationDataA : animationDataB,
@@ -47,6 +48,7 @@ export default class TransitionLoop extends React.Component {
     return (
       <div>
         <Lottie
+          style={elementStyle}
           options={defaultOptions}
           height={400}
           width={400}

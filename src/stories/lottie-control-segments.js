@@ -25,11 +25,13 @@ export default class LottieControlSegment extends React.Component {
       margin: '10px auto',
       textAlign: 'center',
     };
+    const elementStyle = { margin: "0px auto" };
     const { isStopped, isPaused, direction, speed, isDataA, startFrame, endFrame } = this.state;
     const defaultOptions = { animationData: (isDataA ? animationDataA : animationDataB) };
 
     return (<div>
       <Lottie
+        style={elementStyle}
         options={defaultOptions}
         height={400}
         width={400}

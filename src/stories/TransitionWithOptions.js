@@ -28,6 +28,7 @@ export default class TransitionWithOptions extends React.Component {
       margin: '20px auto',
       textAlign: 'center',
     };
+    const elementStyle = { margin: "0px auto" };
     const { showLoopedAnimation } = this.state;
     const animationOptionsWithLoop = {
       animationData: animationDataA,
@@ -41,6 +42,7 @@ export default class TransitionWithOptions extends React.Component {
     return (
       <div>
         <Lottie
+          style={elementStyle}
           options={showLoopedAnimation ? animationOptionsWithLoop : animationOptionsWithoutLoop}
           height={400}
           width={400}
