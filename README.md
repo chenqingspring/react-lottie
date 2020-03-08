@@ -93,31 +93,43 @@ the object representing the animation settings that will be instantiated by body
 **rendererSettings** *required* 
 
 **styles** *optional* [default: `{{height: 100%, width: 100%, outline: none}}`]
+
 Insert inline styling for container.
 
 **className** *optional* [default: `""`]
+
 Insert class name for container.
 
 **loop** *optional* [default: `false`]
+
 Should animation loop.
 
 **autoplay** *optional* [default: `false`]
+
 Should animation begin to play automatically.
 
 **isClickToPauseDisabled** *optional* [default: `false`]
+
 Disables click event to pause the animation.
 
 **isStopped** *optional* [default: `false`]
 
+Handler to stop the animation.
+
 **isPaused** *optional* [default: `false`]
 
+Handler to pause the animation.
+
 **width** *optional* [default: `100%`]
+
 Pixel value for containers width.
 
 **height** *optional* [default: `100%`]
+
 Pixel value for containers height.
 
 **speed** *optional* [default: `1`]
+
 Set the speed of the animation (`normal === 1`).
 
 **ariaRole** *optional* [default: `button`]
