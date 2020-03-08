@@ -45,9 +45,21 @@ export default class LottieControl extends Component {
       isStopped: false,
       isPaused: false
     };
+    this.handleAnimationAction = this.handleAnimationAction.bind(this);
   }
 
+  handleAnimationAction(action, value) {
+    if (action === "play" || action === "stop") {
+      const isStopped = value;
+      return this.setState({ isStopped });
+    }
+    this.setState(prevState => ({
+      isPaused: !prevState.isPaused
+    }));
+  };
+
   render() {
+    const { isStopped, isPaused } = this.state;
     const buttonStyle = {
       display: "block",
       margin: "10px auto"
@@ -68,12 +80,27 @@ export default class LottieControl extends Component {
           options={defaultOptions}
           height={400}
           width={400}
-          isStopped={this.state.isStopped}
-          isPaused={this.state.isPaused}
+          isStopped={isStopped}
+          isPaused={isPaused}
         />
-        <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
-        <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-        <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+        <button
+          style={buttonStyle}
+          onClick={this.handleAnimationAction("stop", true)}
+        >
+          stop
+        </button>
+        <button
+          style={buttonStyle}
+          onClick={this.handleAnimationAction("play", false)}
+        >
+          play
+        </button>
+        <button 
+          style={buttonStyle}
+          onClick={this.handleAnimationAction("pause")}
+        >
+          pause
+        </button>
       </>
     )
   }
@@ -84,13 +111,34 @@ export default class LottieControl extends Component {
 ### props
 The `<Lottie />` Component supports the following properties:
 
-**options** *required*
 
-the object representing the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported:
+
+**options** *required* 
 
 **animationData** *required*
 
 **rendererSettings** *required* 
+
+Below are a the available options that are exposed through lottie-web,
+these options are available in react-lottie-wrapper.
+
+```
+options = {
+  loop: // optional
+  autoplay: // optional
+  animationData: // required 
+  path: // optional
+  rendererSettings: {
+    context: // optional
+    preserveAspectRatio: // optional
+    clearCanvas: // optional
+    progressiveLoad: // optional
+    hideOnTransparent: // optional
+    className: // optional
+    id: // optional
+  }
+}
+```
 
 **styles** *optional* [default: `{{height: 100%, width: 100%, outline: none}}`]
 
