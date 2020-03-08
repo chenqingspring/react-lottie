@@ -34,21 +34,23 @@ npm install --save react-lottie-wrapper
 Import pinjump.json.json as animation data
 
 ```jsx
-import React from 'react'
-import Lottie from 'react-lottie-wrapper';
-import * as animationData from './pinjump.json'
+import React, { Component } from "react"
+import Lottie from "react-lottie-wrapper";
+import * as animationData from "./pinjump.json"
 
-export default class LottieControl extends React.Component {
-
+export default class LottieControl extends Component {
   constructor(props) {
     super(props);
-    this.state = {isStopped: false, isPaused: false};
+    this.state = {
+      isStopped: false,
+      isPaused: false
+    };
   }
 
   render() {
     const buttonStyle = {
-      display: 'block',
-      margin: '10px auto'
+      display: "block",
+      margin: "10px auto"
     };
 
     const defaultOptions = {
@@ -56,39 +58,51 @@ export default class LottieControl extends React.Component {
       autoplay: true, 
       animationData: animationData.default,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
+        preserveAspectRatio: "xMidYMid slice"
       }
     };
 
-    return <div>
-      <Lottie options={defaultOptions}
-              height={400}
-              width={400}
-              isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}/>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-      <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
-    </div>
+    return (
+      <>
+        <Lottie 
+          options={defaultOptions}
+          height={400}
+          width={400}
+          isStopped={this.state.isStopped}
+          isPaused={this.state.isPaused}
+        />
+        <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
+        <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
+        <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+      </>
+    )
   }
 }
 
 ```
 
 ### props
-The `<Lottie />` Component supports the following components:
+The `<Lottie />` Component supports the following properties:
 
 **options** *required*
 
 the object representing the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported:
 
->**loop** *options* [default: `false`]
->
->**autoplay** *options* [default: `false`]
->
->**animationData** *required*
->
->**rendererSettings** *required* 
+**animationData** *required*
+
+**rendererSettings** *required* 
+
+**loop** *options* [default: `false`]
+
+**autoplay** *options* [default: `false`]
+
+**isClickToPauseDisabled** *optional* [default: `false`]
+
+Disables click event to pause the animation.
+
+**isStopped** *optional* [default: `false`]
+
+**isPaused** *optional* [default: `false`]
 
 **width** *optional* [default: `100%`]
 
@@ -97,6 +111,14 @@ pixel value for containers width.
 **height** *optional* [default: `100%`]
 
 pixel value for containers height.
+
+**speed** *optional* [default: `1`]
+
+**ariaRole** *optional* [default: `button`]
+
+**ariaLabel** *optional* [default: `animation`]
+
+**title** *optional* [default: `""`]
 
 **eventListeners** *optional* [default: `[]`]
 
