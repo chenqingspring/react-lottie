@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/donovanclarke/react-lottie"
   },
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
     "release": "git add package.json && git commit -m 'chore: bump version number' && standard-version --first-release && git push --follow-tags origin master && npm publish",

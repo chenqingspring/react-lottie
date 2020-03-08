@@ -1,2 +1,6 @@
 src
 .babelrc
+.scripts/
+.storybook/
+yarn.lock
+.eslintrc
