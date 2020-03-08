@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import lottie from "lottie-web";
+import { loadAnimation } from "lottie-web";
+
+import { getSize } from "./utils";
 
 export default class Lottie extends Component {
   static propTypes = {
@@ -18,7 +20,7 @@ export default class Lottie extends Component {
     isClickToPauseDisabled: PropTypes.bool,
     title: PropTypes.string,
     style: PropTypes.string
-  }
+  };
 
   static defaultProps = {
     eventListeners: [],
@@ -29,7 +31,7 @@ export default class Lottie extends Component {
     ariaLabel: "animation",
     isClickToPauseDisabled: false,
     title: ""
-  }
+  };
   
   componentDidMount() {
     const {
@@ -57,23 +59,24 @@ export default class Lottie extends Component {
 
     this.options = { ...this.options, ...options };
 
-    this.anim = lottie.loadAnimation(this.options);
+    this.anim = loadAnimation(this.options);
     this.registerEvents(eventListeners);
   }
 
   componentDidUpdate(nextProps) {
     /* Recreate the animation handle if the data is changed */
+    const { eventListeners, isStopped, segments } = this.props;
     if (this.options.animationData !== nextProps.options.animationData) {
-      this.deRegisterEvents(this.props.eventListeners);
+      this.deRegisterEvents(eventListeners);
       this.destroy();
       this.options = { ...this.options, ...nextProps.options };
-      this.anim = lottie.loadAnimation(this.options);
+      this.anim = loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
 
-    if (this.props.isStopped) {
+    if (isStopped) {
       this.stop();
-    } else if (this.props.segments) {
+    } else if (segments) {
       this.playSegments();
     } else {
       this.play();
@@ -156,18 +159,6 @@ export default class Lottie extends Component {
       style,
     } = this.props;
 
-    const getSize = (initial) => {
-      let size;
-
-      if (typeof initial === "number") {
-        size = `${initial}px`;
-      } else {
-        size = initial || "100%";
-      }
-
-      return size;
-    };
-
     const lottieStyles = {
       width: getSize(width),
       height: getSize(height),
@@ -199,18 +190,3 @@ export default class Lottie extends Component {
     );
   }
 }
-
-Lottie.propTypes = {
-
-};
-
-Lottie.defaultProps = {
-  eventListeners: [],
-  isStopped: false,
-  isPaused: false,
-  speed: 1,
-  ariaRole: "button",
-  ariaLabel: "animation",
-  isClickToPauseDisabled: false,
-  title: "",
-};
