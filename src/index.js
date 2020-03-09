@@ -21,7 +21,8 @@ export default class Lottie extends Component {
     isClickToPauseDisabled: PropTypes.bool,
     title: PropTypes.string,
     style: PropTypes.object,
-    className: PropTypes.string
+    className: PropTypes.string,
+    tabIndex: PropTypes.number
   };
 
   static defaultProps = {
@@ -34,15 +35,12 @@ export default class Lottie extends Component {
     ariaLabel: "animation",
     isClickToPauseDisabled: false,
     title: "",
-    className: ""
+    className: "",
+    tabIndex: 0
   };
   
   componentDidMount() {
-    const {
-      options,
-      eventListeners,
-    } = this.props;
-
+    const { options, eventListeners } = this.props;
     const {
       loop,
       autoplay,
@@ -162,7 +160,8 @@ export default class Lottie extends Component {
       isClickToPauseDisabled,
       title,
       style,
-      className
+      className,
+      tabIndex
     } = this.props;
 
     const lottieStyles = {
@@ -190,7 +189,7 @@ export default class Lottie extends Component {
         title={title}
         role={ariaRole}
         aria-label={ariaLabel}
-        tabIndex="0"
+        tabIndex={tabIndex}
       />
     );
   }

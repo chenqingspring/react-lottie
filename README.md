@@ -189,6 +189,10 @@ Set the speed of the animation (`normal === 1`).
 
 **title** *optional* [default: `""`]
 
+**tabIndex** *optional* [default: `0`]
+
+Set the tab index of the container for accessibility. 
+
 **eventListeners** *optional* [default: `[]`]
 
 This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
