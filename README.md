@@ -183,7 +183,7 @@ Pixel value for containers height.
 
 Set the speed of the animation (`normal === 1`).
 
-**ariaRole** *optional* [default: `button`]
+**role** *optional* [default: `button`]
 
 **ariaLabel** *optional* [default: `animation`]
 

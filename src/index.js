@@ -16,7 +16,7 @@ export default class Lottie extends Component {
     speed: PropTypes.number,
     segments: PropTypes.arrayOf(PropTypes.number),
     direction: PropTypes.number,
-    ariaRole: PropTypes.string,
+    role: PropTypes.string,
     ariaLabel: PropTypes.string,
     isClickToPauseDisabled: PropTypes.bool,
     title: PropTypes.string,
@@ -31,11 +31,11 @@ export default class Lottie extends Component {
     isStopped: false,
     isPaused: false,
     speed: 1,
-    ariaRole: "button",
+    role: null,
     ariaLabel: "animation",
     isClickToPauseDisabled: false,
-    title: "",
-    className: "",
+    title: null,
+    className: null,
     tabIndex: 0
   };
   
@@ -155,7 +155,7 @@ export default class Lottie extends Component {
       renderAs,
       width,
       height,
-      ariaRole,
+      role,
       ariaLabel,
       isClickToPauseDisabled,
       title,
@@ -163,7 +163,13 @@ export default class Lottie extends Component {
       className,
       tabIndex
     } = this.props;
-
+    
+    const extraProps = { 
+      role, 
+      title, 
+      className, 
+      tabIndex 
+    };
     const lottieStyles = {
       width: getSize(width),
       height: getSize(height),
@@ -183,13 +189,10 @@ export default class Lottie extends Component {
         ref={(c) => {
           this.el = c;
         }}
-        className={className}
         style={lottieStyles}
         onClick={onClickHandler}
-        title={title}
-        role={ariaRole}
         aria-label={ariaLabel}
-        tabIndex={tabIndex}
+        {...extraProps}
       />
     );
   }
