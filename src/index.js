@@ -57,10 +57,8 @@ export default class Lottie extends Component {
       segments: segments !== false,
       animationData,
       rendererSettings,
+      ...options
     };
-
-    this.options = { ...this.options, ...options };
-
     this.anim = loadAnimation(this.options);
     this.registerEvents(eventListeners);
   }
@@ -144,10 +142,9 @@ export default class Lottie extends Component {
     // The pause() method is for handling pausing by passing a prop isPaused
     // This method is for handling the ability to pause by clicking on the animation
     if (this.anim.isPaused) {
-      this.anim.play();
-    } else {
-      this.anim.pause();
+      return this.anim.play();
     }
+    this.anim.pause();
   }
 
   render() {
@@ -176,15 +173,12 @@ export default class Lottie extends Component {
       outline: "none",
       ...style,
     };
-
     const onClickHandler =
       isClickToPauseDisabled
         ? () => null
         : this.handleClickToPause;
     const Element = renderAs;
     return (
-      // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <Element
         ref={(c) => {
           this.el = c;
