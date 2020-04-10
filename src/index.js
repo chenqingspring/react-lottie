@@ -152,21 +152,12 @@ export default class Lottie extends Component {
       renderAs,
       width,
       height,
-      role,
       ariaLabel,
       isClickToPauseDisabled,
-      title,
       style,
-      className,
-      tabIndex
+      ...extraProps
     } = this.props;
     
-    const extraProps = { 
-      role, 
-      title, 
-      className, 
-      tabIndex 
-    };
     const lottieStyles = {
       width: getSize(width),
       height: getSize(height),
