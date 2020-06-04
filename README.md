@@ -38,7 +38,7 @@ Import pinjump.json.json as animation data
 ```jsx
 import React from 'react'
 import Lottie from 'react-lottie';
-import * as animationData from './pinjump.json'
+import animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {
 
@@ -56,7 +56,7 @@ export default class LottieControl extends React.Component {
     const defaultOptions = {
       loop: true,
       autoplay: true, 
-      animationData: animationData,
+      animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
