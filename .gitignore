@@ -3,3 +3,4 @@ node_modules
 dist
 .rpt2_cache
 ./example/src/reactComponentLib
+npm-publish-test.yml
