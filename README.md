@@ -30,49 +30,57 @@ Install through npm:
 ```
 npm install --save react-lottie
 ```
+Install through yarn:
+```
+yarn add react-lottie
+```
 
 ## Usage
 
-Import pinjump.json.json as animation data
+Import twitter-heart.json as animation data
 
 ```jsx
-import React from 'react'
-import Lottie from 'react-lottie';
-import * as animationData from './pinjump.json'
+import React, { useState } from "react";
+import Lottie from "react-lottie";
+import animationData from "./twitter-heart.json";
 
-export default class LottieControl extends React.Component {
+export default function LottieControl() {
+  const [animationState, setAnimationState] = useState({
+    isStopped: false,
+    isPaused: false,
+  });
 
-  constructor(props) {
-    super(props);
-    this.state = {isStopped: false, isPaused: false};
-  }
-
-  render() {
-    const buttonStyle = {
-      display: 'block',
-      margin: '10px auto'
-    };
-
-    const defaultOptions = {
-      loop: true,
-      autoplay: true, 
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
-
-    return <div>
-      <Lottie options={defaultOptions}
-              height={400}
-              width={400}
-              isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}/>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-      <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  return (
+    <div>
+      <Lottie
+        options={defaultOptions}
+        height={400}
+        width={400}
+        isStopped={animationState.isStopped}
+        isPaused={animationState.isPaused}
+      />
+      <button 
+        onClick={() => setAnimationState({ isStopped: true })}
+        style={{ display: "block",margin: "10px auto" }}
+        >  Stop  </button>
+      <button 
+        onClick={() => setAnimationState({ isStopped: false })}
+        style={{ display: "block",margin: "10px auto" }}
+        >  Play  </button>
+      <button 
+        onClick={() => setAnimationState({ isPaused: !animationState.isPaused })}
+        style={{ display: "block",margin: "10px auto" }}
+        >  Pause  </button>
     </div>
-  }
+  );
 }
 
 ```
