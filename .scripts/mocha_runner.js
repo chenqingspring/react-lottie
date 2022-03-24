@@ -5,8 +5,8 @@
 // Use `.scripts/user/pretest.js instead`.
 
 process.env.NODE_ENV = 'development';
-require('babel-core/register');
-require('babel-polyfill');
+require('@babel/register');
+require('@babel/polyfill');
 
 // Add jsdom support, which is required for enzyme.
 var jsdom = require('jsdom').jsdom;
