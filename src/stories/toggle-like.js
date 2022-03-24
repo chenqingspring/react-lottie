@@ -3,7 +3,6 @@ import Lottie from '../index';
 import * as animationDataA from './TwitterHeart.json';
 
 export default class ToggleLike extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -22,7 +21,9 @@ export default class ToggleLike extends React.Component {
       margin: '10px auto',
       textAlign: 'center',
     };
-    const { isStopped, isPaused, direction, speed, isLike } = this.state;
+    const {
+      isStopped, isPaused, direction, speed, isLike,
+    } = this.state;
     const defaultOptions = { animationData: animationDataA, loop: false, autoplay: false };
 
     const clickHandler = () => {
@@ -32,17 +33,19 @@ export default class ToggleLike extends React.Component {
       this.setState({ isStopped: false, isLike: !isLike });
     };
 
-    return (<div>
-      <Lottie
-        options={defaultOptions}
-        height={400}
-        width={400}
-        isStopped={isStopped}
-        isPaused={isPaused}
-        speed={speed}
-        direction={direction}
-      />
-      <button style={centerStyle} onClick={clickHandler}>{isLike ? 'unlike' : 'like'}</button>
-    </div>);
+    return (
+      <div>
+        <Lottie
+          options={defaultOptions}
+          height={400}
+          width={400}
+          isStopped={isStopped}
+          isPaused={isPaused}
+          speed={speed}
+          direction={direction}
+        />
+        <button style={centerStyle} onClick={clickHandler}>{isLike ? 'unlike' : 'like'}</button>
+      </div>
+    );
   }
 }

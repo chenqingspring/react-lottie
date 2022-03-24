@@ -45,7 +45,7 @@ describe('react-lottie', () => {
             ariaRole="test"
             ariaLabel="testlabel"
             title="title"
-          />
+          />,
         );
 
         expect(component.find('div').prop('role')).to.equal('test');
@@ -61,7 +61,7 @@ describe('react-lottie', () => {
             options={defaultOptions}
             height={199}
             width={188}
-          />
+          />,
         );
 
         expect(component.find('div').prop('style').height).to.equal('199px');

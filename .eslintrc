@@ -18,6 +18,18 @@
     "func-names": 0,
     # propTypes can be object
     "react/forbid-prop-types": 0,
+    # These come after upgrade of airbnb eslint config and @babel-parser
+    # Ideally we should figure out which following rules we want to keep
+    # and fix the code accordingly, but to keep changes in this PR and let
+    # library's author decide where they want to go, i am setting them to false
+    "max-len": 0,
     "react/destructuring-assignment": 0,
+    "react/require-default-props": 0,
+    "react/no-unused-state": 0,
+    "react/sort-comp": 0,
+    "react/button-has-type": 0,
+    "react/no-access-state-in-setstate": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
   },
 }
