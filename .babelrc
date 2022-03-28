@@ -1,7 +1,8 @@
 {
   "plugins": ["@babel/plugin-transform-runtime"],
   "presets": [
-    "react-app"
+    "@babel/preset-env",
+    "react-app",
   ],
   "parserOpts": {}
 }
