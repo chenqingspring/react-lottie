@@ -1,9 +1,3 @@
-// IMPORTANT
-// ---------
-// This is an auto generated file with React CDK.
-// Do not modify this file.
-// Use `.scripts/user/pretest.js instead`.
-
 process.env.NODE_ENV = 'development';
 require('@babel/register');
 require('@babel/polyfill');
