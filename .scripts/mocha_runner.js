@@ -1,6 +1,7 @@
 process.env.BABEL_ENV = 'test';
 require('@babel/register');
 require('@babel/polyfill');
+require('./setupTests');
 
 // Add jsdom support, which is required for enzyme.
 var jsdom = require('jsdom').jsdom;
