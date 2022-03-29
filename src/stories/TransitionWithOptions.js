@@ -45,7 +45,10 @@ export default class TransitionWithOptions extends React.Component {
           height={400}
           width={400}
         />
-        <p style={centerStyle}>This animation is {showLoopedAnimation ? 'looped' : 'not looped'}</p>
+        <p style={centerStyle}>
+          This animation is
+          {showLoopedAnimation ? 'looped' : 'not looped'}
+        </p>
         <button style={centerStyle} onClick={this.clickHandler}>
           switch
         </button>

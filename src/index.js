@@ -33,12 +33,12 @@ export default class Lottie extends React.Component {
     this.registerEvents(eventListeners);
   }
 
-  componentWillUpdate(nextProps /* , nextState */) {
+  UNSAFE_componentWillUpdate(nextProps /* , nextState */) {
     /* Recreate the animation handle if the data is changed */
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
@@ -117,7 +117,7 @@ export default class Lottie extends React.Component {
     } else {
       this.anim.pause();
     }
-  }
+  };
 
   render() {
     const {

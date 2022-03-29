@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 import LottieControl from './lottie-control';
 import LottieControlSegments from './lottie-control-segments';
 import ToggleLike from './toggle-like';

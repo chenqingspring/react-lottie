@@ -1,12 +1,7 @@
-// IMPORTANT
-// ---------
-// This is an auto generated file with React CDK.
-// Do not modify this file.
-// Use `.scripts/user/pretest.js instead`.
-
-process.env.NODE_ENV = 'development';
-require('babel-core/register');
-require('babel-polyfill');
+process.env.BABEL_ENV = 'test';
+require('@babel/register');
+require('@babel/polyfill');
+require('./setupTests');
 
 // Add jsdom support, which is required for enzyme.
 var jsdom = require('jsdom').jsdom;
@@ -30,5 +25,3 @@ process.on('unhandledRejection', function (error) {
   console.error('Unhandled Promise Rejection:');
   console.error(error && error.stack || error);
 });
-
-require('./user/pretest.js');
