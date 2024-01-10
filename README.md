@@ -114,6 +114,9 @@ eventListeners=[
 ]
 ```
 
+**isClickToPauseDisabled** *optional* [default: `false`]
+When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
+
 ## Related Projects
 
 * [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
