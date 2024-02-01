@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.1
+
+### Patch Changes
+
+- b62a50e: exclude scripts from npm
+
 ## 1.5.0
 
 ### Minor Changes
