@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.0
+
+### Minor Changes
+
+- moving prop-types to dependencies
+
 ## 1.3.0
 
 ### Minor Changes
