@@ -43,7 +43,8 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^15.6.2",
     "sinon": "^1.17.6",
-    "standard-version": "^4.4.0"
+    "standard-version": "^4.4.0",
+    "@changesets/cli": "^2.27.1"
   },
   "peerDependencies": {
     "react": ">=15.0.0"

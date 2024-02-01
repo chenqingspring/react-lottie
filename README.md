@@ -2,6 +2,10 @@
 
 [![npm version](https://badge.fury.io/js/lottie-jsx.svg)](http://badge.fury.io/js/lottie-jsx)
 
+## Credit
+
+A live fork from the (dead?) package https://www.npmjs.com/package/react-lottie created by [chenqingspring](https://github.com/chenqingspring/react-lottie)
+
 ## Demo
 https://chenqingspring.github.io/react-lottie
 
