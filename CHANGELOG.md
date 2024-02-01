@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.0
+
+### Minor Changes
+
+- 3f1fcb0: add tab index
+
 ## 1.4.0
 
 ### Minor Changes
