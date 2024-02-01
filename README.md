@@ -1,6 +1,6 @@
 # Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie), [Vue](https://github.com/chenqingspring/vue-lottie))
 
-[![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
+[![npm version](https://badge.fury.io/js/lottie-jsx.svg)](http://badge.fury.io/js/lottie-jsx)
 
 ## Demo
 https://chenqingspring.github.io/react-lottie
@@ -28,7 +28,7 @@ Looking for lottie files › https://www.lottiefiles.com/
 
 Install through npm:
 ```
-npm install --save react-lottie
+npm install --save lottie-jsx
 ```
 
 ## Usage
@@ -37,7 +37,7 @@ Import pinjump.json.json as animation data
 
 ```jsx
 import React from 'react'
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-jsx';
 import * as animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {

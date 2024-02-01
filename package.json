@@ -1,10 +1,10 @@
 {
-  "name": "react-lottie",
+  "name": "lottie-jsx",
   "version": "1.2.4",
   "description": "lottie animation view for React",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenqingspring/react-lottie"
+    "url": "https://github.com/jackall3n/react-lottie"
   },
   "license": "MIT",
   "scripts": {

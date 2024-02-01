@@ -16,7 +16,7 @@ const defaultOptions = {
   },
 };
 
-describe('react-lottie', () => {
+describe('lottie-jsx', () => {
   describe('props', () => {
     describe('isClickToPauseDisabled', () => {
       it('should prevent handleClickToPause from being called when true', () => {
