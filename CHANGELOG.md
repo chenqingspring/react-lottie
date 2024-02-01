@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- moving prop-types to dependencies
+- moving prop-types to dependencies > https://github.com/chenqingspring/react-lottie/pull/154
 
 ## 1.3.0
 
