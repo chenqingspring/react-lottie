@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.2
+
+### Patch Changes
+
+- add classname prop
+
 ## 1.5.1
 
 ### Patch Changes
