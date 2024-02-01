@@ -1,2 +1,5 @@
 src
 .babelrc
+.scripts
+.idea
+.changeset
