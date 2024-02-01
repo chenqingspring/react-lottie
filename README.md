@@ -30,17 +30,17 @@ Looking for lottie files › https://www.lottiefiles.com/
 
 ## Installation
 
-pnpm:
+### pnpm:
 ```
 pnpm install lottie-jsx
 ```
 
-yarn:
+### yarn:
 ```
 yarn add lottie-jsx
 ```
 
-npm:
+### npm:
 ```
 npm install lottie-jsx
 ```
