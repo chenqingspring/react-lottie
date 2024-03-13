@@ -80,15 +80,16 @@ export default class LottieControl extends React.Component {
 Load a remote .json file for your player
 
 ```jsx
-import Lottie from 'react-lottie';
-<Lottie 
-  options={{
-    loop: false, 
-    path: 'https://labs.nearpod.com/bodymovin/demo/pancakes/data.json',
-  }}
-  height: 200,
-  width: 300,
-/>
+    import Lottie from 'react-lottie';
+
+    <Lottie 
+      options={{
+        loop: false, 
+        path: 'https://labs.nearpod.com/bodymovin/demo/pancakes/data.json',
+      }}
+      height="200"
+      width="300"
+    />
 ```
 
 ### props
