@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import lottie from 'lottie-web';
+import lottiePlayer from 'lottie-web';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
@@ -17,6 +17,11 @@ export default class Lottie extends React.Component {
       segments,
     } = options;
 
+    if (!animationData) {
+      console.error('animationData is missing');
+      return;
+    }
+
     this.options = {
       container: this.el,
       renderer: 'svg',
@@ -29,93 +34,108 @@ export default class Lottie extends React.Component {
 
     this.options = { ...this.options, ...options };
 
-    this.anim = lottie.loadAnimation(this.options);
+    try {
+      this.anim = lottiePlayer.loadAnimation(this.options);
+      if (!this.anim) {
+        throw new Error('Animation failed to load');
+      }
+    } catch (error) {
+      console.error('Failed to initialize animation:', error);
+    }
+
     this.registerEvents(eventListeners);
   }
 
-  componentWillUpdate(nextProps /* , nextState */) {
-    /* Recreate the animation handle if the data is changed */
+  componentWillUpdate(nextProps) {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
-      this.destroy();
-      this.options = {...this.options, ...nextProps.options};
-      this.anim = lottie.loadAnimation(this.options);
+      if (this.anim) {
+        this.anim.destroy();
+      }
+      this.options = { ...this.options, ...nextProps.options };
+      this.anim = lottiePlayer.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.isStopped) {
-      this.stop();
-    } else if (this.props.segments) {
-      this.playSegments();
-    } else {
-      this.play();
-    }
-
-    this.pause();
-    this.setSpeed();
-    this.setDirection();
-  }
-
   componentWillUnmount() {
     this.deRegisterEvents(this.props.eventListeners);
-    this.destroy();
+    if (this.anim) {
+      this.anim.destroy();
+    }
     this.options.animationData = null;
     this.anim = null;
   }
 
   setSpeed() {
-    this.anim.setSpeed(this.props.speed);
+    if (this.anim) {
+      this.anim.setSpeed(this.props.speed);
+    }
   }
 
   setDirection() {
-    this.anim.setDirection(this.props.direction);
+    if (this.anim) {
+      this.anim.setDirection(this.props.direction);
+    }
   }
 
   play() {
-    this.anim.play();
+    if (this.anim) {
+      this.anim.play();
+    }
   }
 
   playSegments() {
-    this.anim.playSegments(this.props.segments);
+    if (this.anim && this.props.segments) {
+      this.anim.playSegments(this.props.segments);
+    }
   }
 
   stop() {
-    this.anim.stop();
+    if (this.anim) {
+      this.anim.stop();
+    }
   }
 
   pause() {
-    if (this.props.isPaused && !this.anim.isPaused) {
-      this.anim.pause();
-    } else if (!this.props.isPaused && this.anim.isPaused) {
-      this.anim.pause();
+    if (this.anim) {
+      if (this.props.isPaused && !this.anim.isPaused) {
+        this.anim.pause();
+      } else if (!this.props.isPaused && this.anim.isPaused) {
+        this.anim.pause();
+      }
     }
   }
 
   destroy() {
-    this.anim.destroy();
+    if (this.anim) {
+      this.anim.destroy();
+    }
   }
 
   registerEvents(eventListeners) {
-    eventListeners.forEach((eventListener) => {
-      this.anim.addEventListener(eventListener.eventName, eventListener.callback);
-    });
+    if (this.anim) {
+      eventListeners.forEach((eventListener) => {
+        this.anim.addEventListener(eventListener.eventName, eventListener.callback);
+      });
+    }
   }
 
   deRegisterEvents(eventListeners) {
-    eventListeners.forEach((eventListener) => {
-      this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
-    });
+    if (this.anim) {
+      eventListeners.forEach((eventListener) => {
+        this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
+      });
+    }
   }
 
   handleClickToPause = () => {
-    // The pause() method is for handling pausing by passing a prop isPaused
-    // This method is for handling the ability to pause by clicking on the animation
-    if (this.anim.isPaused) {
-      this.anim.play();
-    } else {
-      this.anim.pause();
+    if (this.anim) {
+      if (this.anim.isPaused) {
+        this.anim.play();
+      } else {
+        this.anim.pause();
+      }
     }
   }
 
@@ -153,8 +173,6 @@ export default class Lottie extends React.Component {
     const onClickHandler = isClickToPauseDisabled ? () => null : this.handleClickToPause;
 
     return (
-      // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         ref={(c) => {
           this.el = c;
