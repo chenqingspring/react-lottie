@@ -31,6 +31,8 @@ export default class Lottie extends React.Component {
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
+    
+    this.setSpeed();
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
