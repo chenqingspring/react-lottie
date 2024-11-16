@@ -4,7 +4,7 @@
   "description": "lottie animation view for React",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenqingspring/react-lottie"
+    "url": "git+https://github.com/chenqingspring/react-lottie.git"
   },
   "license": "MIT",
   "scripts": {
