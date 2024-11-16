@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.7](https://github.com/chenqingspring/react-lottie/compare/v1.2.6...v1.2.7) (2024-11-16)
+
+
+### Bug Fixes
+
+* repository.url ([4093792](https://github.com/chenqingspring/react-lottie/commit/409379290c78fd9ef4e029b689e0a7028e9bb67d))
+
 ### [1.2.6](https://github.com/chenqingspring/react-lottie/compare/v1.2.5...v1.2.6) (2024-11-16)
 
 
