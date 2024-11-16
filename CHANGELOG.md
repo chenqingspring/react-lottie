@@ -1,6 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.2.6](https://github.com/chenqingspring/react-lottie/compare/v1.2.5...v1.2.6) (2024-11-16)
+
+
+### Features
+
+* update lottie-web to latest ([8018d02](https://github.com/chenqingspring/react-lottie/commit/8018d02c0c5a42b315d3f1e3e4d2edb9572e5d46))
 
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/chenqingspring/react-lottie/compare/v1.2.4...v1.2.5) (2024-11-16)
