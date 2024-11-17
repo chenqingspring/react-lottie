@@ -48,9 +48,9 @@
     "react": ">=15.0.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "prop-types": "^15.6.1",
-    "lottie-web": "^5.12.2"
+    "@babel/runtime": "^7.26.0",
+    "lottie-web": "^5.12.2",
+    "prop-types": "^15.6.1"
   },
   "main": "dist/index.js"
 }
