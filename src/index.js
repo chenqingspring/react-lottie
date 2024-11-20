@@ -80,7 +80,7 @@ export default class Lottie extends React.Component {
   }
 
   playSegments() {
-    this.anim.playSegments(this.props.segments);
+    this.anim.playSegments(this.props.segments, true);
   }
 
   stop() {
