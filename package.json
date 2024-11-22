@@ -49,7 +49,6 @@
     "react": ">=15.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.26.0",
     "lottie-web": "^5.12.2",
     "prop-types": "^15.6.1"
   },
