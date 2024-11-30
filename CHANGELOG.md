@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.10](https://github.com/chenqingspring/react-lottie/compare/v1.2.9...v1.2.10) (2024-11-30)
+
+
+### Bug Fixes
+
+* add babel-runtime ([eb089a4](https://github.com/chenqingspring/react-lottie/commit/eb089a4335a85a2996159762c8860673bf45b547))
+
 ### [1.2.9](https://github.com/chenqingspring/react-lottie/compare/v1.2.8...v1.2.9) (2024-11-22)
 
 ### [1.2.8](https://github.com/chenqingspring/react-lottie/compare/v1.2.7...v1.2.8) (2024-11-20)
