@@ -78,7 +78,7 @@ export default class LottieControl extends React.Component {
 ```
 
 ### props
-The `<Lottie />` Component supports the following components:
+The `<Lottie />` Component supports the following props:
 
 **options** *required*
 
