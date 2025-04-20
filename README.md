@@ -2,8 +2,12 @@
 
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
-## Demo
-https://chenqingspring.github.io/react-lottie
+## Demos
+[Full demo in your vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeControl&libCreator=tanstack&userId=abc123)
+[Toggle like - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLike&libCreator=tanstack&userId=abc123)
+[Transition & loops - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsLoops&libCreator=tanstack&userId=abc123)
+[Transitions with options - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsOptions&libCreator=tanstack&userId=abc123)
+[Wtih segments - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleSegment&libCreator=tanstack&userId=abc123)
 
 ## Wapper of bodymovin.js
 
@@ -31,7 +35,7 @@ Install through npm:
 npm install --save react-lottie
 ```
 
-## Usage
+## Usage [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeControl&libCreator=tanstack&userId=abc123)
 
 Import pinjump.json as animation data
 
@@ -92,15 +96,15 @@ the object representing the animation settings that will be instantiated by body
 >
 >**rendererSettings** *required* 
 
-**width** *optional* [default: `100%`]
+**width** *optional* [default: `100%`] - [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeWidthHeight&libCreator=tanstack&userId=abc123)
 
 pixel value for containers width.
 
-**height** *optional* [default: `100%`]
+**height** *optional* [default: `100%`] - [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeWidthHeight&libCreator=tanstack&userId=abc123)
 
 pixel value for containers height.
 
-**eventListeners** *optional* [default: `[]`]
+**eventListeners** *optional* [default: `[]`] - [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=LottieEventListeners&libCreator=tanstack&userId=abc123)
 
 This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
 
@@ -114,7 +118,7 @@ eventListeners=[
 ]
 ```
 
-**isClickToPauseDisabled** *optional* [default: `false`]
+**isClickToPauseDisabled** *optional* [default: `false`] - [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=LottieClickToPause&libCreator=tanstack&userId=abc123)
 When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
 
 ## Related Projects
