@@ -3,11 +3,11 @@
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
 ## Demos
-[Full demo in your vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeControl&libCreator=tanstack&userId=abc123)
-[Toggle like - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLike&libCreator=tanstack&userId=abc123)
-[Transition & loops - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsLoops&libCreator=tanstack&userId=abc123)
-[Transitions with options - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsOptions&libCreator=tanstack&userId=abc123)
-[Wtih segments - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleSegment&libCreator=tanstack&userId=abc123)
+- [Full demo in your vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeControl&libCreator=tanstack&userId=abc123)
+- [Toggle like - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLike&libCreator=tanstack&userId=abc123)
+- [Transition & loops - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsLoops&libCreator=tanstack&userId=abc123)
+- [Transitions with options - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleTransitionsOptions&libCreator=tanstack&userId=abc123)
+- [Wtih segments - Demo in vs code](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleSegment&libCreator=tanstack&userId=abc123)
 
 ## Wapper of bodymovin.js
 
