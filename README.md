@@ -59,8 +59,8 @@ export default class LottieControl extends React.Component {
 
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
-      animationData: animationData,
+      autoplay: true,
+      animationData: animationData.default,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -71,7 +71,8 @@ export default class LottieControl extends React.Component {
               height={400}
               width={400}
               isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}/>
+              isPaused={this.state.isPaused}
+              isClickToPauseDisabled={true}/>
       <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
       <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
       <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
