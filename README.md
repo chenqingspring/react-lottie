@@ -94,6 +94,8 @@ the object representing the animation settings that will be instantiated by body
 >
 >**animationData** *required*
 >
+>**renderer** *options* [default: `svg`]
+>
 >**rendererSettings** *required* 
 
 **width** *optional* [default: `100%`] - [Demo](http://www.jinno.app/redirect?from=chenqingspring&redirect=libary&libName=react-lottie&componentName=ToggleLikeWidthHeight&libCreator=tanstack&userId=abc123)
