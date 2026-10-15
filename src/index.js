@@ -28,9 +28,9 @@ export default class Lottie extends React.Component {
     };
 
     this.options = { ...this.options, ...options };
-
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
+    this.setSpeed();
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
@@ -184,7 +184,7 @@ Lottie.propTypes = {
   ariaLabel: PropTypes.string,
   isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
 };
 
 Lottie.defaultProps = {

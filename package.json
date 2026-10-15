@@ -1,10 +1,11 @@
 {
   "name": "react-lottie",
-  "version": "1.2.3",
+  "version": "1.2.10",
+  "funding": "https://opencollective.com/react-lottie",
   "description": "lottie animation view for React",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenqingspring/react-lottie"
+    "url": "git+https://github.com/chenqingspring/react-lottie.git"
   },
   "license": "MIT",
   "scripts": {
@@ -38,22 +39,19 @@
     "git-url-parse": "^6.0.1",
     "jsdom": "^9.5.0",
     "mocha": "^5.2.0",
-    "prop-types": "^15.6.1",
     "react": "^15.6.2",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^15.6.2",
     "sinon": "^1.17.6",
-    "standard-version": "^4.4.0"
+    "standard-version": "^9.5.0"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0"
+    "react": ">=15.0.0"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "lottie-web": "^5.1.3"
+    "lottie-web": "^5.12.2",
+    "prop-types": "^15.6.1"
   },
-  "main": "dist/index.js",
-  "engines": {
-    "npm": "^3.0.0"
-  }
+  "main": "dist/index.js"
 }

@@ -33,7 +33,7 @@ npm install --save react-lottie
 
 ## Usage
 
-Import pinjump.json.json as animation data
+Import pinjump.json as animation data
 
 ```jsx
 import React from 'react'
@@ -113,6 +113,9 @@ eventListeners=[
   },
 ]
 ```
+
+**isClickToPauseDisabled** *optional* [default: `false`]
+When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
 
 ## Related Projects
 

@@ -1,6 +1,41 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.2.10](https://github.com/chenqingspring/react-lottie/compare/v1.2.9...v1.2.10) (2024-11-30)
+
+
+### Bug Fixes
+
+* add babel-runtime ([eb089a4](https://github.com/chenqingspring/react-lottie/commit/eb089a4335a85a2996159762c8860673bf45b547))
+
+### [1.2.9](https://github.com/chenqingspring/react-lottie/compare/v1.2.8...v1.2.9) (2024-11-22)
+
+### [1.2.8](https://github.com/chenqingspring/react-lottie/compare/v1.2.7...v1.2.8) (2024-11-20)
+
+### [1.2.7](https://github.com/chenqingspring/react-lottie/compare/v1.2.6...v1.2.7) (2024-11-16)
+
+
+### Bug Fixes
+
+* repository.url ([4093792](https://github.com/chenqingspring/react-lottie/commit/409379290c78fd9ef4e029b689e0a7028e9bb67d))
+
+### [1.2.6](https://github.com/chenqingspring/react-lottie/compare/v1.2.5...v1.2.6) (2024-11-16)
+
+
+### Features
+
+* update lottie-web to latest ([8018d02](https://github.com/chenqingspring/react-lottie/commit/8018d02c0c5a42b315d3f1e3e4d2edb9572e5d46))
+
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/chenqingspring/react-lottie/compare/v1.2.4...v1.2.5) (2024-11-16)
+
+
+
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/chenqingspring/react-lottie/compare/v1.2.3...v1.2.4) (2024-01-04)
+
+
 
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/chenqingspring/react-lottie/compare/v1.2.2...v1.2.3) (2018-06-14)
