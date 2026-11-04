@@ -11,6 +11,10 @@ echo ""
 rm -rf ./dist
 NODE_ENV=production ./node_modules/.bin/babel --ignore "src/tests/**","src/stories/**" ./src --out-dir ./dist
 echo ""
+echo "=> Verifying the built package ..."
+echo ""
+node ./.scripts/verify_dist.js
+echo ""
 echo "=> Transpiling completed."
 
 . .scripts/user/prepublish.sh
