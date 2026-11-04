@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -25,7 +26,10 @@ describe('react-lottie', () => {
         const spy = sinon.stub();
 
         component.instance().handleClickToPause = spy;
-        component.instance().forceUpdate();
+        act(() => {
+          component.instance().forceUpdate();
+        });
+        component.update();
         component.find('div').at(0).simulate('click');
 
         expect(spy.callCount).to.equal(1);

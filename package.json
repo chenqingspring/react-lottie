@@ -1,6 +1,6 @@
 {
   "name": "react-lottie",
-  "version": "1.2.11",
+  "version": "2.0.0",
   "funding": "https://opencollective.com/react-lottie",
   "description": "lottie animation view for React",
   "repository": {
@@ -16,36 +16,44 @@
     "testonly": "mocha --require .scripts/mocha_runner.js src/**/tests/**/*.js",
     "test": "npm run lint && npm run testonly",
     "test-watch": "npm run testonly -- --watch --watch-extensions js",
-    "start": "start-storybook -p 9010",
+    "start": "storybook dev -p 9010",
+    "build-storybook": "storybook build -o .out",
     "publish-storybook": "bash .scripts/publish_storybook.sh",
     "postpublish": "npm run publish-storybook"
   },
   "devDependencies": {
-    "@kadira/storybook": "^2.35.3",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-react-app": "^0.2.1",
+    "@babel/cli": "^7.29.7",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "@babel/register": "^7.29.7",
+    "@cfaester/enzyme-adapter-react-18": "^0.8.0",
+    "@eslint/js": "^9.39.5",
+    "@storybook/react-vite": "^10.6.5",
     "chai": "^4.5.0",
-    "enzyme": "^2.2.0",
-    "eslint": "^3.6.0",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0",
-    "git-url-parse": "^6.0.1",
+    "enzyme": "^3.11.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
     "jsdom": "^29.1.1",
     "mocha": "^12.0.3",
-    "react": "^15.6.2",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sinon": "^22.1.0",
-    "standard-version": "^9.5.0"
+    "standard-version": "^9.5.0",
+    "storybook": "^10.6.5",
+    "vite": "^7.3.7"
   },
   "peerDependencies": {
-    "react": ">=15.0.0"
+    "react": ">=16.8.0"
+  },
+  "overrides": {
+    "cheerio": "1.0.0-rc.12"
+  },
+  "resolutions": {
+    "cheerio": "1.0.0-rc.12"
   },
   "dependencies": {
     "lottie-web": "^5.12.2",

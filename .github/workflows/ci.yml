@@ -22,3 +22,5 @@ jobs:
       - run: npm test
       - name: Verify the package builds
         run: npm run prepublish
+      - name: Verify Storybook builds
+        run: npm run build-storybook

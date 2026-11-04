@@ -31,6 +31,16 @@ Install through npm:
 npm install --save react-lottie
 ```
 
+## Requirements
+
+React 16.8 or newer. The test suite runs against React 18; the component uses
+plain class components and works with React 19 as well.
+
+## Local development
+
+Run the Storybook stories with `npm start` (port 9010) and the test suite with
+`npm test`.
+
 ## TypeScript
 
 Type definitions are maintained on DefinitelyTyped and track this package's
@@ -61,7 +71,7 @@ Import pinjump.json as animation data
 ```jsx
 import React from 'react'
 import Lottie from 'react-lottie';
-import * as animationData from './pinjump.json'
+import animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {
 
@@ -114,7 +124,7 @@ first frame, so only use it once, to start from a known state.
 ```jsx
 import React from 'react'
 import Lottie from 'react-lottie';
-import * as animationData from './pinjump.json'
+import animationData from './pinjump.json'
 
 export default class HoverLottie extends React.Component {
 

@@ -45,7 +45,7 @@ if (canvasWindow && canvasWindow.HTMLCanvasElement) {
   };
 }
 
-// jsdom 9 does not implement requestAnimationFrame, but lottie-web's play()
+// jsdom does not implement requestAnimationFrame, but lottie-web's play()
 // schedules one through its animation manager. Without a stub, any test that
 // starts playback dies with "window.requestAnimationFrame is not a function".
 // The tests assert on animation state (isPaused / playDirection), not on
