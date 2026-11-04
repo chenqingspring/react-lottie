@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * apply the initial `isStopped`, `isPaused` and `direction` props on mount instead of only on update
 * replay changed segments immediately by passing `force` to `playSegments` ([#82](https://github.com/chenqingspring/react-lottie/issues/82))
+* reload the animation when the remote `path` option changes ([#99](https://github.com/chenqingspring/react-lottie/issues/99))
 * guard `destroy()` when the animation was never created ([#51](https://github.com/chenqingspring/react-lottie/issues/51))
 * drop the runtime dependency on `babel-runtime`, which broke consumers' builds ([#177](https://github.com/chenqingspring/react-lottie/issues/177))
 

@@ -122,6 +122,30 @@ describe('react-lottie', () => {
 
       expect(component.instance().anim.animationData).to.equal(beatingHeart);
     });
+
+    it('should reload the animation when the remote path changes', () => {
+      const animation = {
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        setSpeed: sinon.stub(),
+        setDirection: sinon.stub(),
+        stop: sinon.stub(),
+        pause: sinon.stub(),
+        play: sinon.stub(),
+        playSegments: sinon.stub(),
+        destroy: sinon.stub(),
+      };
+      const loadAnimation = sinon.stub(lottie, 'loadAnimation').returns(animation);
+      const component = mount(
+        <ReactLottie options={{ loop: true, autoplay: true, path: 'a.json' }} />
+      );
+
+      component.setProps({ options: { loop: true, autoplay: true, path: 'b.json' } });
+
+      expect(loadAnimation.callCount).to.equal(2);
+      expect(loadAnimation.secondCall.args[0].path).to.equal('b.json');
+      loadAnimation.restore();
+    });
   });
 
   describe('hover playback', () => {

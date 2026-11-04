@@ -5,9 +5,9 @@
 ## Demo
 https://chenqingspring.github.io/react-lottie
 
-## Wapper of bodymovin.js
+## Wrapper of lottie-web
 
-[bodymovin](https://github.com/bodymovin/bodymovin) is [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) plugin for exporting animations as JSON, also it provide bodymovin.js for render them as svg/canvas/html.
+[lottie-web](https://github.com/airbnb/lottie-web) (previously Bodymovin) is an [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) plugin for exporting animations as JSON. It also provides the player that renders them as svg/canvas/html.
 
 ## Why Lottie?
 
@@ -68,7 +68,7 @@ export default class LottieControl extends React.Component {
     const defaultOptions = {
       loop: true,
       autoplay: true, 
-      animationData: animationData,
+      animationData: animationData.default,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -116,7 +116,7 @@ export default class HoverLottie extends React.Component {
     const defaultOptions = {
       loop: false,
       autoplay: false,
-      animationData: animationData,
+      animationData: animationData.default,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -138,7 +138,7 @@ export default class HoverLottie extends React.Component {
 ```
 
 ### props
-The `<Lottie />` Component supports the following components:
+The `<Lottie />` Component supports the following props:
 
 **options** *required*
 
@@ -148,7 +148,9 @@ the object representing the animation settings that will be instantiated by body
 >
 >**autoplay** *options* [default: `false`]
 >
->**animationData** *required*
+>**animationData** *optional* — the exported animation data. Mutually exclusive with `path`.
+>
+>**path** *optional* — a URL (or path) to a JSON animation file. Mutually exclusive with `animationData`.
 >
 >**renderer** *optional* [default: `svg`]
 >
@@ -185,7 +187,7 @@ animation that should not receive keyboard focus.
 
 ## Related Projects
 
-* [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
+* [lottie-web](https://github.com/airbnb/lottie-web) react-lottie is a wrapper of lottie-web
 * [Angular Lottie](https://github.com/chenqingspring/ng-lottie) angular implementation
 * [Vue Lottie](https://github.com/chenqingspring/vue-lottie) vue implementation
 * [React Native Lottie](https://github.com/airbnb/lottie-react-native) react native implementation by airbnb
