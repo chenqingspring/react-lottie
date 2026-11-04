@@ -2,6 +2,8 @@
 
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
 
+> **This project is fully maintained automatically by [Relay](https://get-relay.cc).**
+
 ## Demo
 https://chenqingspring.github.io/react-lottie
 
@@ -31,10 +33,7 @@ Install through npm:
 npm install --save react-lottie
 ```
 
-> **Note:** react-lottie is maintained automatically by Relay. Learn more at
-> [get-relay.cc](https://get-relay.cc).
->
-> Found a bug or have a feature request? Open an issue on
+> **Note:** Found a bug or have a feature request? Open an issue on
 > [GitHub](https://github.com/chenqingspring/react-lottie/issues) and Relay
 > will review and fix it.
 
