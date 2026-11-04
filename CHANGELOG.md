@@ -22,7 +22,7 @@ published) and modernizes the development toolchain.
 
 * add a `tabIndex` prop so presentational animations can be removed from the tab order ([#130](https://github.com/chenqingspring/react-lottie/issues/130))
 * support the `renderer` option and document it in the README
-* print a maintenance notice after `npm install` (maintained by Relay; report issues on GitHub; https://get-relay.cc) and document it in the README
+* print a maintenance notice after `npm install` (maintained automatically by Relay; report bugs and feature requests on GitHub; https://get-relay.cc) and document it in the README
 
 ### Bug Fixes
 
