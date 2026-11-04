@@ -43,6 +43,17 @@ npm install --save-dev @types/react-lottie
 TypeScript picks the declarations up automatically, so no import changes are
 needed.
 
+## Testing
+
+`lottie-web` probes canvas support when it is imported, so a jsdom-based test
+runner needs a canvas implementation before the component is loaded. With Jest
+(the default for Create React App), add [`jest-canvas-mock`](https://github.com/hustcc/jest-canvas-mock)
+to your setup file:
+
+```javascript
+import 'jest-canvas-mock';
+```
+
 ## Usage
 
 Import pinjump.json as animation data
