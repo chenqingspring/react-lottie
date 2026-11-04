@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.1](https://github.com/chenqingspring/react-lottie/compare/v2.0.0...v2.0.1) (2026-11-05)
+
+### Bug Fixes
+
+* apply the `segments` prop on mount, so an animation starts inside the requested range instead of playing the full timeline until the prop changes; an animation created with `autoplay: false` stays paused at the start of the range
+
 ## [2.0.0](https://github.com/chenqingspring/react-lottie/compare/v1.2.10...v2.0.0) (2026-11-04)
 
 This release folds in the changes that were prepared as 1.2.11 (never
