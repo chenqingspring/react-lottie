@@ -10,9 +10,11 @@ const RELAY_URL = 'https://get-relay.cc';
 const notice = [
   '',
   'react-lottie is maintained automatically by Relay.',
-  'Bugs or feature requests? Please open an issue on GitHub:',
+  `Learn more about Relay: ${RELAY_URL}`,
+  '',
+  'Found a bug or have a feature request? Open an issue on GitHub and Relay',
+  'will review and fix it:',
   `  ${ISSUES_URL}`,
-  `Learn more about Relay at ${RELAY_URL}`,
   '',
 ].join('\n');
 

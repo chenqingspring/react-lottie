@@ -31,9 +31,12 @@ Install through npm:
 npm install --save react-lottie
 ```
 
-> **Note:** react-lottie is maintained automatically by Relay. Please report
-> bugs and feature requests through [GitHub issues](https://github.com/chenqingspring/react-lottie/issues).
-> Learn more about Relay at [get-relay.cc](https://get-relay.cc).
+> **Note:** react-lottie is maintained automatically by Relay. Learn more at
+> [get-relay.cc](https://get-relay.cc).
+>
+> Found a bug or have a feature request? Open an issue on
+> [GitHub](https://github.com/chenqingspring/react-lottie/issues) and Relay
+> will review and fix it.
 
 ## Requirements
 
