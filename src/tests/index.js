@@ -184,6 +184,33 @@ describe('react-lottie', () => {
 
       component.unmount();
     });
+
+    it('applies the segments prop on mount', () => {
+      const component = mount(
+        <ReactLottie options={defaultOptions} segments={[10, 30]} />
+      );
+      const animation = component.instance().anim;
+
+      expect(animation.firstFrame).to.equal(10);
+      expect(animation.totalFrames).to.equal(20);
+
+      component.unmount();
+    });
+
+    it('keeps a mount-time segment paused when autoplay is false', () => {
+      const component = mount(
+        <ReactLottie
+          options={{ ...defaultOptions, autoplay: false }}
+          segments={[10, 30]}
+        />
+      );
+      const animation = component.instance().anim;
+
+      expect(animation.firstFrame).to.equal(10);
+      expect(animation.isPaused).to.equal(true);
+
+      component.unmount();
+    });
   });
 
   describe('hover playback', () => {

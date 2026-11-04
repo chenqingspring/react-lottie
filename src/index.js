@@ -40,6 +40,17 @@ export default class Lottie extends React.Component {
     this.setSpeed();
     this.setDirection();
 
+    /* Apply a segment passed on mount. The component otherwise only reacts to
+       `segments` changes, so the animation used to play the whole timeline
+       until the prop was updated. */
+    if (this.props.segments && this.props.segments.length === 2) {
+      const wasPaused = this.anim.isPaused;
+      this.playSegments();
+      if (wasPaused) {
+        this.pause();
+      }
+    }
+
     /* Apply the initial playback props, which are otherwise only read on update */
     if (this.props.isStopped) {
       this.stop();
