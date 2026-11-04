@@ -245,15 +245,13 @@ describe('react-lottie', () => {
       });
     });
 
-    describe('componentWillUpdate', () => {
+    describe('componentDidUpdate', () => {
       it('should register events when animationData changes', () => {
         const registerEventsSpy = sinon.stub();
         const component = mount(<ReactLottie options={defaultOptions} />);
 
         component.instance().registerEvents = registerEventsSpy;
-        component.update();
-
-        component.instance().componentWillUpdate({
+        component.setProps({
           options: {
             ...defaultOptions,
             animationData: beatingHeart,
@@ -261,6 +259,16 @@ describe('react-lottie', () => {
         });
 
         expect(registerEventsSpy.callCount).to.equal(1);
+      });
+
+      it('should not recreate the animation when options are unchanged', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        const original = component.instance().anim;
+
+        component.setProps({ width: 320 });
+
+        expect(component.instance().anim).to.equal(original);
+        component.unmount();
       });
     });
 

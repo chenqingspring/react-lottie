@@ -42,21 +42,21 @@ export default class Lottie extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps /* , nextState */) {
-    /* Recreate the animation handle if the data or its remote path changed */
-    const dataChanged = this.options.animationData !== nextProps.options.animationData;
-    const pathChanged = this.options.path !== nextProps.options.path;
+  componentDidUpdate(prevProps) {
+    /* Recreate the animation handle if the data or its remote path changed.
+       Done here rather than in componentWillUpdate, which React has deprecated
+       and which is unsafe in concurrent rendering (#77, #100, #119). */
+    const dataChanged = this.options.animationData !== this.props.options.animationData;
+    const pathChanged = this.options.path !== this.props.options.path;
 
     if (dataChanged || pathChanged) {
-      this.deRegisterEvents(this.props.eventListeners);
+      this.deRegisterEvents(prevProps.eventListeners);
       this.destroy();
-      this.options = { ...this.options, ...nextProps.options };
+      this.options = { ...this.options, ...this.props.options };
       this.anim = lottie.loadAnimation(this.options);
-      this.registerEvents(nextProps.eventListeners);
+      this.registerEvents(this.props.eventListeners);
     }
-  }
 
-  componentDidUpdate() {
     /* Reconcile playback with the props without flashing to "playing" first:
        calling play() and then pause() on every update restarts an animation
        that the caller paused (#58). */
