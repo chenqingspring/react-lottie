@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.11](https://github.com/chenqingspring/react-lottie/compare/v1.2.10...v1.2.11) (2026-11-04)
+
+
+### Features
+
+* add a `tabIndex` prop so presentational animations can be removed from the tab order ([#130](https://github.com/chenqingspring/react-lottie/issues/130))
+* support the `renderer` option and document it in the README
+
+### Bug Fixes
+
+* apply the initial `isStopped`, `isPaused` and `direction` props on mount instead of only on update
+* replay changed segments immediately by passing `force` to `playSegments` ([#82](https://github.com/chenqingspring/react-lottie/issues/82))
+* guard `destroy()` when the animation was never created ([#51](https://github.com/chenqingspring/react-lottie/issues/51))
+* drop the runtime dependency on `babel-runtime`, which broke consumers' builds ([#177](https://github.com/chenqingspring/react-lottie/issues/177))
+
 ### [1.2.10](https://github.com/chenqingspring/react-lottie/compare/v1.2.9...v1.2.10) (2024-11-30)
 
 
