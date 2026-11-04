@@ -13,13 +13,14 @@ export default class Lottie extends React.Component {
       loop,
       autoplay,
       animationData,
+      renderer = 'svg',
       rendererSettings,
       segments,
     } = options;
 
     this.options = {
       container: this.el,
-      renderer: 'svg',
+      renderer,
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
@@ -31,6 +32,14 @@ export default class Lottie extends React.Component {
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
     this.setSpeed();
+    this.setDirection();
+
+    /* Apply the initial playback props, which are otherwise only read on update */
+    if (this.props.isStopped) {
+      this.stop();
+    } else if (this.props.isPaused) {
+      this.pause();
+    }
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
@@ -38,7 +47,7 @@ export default class Lottie extends React.Component {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
     }
@@ -78,7 +87,9 @@ export default class Lottie extends React.Component {
   }
 
   playSegments() {
-    this.anim.playSegments(this.props.segments);
+    /* Passing `force` replays the new segments even if the animation is
+       already running, so a segments prop change takes effect immediately. */
+    this.anim.playSegments(this.props.segments, true);
   }
 
   stop() {
@@ -94,6 +105,9 @@ export default class Lottie extends React.Component {
   }
 
   destroy() {
+    /* The animation may already be gone, e.g. after a fast unmount or a
+       failed loadAnimation call (issue #51). */
+    if (!this.anim) return;
     this.anim.destroy();
   }
 
@@ -127,6 +141,7 @@ export default class Lottie extends React.Component {
       ariaLabel,
       isClickToPauseDisabled,
       title,
+      tabIndex,
     } = this.props;
 
     const getSize = (initial) => {
@@ -164,7 +179,7 @@ export default class Lottie extends React.Component {
         title={title}
         role={ariaRole}
         aria-label={ariaLabel}
-        tabIndex="0"
+        tabIndex={tabIndex}
       />
     );
   }
@@ -185,6 +200,7 @@ Lottie.propTypes = {
   isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
   style: PropTypes.object,
+  tabIndex: PropTypes.number,
 };
 
 Lottie.defaultProps = {
@@ -196,4 +212,5 @@ Lottie.defaultProps = {
   ariaLabel: 'animation',
   isClickToPauseDisabled: false,
   title: '',
+  tabIndex: 0,
 };

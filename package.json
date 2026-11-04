@@ -1,6 +1,6 @@
 {
   "name": "react-lottie",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "funding": "https://opencollective.com/react-lottie",
   "description": "lottie animation view for React",
   "repository": {
@@ -26,7 +26,6 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
-    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^0.2.1",
     "chai": "^3.5.0",
@@ -49,9 +48,8 @@
     "react": ">=15.0.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
     "lottie-web": "^5.12.2",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.8.1"
   },
   "main": "dist/index.js"
 }

@@ -31,6 +31,18 @@ Install through npm:
 npm install --save react-lottie
 ```
 
+## TypeScript
+
+Type definitions are maintained on DefinitelyTyped and track this package's
+props. Install them alongside the package:
+
+```
+npm install --save-dev @types/react-lottie
+```
+
+TypeScript picks the declarations up automatically, so no import changes are
+needed.
+
 ## Usage
 
 Import pinjump.json as animation data
@@ -77,6 +89,54 @@ export default class LottieControl extends React.Component {
 
 ```
 
+### Play on hover
+
+`eventListeners` takes lottie-web animation events (`complete`, `loopComplete`,
+`enterFrame`, ...), not DOM events. Registering `onMouseOver` or `onMouseLeave`
+there will never fire. Put the DOM handlers on a wrapper element and drive the
+component with props instead.
+
+To play forward on hover and reverse from the current frame on leave, keep the
+animation running and flip `direction`. `isStopped` resets the animation to its
+first frame, so only use it once, to start from a known state.
+
+```jsx
+import React from 'react'
+import Lottie from 'react-lottie';
+import * as animationData from './pinjump.json'
+
+export default class HoverLottie extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {isStopped: true, direction: 1};
+  }
+
+  render() {
+    const defaultOptions = {
+      loop: false,
+      autoplay: false,
+      animationData: animationData,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
+
+    return <div
+      onMouseEnter={() => this.setState({isStopped: false, direction: 1})}
+      onMouseLeave={() => this.setState({direction: -1})}>
+      <Lottie options={defaultOptions}
+              height={100}
+              width={100}
+              isStopped={this.state.isStopped}
+              direction={this.state.direction}
+              isClickToPauseDisabled />
+    </div>
+  }
+}
+
+```
+
 ### props
 The `<Lottie />` Component supports the following components:
 
@@ -90,6 +150,8 @@ the object representing the animation settings that will be instantiated by body
 >
 >**animationData** *required*
 >
+>**renderer** *optional* [default: `svg`]
+>
 >**rendererSettings** *required* 
 
 **width** *optional* [default: `100%`]
@@ -102,7 +164,7 @@ pixel value for containers height.
 
 **eventListeners** *optional* [default: `[]`]
 
-This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
+This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events. These are lottie-web animation events, not DOM events: for `onMouseOver`, `onMouseLeave` and friends put the handler on a wrapping element, as shown in [Play on hover](#play-on-hover).
 
 example:
 ```jsx
@@ -116,6 +178,10 @@ eventListeners=[
 
 **isClickToPauseDisabled** *optional* [default: `false`]
 When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
+
+**tabIndex** *optional* [default: `0`]
+Tab order of the rendered container. Pass `-1` for a purely presentational
+animation that should not receive keyboard focus.
 
 ## Related Projects
 

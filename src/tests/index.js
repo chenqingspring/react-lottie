@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import lottie from 'lottie-web';
 import ReactLottie from '../index';
 import pinjump from '../stories/pinjump.json';
 import beatingHeart from '../stories/beating-heart.json';
@@ -68,6 +69,42 @@ describe('react-lottie', () => {
         expect(component.find('div').prop('style').width).to.equal('188px');
       });
     });
+
+    describe('tabIndex', () => {
+      it('defaults to 0 and can be removed from the tab order', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        expect(component.find('div').at(0).prop('tabIndex')).to.equal(0);
+
+        component.setProps({ tabIndex: -1 });
+        expect(component.find('div').at(0).prop('tabIndex')).to.equal(-1);
+        component.unmount();
+      });
+    });
+
+    describe('renderer', () => {
+      it('defaults to svg and passes an override to lottie-web', () => {
+        const svg = mount(<ReactLottie options={defaultOptions} />);
+        expect(svg.instance().options.renderer).to.equal('svg');
+        svg.unmount();
+
+        const loadAnimation = sinon.stub(lottie, 'loadAnimation').returns({
+          addEventListener: sinon.stub(),
+          removeEventListener: sinon.stub(),
+          setSpeed: sinon.stub(),
+          setDirection: sinon.stub(),
+          stop: sinon.stub(),
+          pause: sinon.stub(),
+          destroy: sinon.stub(),
+        });
+        const component = shallow(
+          <ReactLottie options={{ ...defaultOptions, renderer: 'canvas' }} />
+        );
+
+        component.instance().componentDidMount();
+        expect(loadAnimation.firstCall.args[0].renderer).to.equal('canvas');
+        loadAnimation.restore();
+      });
+    });
   });
 
   describe('when props change', () => {
@@ -84,6 +121,81 @@ describe('react-lottie', () => {
       });
 
       expect(component.instance().anim.animationData).to.equal(beatingHeart);
+    });
+  });
+
+  describe('hover playback', () => {
+    const hoverOptions = {
+      ...defaultOptions,
+      autoplay: false,
+    };
+
+    it('plays on enter and reverses from the current frame on leave', () => {
+      const component = mount(
+        <ReactLottie options={hoverOptions} isStopped direction={1} />
+      );
+      const animation = component.instance().anim;
+
+      expect(animation.isPaused).to.equal(true);
+
+      component.setProps({ isStopped: false });
+      expect(animation.isPaused).to.equal(false);
+      expect(animation.playDirection).to.equal(1);
+
+      component.setProps({ direction: -1 });
+      expect(animation.isPaused).to.equal(false);
+      expect(animation.playDirection).to.equal(-1);
+
+      component.setProps({ direction: 1 });
+      expect(animation.isPaused).to.equal(false);
+      expect(animation.playDirection).to.equal(1);
+
+      component.unmount();
+    });
+
+    it('applies the initial playback props on mount', () => {
+      const reversed = mount(<ReactLottie options={hoverOptions} direction={-1} />);
+      expect(reversed.instance().anim.playDirection).to.equal(-1);
+      reversed.unmount();
+
+      const stopped = mount(
+        <ReactLottie
+          options={{ ...hoverOptions, autoplay: true }}
+          isStopped
+        />
+      );
+      expect(stopped.instance().anim.isPaused).to.equal(true);
+      stopped.unmount();
+
+      const paused = mount(
+        <ReactLottie
+          options={{ ...hoverOptions, autoplay: true }}
+          isPaused
+        />
+      );
+      expect(paused.instance().anim.isPaused).to.equal(true);
+      paused.unmount();
+    });
+
+    it('registers eventListeners on the animation, not on the DOM node', () => {
+      let calls = 0;
+      const component = mount(
+        <ReactLottie
+          options={hoverOptions}
+          eventListeners={[{
+            eventName: 'complete',
+            callback: () => { calls += 1; },
+          }]}
+        />
+      );
+
+      component.find('div').at(0).simulate('mouseover');
+      expect(calls).to.equal(0);
+
+      component.instance().anim.trigger('complete');
+      expect(calls).to.equal(1);
+
+      component.unmount();
     });
   });
 
@@ -151,6 +263,27 @@ describe('react-lottie', () => {
         component.unmount();
 
         expect(spy.callCount).to.equal(1);
+      });
+
+      it('should not throw when the animation is already gone', () => {
+        const component = shallow(<ReactLottie options={defaultOptions} />);
+        component.instance().anim = null;
+
+        expect(() => component.instance().destroy()).to.not.throw();
+      });
+    });
+
+    describe('playSegments', () => {
+      it('should force the new segments to play when already running', () => {
+        const spy = sinon.stub();
+        const component = mount(
+          <ReactLottie options={defaultOptions} segments={[0, 30]} />
+        );
+
+        component.instance().anim.playSegments = spy;
+        component.instance().playSegments();
+
+        expect(spy.calledWith([0, 30], true)).to.equal(true);
       });
     });
   });
