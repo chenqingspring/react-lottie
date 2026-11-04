@@ -3583,9 +3583,9 @@ ignore@^3.2.0:
   integrity sha1-QyNS5XrM2HqzEQ6C0/6g5HgSFW0=
 
 immutable@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.npmjs.org/immutable/-/immutable-3.8.1.tgz"
-  integrity sha1-IAgH8Rqw9ycQ6khVQt4IgHX2jNI=
+  version "3.8.4"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.4.tgz#af27c93537f09629c9d154a173cd55f7bfdc75fd"
+  integrity sha512-ZQv17KolYrYmsDoDB8N67zhIKsNi9mGYlk96y/yuxyAqJB2hLzSGSM7k/sB0/ZvO4kx27U9+fBeD/XlLGh/uXQ==
 
 imurmurhash@^0.1.4:
   version "0.1.4"
