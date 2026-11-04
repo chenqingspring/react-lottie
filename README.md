@@ -148,6 +148,29 @@ export default class HoverLottie extends React.Component {
 
 ```
 
+### Play a segment
+
+Pass `segments` to play a frame range instead of the whole animation. The
+frames are the ones shown in After Effects / the lottie editor.
+
+```jsx
+<Lottie options={defaultOptions}
+        height={400}
+        width={400}
+        segments={[45, 90]} />
+```
+
+Changing `segments` while the animation is running restarts playback from the
+new `fromFrame`, so a single state value is enough to switch ranges:
+
+```jsx
+<Lottie options={defaultOptions} segments={this.state.segment} />
+```
+
+A segment also has to be reachable with `loop`/`autoplay` as usual: with
+`loop: false` and `autoplay: false` the range only plays once you flip
+`isStopped` or pass a new `segments` value.
+
 ### props
 The `<Lottie />` Component supports the following props:
 
@@ -175,6 +198,33 @@ pixel value for containers width.
 
 pixel value for containers height.
 
+**isStopped** *optional* [default: `false`]
+
+Stops the animation and resets it to the first frame. Setting it back to `false`
+resumes playback. Unlike `isPaused`, this discards the current position.
+
+**isPaused** *optional* [default: `false`]
+
+Pauses the animation without losing its current frame. Setting it back to
+`false` resumes from where it stopped.
+
+**speed** *optional* [default: `1`]
+
+Playback rate. `2` plays twice as fast, `0.5` at half speed, and negative
+values play in reverse at that rate.
+
+**direction** *optional* [default: `1`]
+
+`1` plays forward, `-1` plays backward. Changing it keeps the current frame,
+which is what you want for hover-in / hover-out effects.
+
+**segments** *optional* [default: none]
+
+`[fromFrame, toFrame]` to play only part of the animation, e.g. `[45, 90]`.
+The range is applied as soon as the prop is set and re-applied whenever it
+changes, so a new value starts playing that segment immediately even while the
+animation is running. See [Play a segment](#play-a-segment).
+
 **eventListeners** *optional* [default: `[]`]
 
 This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events. These are lottie-web animation events, not DOM events: for `onMouseOver`, `onMouseLeave` and friends put the handler on a wrapping element, as shown in [Play on hover](#play-on-hover).
@@ -191,6 +241,24 @@ eventListeners=[
 
 **isClickToPauseDisabled** *optional* [default: `false`]
 When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
+
+**ariaRole** *optional* [default: `button`]
+
+Role of the rendered container. Pass `img` for a purely decorative animation
+that is described by `ariaLabel`.
+
+**ariaLabel** *optional* [default: `animation`]
+
+Accessible name of the container.
+
+**title** *optional* [default: `''`]
+
+`title` attribute (native tooltip) of the container.
+
+**style** *optional*
+
+Extra inline styles merged onto the container, after the `width`, `height` and
+layout defaults. Use it to override `overflow` or `margin`.
 
 **tabIndex** *optional* [default: `0`]
 Tab order of the rendered container. Pass `-1` for a purely presentational

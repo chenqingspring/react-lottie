@@ -18,4 +18,24 @@ describe('README', () => {
   it('points the demo at the official GitHub Pages site', () => {
     expect(readme).to.contain('https://chenqingspring.github.io/react-lottie');
   });
+
+  // Issue #39: `segments` shipped in #31 without any documentation.
+  // https://github.com/chenqingspring/react-lottie/issues/39
+  it('documents how to play a segment', () => {
+    expect(readme).to.contain('### Play a segment');
+    expect(readme).to.contain('segments={[45, 90]}');
+  });
+
+  // Guards the props table against drifting away from the component: every
+  // prop in Lottie.propTypes must appear as a bold entry in the README.
+  it('documents every prop the component accepts', () => {
+    const source = fs.readFileSync(path.join(__dirname, '../index.js'), 'utf8');
+    const propTypes = source.slice(source.indexOf('Lottie.propTypes'));
+    const documented = propTypes.match(/^ {2}(\w+):/gm).map(line => line.trim().replace(':', ''));
+
+    expect(documented).to.include('segments');
+
+    const undocumented = documented.filter(prop => !readme.includes(`**${prop}**`));
+    expect(undocumented).to.deep.equal([]);
+  });
 });
