@@ -185,8 +185,9 @@ export default class Lottie extends React.Component {
     const onClickHandler = isClickToPauseDisabled ? () => null : this.handleClickToPause;
 
     return (
-      // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      // Click-to-pause is intentional and role="button" is set; keyboard control
+      // is not part of the API yet.
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <div
         ref={(c) => {
           this.el = c;

@@ -2,8 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.2.11](https://github.com/chenqingspring/react-lottie/compare/v1.2.10...v1.2.11) (2026-11-04)
+## [2.0.0](https://github.com/chenqingspring/react-lottie/compare/v1.2.10...v2.0.0) (2026-11-04)
 
+This release folds in the changes that were prepared as 1.2.11 (never
+published) and modernizes the development toolchain.
+
+### Breaking Changes
+
+* the `react` peer dependency is now `>=16.8.0` (previously `>=15.0.0`);
+  React 15 is no longer supported. The component is tested against React 18
+  and works with React 19.
+* import animation JSON with a default import
+  (`import animationData from './pinjump.json'`). A namespace import
+  (`import * as animationData`) yields a frozen ESM module object that
+  lottie-web cannot annotate, which fails under Vite and other strict ESM
+  bundlers.
 
 ### Features
 

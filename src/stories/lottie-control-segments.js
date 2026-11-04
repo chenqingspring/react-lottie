@@ -1,7 +1,7 @@
 import React from 'react';
 import Lottie from '../index';
-import * as animationDataA from './pinjump.json';
-import * as animationDataB from './TwitterHeart.json';
+import animationDataA from './pinjump.json';
+import animationDataB from './TwitterHeart.json';
 
 export default class LottieControlSegment extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Lottie from '../index';
-import * as animationDataA from './TwitterHeart.json';
-import * as animationDataB from './beating-heart.json';
+import animationDataA from './TwitterHeart.json';
+import animationDataB from './beating-heart.json';
 
 /**
  * TransitionWithOptions: demonstrates how you can switch to a

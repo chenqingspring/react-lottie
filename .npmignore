@@ -1,4 +1,10 @@
 src
-.babelrc
+babel.config.json
+eslint.config.mjs
+.storybook
+.scripts
+.github
+.idea
 .relay
 agents
+.out

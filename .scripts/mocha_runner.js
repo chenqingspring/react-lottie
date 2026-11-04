@@ -5,8 +5,7 @@
 // Use `.scripts/user/pretest.js instead`.
 
 process.env.NODE_ENV = 'development';
-require('babel-core/register');
-require('babel-polyfill');
+require('@babel/register');
 
 // Add jsdom support, which is required for enzyme.
 var JSDOM = require('jsdom').JSDOM;
@@ -22,9 +21,20 @@ Object.keys(document.defaultView).forEach((property) => {
   }
 });
 
-global.navigator = {
-  userAgent: 'node.js'
-};
+// Node >= 21 defines a global `navigator` getter, so it cannot be assigned.
+Object.defineProperty(global, 'navigator', {
+  value: { userAgent: 'node.js' },
+  configurable: true,
+  writable: true
+});
+
+// React 18's act() checks this flag; enzyme's adapter drives updates through it.
+global.IS_REACT_ACT_ENVIRONMENT = true;
+
+var Enzyme = require('enzyme');
+var Adapter = require('@cfaester/enzyme-adapter-react-18').default;
+
+Enzyme.configure({ adapter: new Adapter() });
 
 process.on('unhandledRejection', function (error) {
   console.error('Unhandled Promise Rejection:');

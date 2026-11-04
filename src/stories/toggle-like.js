@@ -1,6 +1,6 @@
 import React from 'react';
 import Lottie from '../index';
-import * as animationDataA from './TwitterHeart.json';
+import animationDataA from './TwitterHeart.json';
 
 export default class ToggleLike extends React.Component {
 
