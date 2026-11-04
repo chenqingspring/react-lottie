@@ -9,11 +9,11 @@ require('babel-core/register');
 require('babel-polyfill');
 
 // Add jsdom support, which is required for enzyme.
-var jsdom = require('jsdom').jsdom;
+var JSDOM = require('jsdom').JSDOM;
 
 var exposedProperties = ['window', 'navigator', 'document'];
 
-global.document = jsdom('');
+global.document = new JSDOM('', { url: 'http://localhost/' }).window.document;
 global.window = document.defaultView;
 Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {
