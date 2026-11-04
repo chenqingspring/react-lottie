@@ -51,7 +51,8 @@
     "react": ">=16.8.0"
   },
   "overrides": {
-    "cheerio": "1.0.0-rc.12"
+    "cheerio": "1.0.0-rc.12",
+    "minimatch@^10.2.2": "11.0.4"
   },
   "resolutions": {
     "cheerio": "1.0.0-rc.12"
