@@ -10,6 +10,7 @@
   "license": "MIT",
   "scripts": {
     "release": "git add package.json && git commit -m 'chore: bump version number' && standard-version --first-release && git push --follow-tags origin master && npm publish",
+    "postinstall": "node scripts/postinstall.js",
     "prepublish": ". ./.scripts/prepublish.sh",
     "lint": "eslint src",
     "lintfix": "eslint src --fix",

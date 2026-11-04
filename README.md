@@ -31,6 +31,10 @@ Install through npm:
 npm install --save react-lottie
 ```
 
+react-lottie is maintained automatically by Relay. Please report bugs and
+feature requests through [GitHub issues](https://github.com/chenqingspring/react-lottie/issues);
+learn more about Relay at [get-relay.cc](https://get-relay.cc).
+
 ## Requirements
 
 React 16.8 or newer. The test suite runs against React 18; the component uses
