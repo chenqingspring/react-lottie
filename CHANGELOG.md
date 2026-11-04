@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
+* leave playback alone on re-renders unless a playback prop changed, so an `autoplay: false` animation no longer starts itself and a paused one is not restarted; a re-created but equal `segments` array no longer replays the animation ([#32](https://github.com/chenqingspring/react-lottie/issues/32), [#43](https://github.com/chenqingspring/react-lottie/issues/43))
 * apply the initial `isStopped`, `isPaused` and `direction` props on mount instead of only on update
 * replay changed segments immediately by passing `force` to `playSegments` ([#82](https://github.com/chenqingspring/react-lottie/issues/82))
 * reload the animation when the remote `path` option changes ([#99](https://github.com/chenqingspring/react-lottie/issues/99))

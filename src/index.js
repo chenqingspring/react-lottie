@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import lottie from 'lottie-web';
 
+const segmentsAreEqual = (a, b) => {
+  if (a === b) return true;
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  return a.every((value, index) => value === b[index]);
+};
+
 export default class Lottie extends React.Component {
   componentDidMount() {
     const {
@@ -57,17 +63,25 @@ export default class Lottie extends React.Component {
       this.registerEvents(this.props.eventListeners);
     }
 
-    /* Reconcile playback with the props without flashing to "playing" first:
-       calling play() and then pause() on every update restarts an animation
-       that the caller paused (#58). */
+    /* Only drive playback when a playback prop asks for it. Re-rendering used
+       to call play() unconditionally, which started an animation that was
+       created with `autoplay: false` and restarted one the caller had paused
+       (#32, #43, #58). A newly loaded animation is left to its own `autoplay`
+       setting unless one of the playback props overrides it below. */
+    const playbackChanged = prevProps.isStopped !== this.props.isStopped
+      || prevProps.isPaused !== this.props.isPaused
+      || !segmentsAreEqual(prevProps.segments, this.props.segments);
+
     if (this.props.isStopped) {
       this.stop();
     } else if (this.props.isPaused) {
       this.pause();
-    } else if (this.props.segments) {
-      this.playSegments();
-    } else {
-      this.play();
+    } else if (playbackChanged) {
+      if (this.props.segments) {
+        this.playSegments();
+      } else {
+        this.play();
+      }
     }
 
     this.setSpeed();

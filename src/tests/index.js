@@ -146,6 +146,40 @@ describe('react-lottie', () => {
       expect(loadAnimation.secondCall.args[0].path).to.equal('b.json');
       loadAnimation.restore();
     });
+
+    it('does not start an animation created with autoplay: false (#32)', () => {
+      const options = { ...defaultOptions, autoplay: false };
+      const component = mount(<ReactLottie options={options} />);
+      const animation = component.instance().anim;
+
+      expect(animation.isPaused).to.equal(true);
+
+      component.setProps({ width: 320 });
+      expect(animation.isPaused).to.equal(true);
+
+      component.setProps({ options: { ...options } });
+      expect(component.instance().anim).to.equal(animation);
+      expect(animation.isPaused).to.equal(true);
+
+      component.unmount();
+    });
+
+    it('does not restart the animation when an equal segments array is re-created', () => {
+      const component = mount(
+        <ReactLottie options={defaultOptions} segments={[0, 30]} />
+      );
+      const spy = sinon.stub();
+      component.instance().anim.playSegments = spy;
+
+      component.setProps({ segments: [0, 30] });
+      expect(spy.callCount).to.equal(0);
+
+      component.setProps({ segments: [0, 60] });
+      expect(spy.callCount).to.equal(1);
+      expect(spy.calledWith([0, 60], true)).to.equal(true);
+
+      component.unmount();
+    });
   });
 
   describe('hover playback', () => {
