@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. See [standa
 * replay changed segments immediately by passing `force` to `playSegments` ([#82](https://github.com/chenqingspring/react-lottie/issues/82))
 * reload the animation when the remote `path` option changes ([#99](https://github.com/chenqingspring/react-lottie/issues/99))
 * guard `destroy()` when the animation was never created ([#51](https://github.com/chenqingspring/react-lottie/issues/51))
+* make the imperative `pause()` method actually pause, and stop restarting a paused animation on unrelated prop updates ([#58](https://github.com/chenqingspring/react-lottie/issues/58))
 * drop the runtime dependency on `babel-runtime`, which broke consumers' builds ([#177](https://github.com/chenqingspring/react-lottie/issues/177))
 
 ### [1.2.10](https://github.com/chenqingspring/react-lottie/compare/v1.2.9...v1.2.10) (2024-11-30)

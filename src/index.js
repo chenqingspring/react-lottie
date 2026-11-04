@@ -57,15 +57,19 @@ export default class Lottie extends React.Component {
   }
 
   componentDidUpdate() {
+    /* Reconcile playback with the props without flashing to "playing" first:
+       calling play() and then pause() on every update restarts an animation
+       that the caller paused (#58). */
     if (this.props.isStopped) {
       this.stop();
+    } else if (this.props.isPaused) {
+      this.pause();
     } else if (this.props.segments) {
       this.playSegments();
     } else {
       this.play();
     }
 
-    this.pause();
     this.setSpeed();
     this.setDirection();
   }
@@ -100,11 +104,7 @@ export default class Lottie extends React.Component {
   }
 
   pause() {
-    if (this.props.isPaused && !this.anim.isPaused) {
-      this.anim.pause();
-    } else if (!this.props.isPaused && this.anim.isPaused) {
-      this.anim.pause();
-    }
+    this.anim.pause();
   }
 
   destroy() {

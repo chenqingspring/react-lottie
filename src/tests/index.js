@@ -310,5 +310,34 @@ describe('react-lottie', () => {
         expect(spy.calledWith([0, 30], true)).to.equal(true);
       });
     });
+
+    describe('imperative playback', () => {
+      it('pause() pauses a playing animation even when isPaused is false', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        const animation = component.instance().anim;
+
+        component.instance().pause();
+        expect(animation.isPaused).to.equal(true);
+
+        component.instance().play();
+        expect(animation.isPaused).to.equal(false);
+        component.unmount();
+      });
+
+      it('does not restart an animation paused by prop on unrelated updates', () => {
+        const component = mount(
+          <ReactLottie options={defaultOptions} isPaused />
+        );
+        const animation = component.instance().anim;
+        expect(animation.isPaused).to.equal(true);
+
+        component.setProps({ width: 300 });
+        expect(animation.isPaused).to.equal(true);
+
+        component.setProps({ isPaused: false });
+        expect(animation.isPaused).to.equal(false);
+        component.unmount();
+      });
+    });
   });
 });
