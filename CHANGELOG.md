@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/chenqingspring/react-lottie/compare/v2.0.1...v2.1.0) (2026-11-05)
+
+### Features
+
+* add an `isSubframe` prop that is passed to lottie-web's `setSubframe()`, so `enterFrame` can fire only on whole After Effects frames, e.g. to trigger audio exactly on frame boundaries ([#71](https://github.com/chenqingspring/react-lottie/issues/71))
+* expose `goToAndStop(frame, isFrame)` and `goToAndPlay(frame, isFrame)` on the component instance, which makes it possible to drive an animation from scroll position or jump to an exact frame/marker through a `ref` ([#40](https://github.com/chenqingspring/react-lottie/issues/40))
+
+### Bug Fixes
+
+* keep a playing animation running when an unrelated prop changes; added a regression test for the state-change pause reported in [#43](https://github.com/chenqingspring/react-lottie/issues/43)
+
 ## [2.0.1](https://github.com/chenqingspring/react-lottie/compare/v2.0.0...v2.0.1) (2026-11-05)
 
 ### Bug Fixes

@@ -39,6 +39,7 @@ export default class Lottie extends React.Component {
     this.registerEvents(eventListeners);
     this.setSpeed();
     this.setDirection();
+    this.setSubframe();
 
     /* Apply a segment passed on mount. The component otherwise only reacts to
        `segments` changes, so the animation used to play the whole timeline
@@ -97,6 +98,7 @@ export default class Lottie extends React.Component {
 
     this.setSpeed();
     this.setDirection();
+    this.setSubframe();
   }
 
   componentWillUnmount() {
@@ -114,8 +116,25 @@ export default class Lottie extends React.Component {
     this.anim.setDirection(this.props.direction);
   }
 
+  /* `isSubframe` mirrors lottie-web's setSubframe(): with it enabled (the
+     default) frames are interpolated, with it disabled `enterFrame` fires only
+     on whole After Effects frames (issue #71). */
+  setSubframe() {
+    this.anim.setSubframe(this.props.isSubframe);
+  }
+
   play() {
     this.anim.play();
+  }
+
+  /* Frame/marker control from a ref, e.g. to sync an animation to scroll.
+     `isFrame` false treats the value as a time in seconds (issue #40). */
+  goToAndStop(value, isFrame) {
+    this.anim.goToAndStop(value, isFrame);
+  }
+
+  goToAndPlay(value, isFrame) {
+    this.anim.goToAndPlay(value, isFrame);
   }
 
   playSegments() {
@@ -224,6 +243,7 @@ Lottie.propTypes = {
   speed: PropTypes.number,
   segments: PropTypes.arrayOf(PropTypes.number),
   direction: PropTypes.number,
+  isSubframe: PropTypes.bool,
   ariaRole: PropTypes.string,
   ariaLabel: PropTypes.string,
   isClickToPauseDisabled: PropTypes.bool,
@@ -237,6 +257,7 @@ Lottie.defaultProps = {
   isStopped: false,
   isPaused: false,
   speed: 1,
+  isSubframe: true,
   ariaRole: 'button',
   ariaLabel: 'animation',
   isClickToPauseDisabled: false,

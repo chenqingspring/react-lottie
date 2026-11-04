@@ -187,6 +187,22 @@ A segment also has to be reachable with `loop`/`autoplay` as usual: with
 `loop: false` and `autoplay: false` the range only plays once you flip
 `isStopped` or pass a new `segments` value.
 
+### Imperative control
+
+A `ref` to the component exposes `play()`, `pause()`, `stop()`,
+`playSegments()`, `goToAndStop(frame, isFrame)` and
+`goToAndPlay(frame, isFrame)`, mirroring the lottie-web animation object. Use
+`isFrame: true` for a frame number, or omit it to pass a time in seconds. This
+is how you can sync an animation to scroll position (issue #40):
+
+```jsx
+const lottie = useRef(null);
+
+const onScroll = (frame) => lottie.current.goToAndStop(frame, true);
+
+<Lottie ref={lottie} options={defaultOptions} />
+```
+
 ### props
 The `<Lottie />` Component supports the following props:
 
@@ -233,6 +249,13 @@ values play in reverse at that rate.
 
 `1` plays forward, `-1` plays backward. Changing it keeps the current frame,
 which is what you want for hover-in / hover-out effects.
+
+**isSubframe** *optional* [default: `true`]
+
+Passed to lottie-web's `setSubframe()`. When `true`, frames are interpolated
+for smooth playback. Set it to `false` to make the `enterFrame` event fire only
+on whole After Effects frames, for example to trigger audio exactly on frame
+boundaries (issue #71).
 
 **segments** *optional* [default: none]
 

@@ -96,6 +96,7 @@ describe('react-lottie', () => {
           removeEventListener: sinon.stub(),
           setSpeed: sinon.stub(),
           setDirection: sinon.stub(),
+          setSubframe: sinon.stub(),
           stop: sinon.stub(),
           pause: sinon.stub(),
           destroy: sinon.stub(),
@@ -133,6 +134,7 @@ describe('react-lottie', () => {
         removeEventListener: sinon.stub(),
         setSpeed: sinon.stub(),
         setDirection: sinon.stub(),
+        setSubframe: sinon.stub(),
         stop: sinon.stub(),
         pause: sinon.stub(),
         play: sinon.stub(),
@@ -149,6 +151,18 @@ describe('react-lottie', () => {
       expect(loadAnimation.callCount).to.equal(2);
       expect(loadAnimation.secondCall.args[0].path).to.equal('b.json');
       loadAnimation.restore();
+    });
+
+    it('keeps a playing animation running when an unrelated prop changes (#43)', () => {
+      const component = mount(<ReactLottie options={defaultOptions} />);
+      const animation = component.instance().anim;
+
+      expect(animation.isPaused).to.equal(false);
+
+      component.setProps({ width: 320 });
+      expect(animation.isPaused).to.equal(false);
+
+      component.unmount();
     });
 
     it('does not start an animation created with autoplay: false (#32)', () => {
@@ -409,6 +423,52 @@ describe('react-lottie', () => {
 
         component.setProps({ isPaused: false });
         expect(animation.isPaused).to.equal(false);
+        component.unmount();
+      });
+    });
+
+    describe('frame control', () => {
+      it('applies the isSubframe prop on mount and on change', () => {
+        const component = mount(
+          <ReactLottie options={defaultOptions} isSubframe={false} />
+        );
+        const animation = component.instance().anim;
+
+        expect(animation.isSubframeEnabled).to.equal(false);
+
+        component.setProps({ isSubframe: true });
+        expect(animation.isSubframeEnabled).to.equal(true);
+        component.unmount();
+      });
+
+      it('moves to an exact frame and honors isSubframe', () => {
+        const subframe = mount(<ReactLottie options={defaultOptions} />);
+        subframe.instance().goToAndStop(12.7, true);
+        expect(subframe.instance().anim.currentFrame).to.equal(12.7);
+        expect(subframe.instance().anim.isPaused).to.equal(true);
+        subframe.unmount();
+
+        const whole = mount(
+          <ReactLottie options={defaultOptions} isSubframe={false} />
+        );
+        whole.instance().goToAndStop(12.7, true);
+        expect(whole.instance().anim.currentFrame).to.equal(12);
+        whole.unmount();
+      });
+
+      it('delegates goToAndStop and goToAndPlay to lottie-web', () => {        const component = mount(<ReactLottie options={defaultOptions} />);
+        const animation = component.instance().anim;
+        const stop = sinon.stub(animation, 'goToAndStop');
+        const play = sinon.stub(animation, 'goToAndPlay');
+
+        component.instance().goToAndStop(12, true);
+        expect(stop.calledOnceWith(12, true)).to.equal(true);
+
+        component.instance().goToAndPlay(1.5);
+        expect(play.calledOnceWith(1.5, undefined)).to.equal(true);
+
+        stop.restore();
+        play.restore();
         component.unmount();
       });
     });
