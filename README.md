@@ -116,6 +116,74 @@ export default class LottieControl extends React.Component {
 
 ```
 
+### Loading animation data without bloating the bundle
+
+A static import like `import animationData from './pinjump.json'` (the example
+above) makes the bundler inline the animation into the JavaScript chunk that
+imports it. A 500 kB JSON file then becomes 500 kB of JavaScript the browser has
+to download and parse before the page can run. The JSON is data, not code, so
+keep it out of the main bundle:
+
+**Serve it from `public/` and use `options.path`.** In Create React App, Vite
+and Next.js, files in `public/` are copied to the build output as static
+assets; they are not bundled into JavaScript. `lottie-web` fetches the file when
+the component mounts, and the browser caches it separately from the app bundle:
+
+```jsx
+const defaultOptions = {
+  path: '/animations/pinjump.json', // relative to the deployed site root
+  loop: true,
+  autoplay: true,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+};
+
+<Lottie options={defaultOptions} height={400} width={400} />
+```
+
+Because lottie-web owns the fetch, `colorFilters` is not applied to animations
+loaded this way — fetch the JSON yourself if you need to recolor it.
+
+**Or load it on demand with a dynamic `import()`.** If you need the parsed data
+in your own code, a dynamic import puts the JSON in a separate chunk that is
+downloaded only when the component renders:
+
+```jsx
+import { useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
+
+export default function Animation() {
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    import('./pinjump.json').then(({ default: data }) => {
+      if (!cancelled) setAnimationData(data);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  if (!animationData) return null;
+
+  return (
+    <Lottie
+      options={{ animationData, loop: true, autoplay: true }}
+      height={400}
+      width={400}
+    />
+  );
+}
+```
+
+Rendering `<Animation />` lazily (for example when it scrolls into view) defers
+even that chunk until it is needed. The same idea works with `React.lazy` around
+a component that imports the JSON.
+
+Finally, the file itself can usually get smaller: export at a lower precision,
+remove unused layers and precompositions, avoid embedded raster images, and let
+gzip/Brotli compress the JSON. LottieFiles' optimizer automates the first steps.
+
 ### Play on hover
 
 `eventListeners` takes lottie-web animation events (`complete`, `loopComplete`,

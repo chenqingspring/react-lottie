@@ -26,6 +26,14 @@ describe('README', () => {
     expect(readme).to.contain('segments={[45, 90]}');
   });
 
+  // Issue #142: a static JSON import inlines the animation into the JS bundle.
+  // https://github.com/chenqingspring/react-lottie/issues/142
+  it('documents how to avoid bundling large animation data', () => {
+    expect(readme).to.contain('### Loading animation data without bloating the bundle');
+    expect(readme).to.contain("path: '/animations/pinjump.json'");
+    expect(readme).to.contain("import('./pinjump.json')");
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {
