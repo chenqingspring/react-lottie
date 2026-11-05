@@ -187,6 +187,34 @@ A segment also has to be reachable with `loop`/`autoplay` as usual: with
 `loop: false` and `autoplay: false` the range only plays once you flip
 `isStopped` or pass a new `segments` value.
 
+### Recolor an animation
+
+`colorFilters` replaces the colors of fills, strokes and solid layers named by
+a keypath, so one animation file can follow a theme (issue #144):
+
+```jsx
+<Lottie
+  options={defaultOptions}
+  colorFilters={[
+    { keypath: 'Pin 1.Shape 2.Fill 1', color: '#4f46e5' },
+    { keypath: 'Background', color: 'rgb(15, 23, 42)' },
+  ]}
+/>
+```
+
+A keypath is the dot-separated name chain from the layer down to the fill,
+stroke or solid, e.g. `layer.group.fill`. For a layer inside a precomposition,
+the composition name can be included (`Precomp.InnerLayer.Shape.Fill 1`) or
+omitted. `*` matches one level and `**` matches any number of levels; dots in
+a name can be escaped with a backslash. Colors accept hex, `rgb()`/`rgba()`,
+`hsl()`/`hsla()` and the basic CSS color names. Invalid filters are ignored.
+
+The filters are applied to `options.animationData`. Changing them reloads the
+animation, because lottie-web cannot recolor a loaded animation; the current
+frame and paused/playing state are preserved. Animations loaded from
+`options.path` are not recolored, since the JSON is fetched by lottie-web:
+load the JSON yourself and pass it as `animationData` instead.
+
 ### Imperative control
 
 A `ref` to the component exposes `play()`, `pause()`, `stop()`,
@@ -221,6 +249,11 @@ the object representing the animation settings that will be instantiated by body
 >**renderer** *optional* [default: `svg`]
 >
 >**rendererSettings** *required* 
+
+**colorFilters** *optional* [default: `[]`]
+
+Array of `{ keypath, color }` objects that replace the colors of fills,
+strokes and solid layers. See [Recolor an animation](#recolor-an-animation).
 
 **width** *optional* [default: `100%`]
 

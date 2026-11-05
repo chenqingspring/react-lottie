@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import lottie from 'lottie-web';
+import { applyColorFilters, colorFiltersAreEqual } from './colorFilters';
 
 const segmentsAreEqual = (a, b) => {
   if (a === b) return true;
@@ -13,6 +14,7 @@ export default class Lottie extends React.Component {
     const {
       options,
       eventListeners,
+      colorFilters,
     } = this.props;
 
     const {
@@ -24,17 +26,40 @@ export default class Lottie extends React.Component {
       segments,
     } = options;
 
+    /* Keep the caller's data and filter list around so a later update can tell
+       whether either actually changed. */
+    this.animationData = animationData;
+    this.colorFilters = colorFilters;
+    const filteredAnimationData = applyColorFilters(animationData, colorFilters);
+
     this.options = {
       container: this.el,
       renderer,
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
-      animationData,
+      animationData: filteredAnimationData,
       rendererSettings,
     };
 
     this.options = { ...this.options, ...options };
+    /* Spreading `options` restored the unfiltered data; use the filtered copy
+       after the merge. */
+    this.options.animationData = filteredAnimationData;
+
+    if (
+      typeof process !== 'undefined'
+      && process.env.NODE_ENV !== 'production'
+      && Array.isArray(colorFilters)
+      && colorFilters.length > 0
+      && !animationData
+    ) {
+      console.warn(
+        '[react-lottie] colorFilters requires options.animationData; '
+        + 'animations loaded from options.path are not recolored.'
+      );
+    }
+
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
     this.setSpeed();
@@ -61,18 +86,44 @@ export default class Lottie extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    /* Recreate the animation handle if the data or its remote path changed.
-       Done here rather than in componentWillUpdate, which React has deprecated
-       and which is unsafe in concurrent rendering (#77, #100, #119). */
-    const dataChanged = this.options.animationData !== this.props.options.animationData;
+    /* Recreate the animation handle if the data, its remote path or the color
+       filters changed. Done here rather than in componentWillUpdate, which
+       React has deprecated and which is unsafe in concurrent rendering
+       (#77, #100, #119). */
+    const dataChanged = this.animationData !== this.props.options.animationData;
     const pathChanged = this.options.path !== this.props.options.path;
+    const colorFiltersChanged = !colorFiltersAreEqual(
+      this.colorFilters,
+      this.props.colorFilters,
+    );
 
-    if (dataChanged || pathChanged) {
+    if (dataChanged || pathChanged || colorFiltersChanged) {
+      const currentFrame = this.anim ? this.anim.currentFrame : 0;
+      const wasPaused = this.anim ? this.anim.isPaused : true;
+      /* lottie-web cannot recolor a loaded animation, so a filter change has to
+         load the data again. Only a filter-only change restores the frame. */
+      const colorOnlyChange = colorFiltersChanged && !dataChanged && !pathChanged;
+
       this.deRegisterEvents(prevProps.eventListeners);
       this.destroy();
+
+      this.animationData = this.props.options.animationData;
+      this.colorFilters = this.props.colorFilters;
       this.options = { ...this.options, ...this.props.options };
+      this.options.animationData = applyColorFilters(
+        this.props.options.animationData,
+        this.props.colorFilters,
+      );
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(this.props.eventListeners);
+
+      /* Keep the frame and playback state so a theme change does not restart
+         a paused or half-played animation. */
+      if (colorOnlyChange) {
+        if (this.props.segments) this.anim.playSegments(this.props.segments, true);
+        if (Number.isFinite(currentFrame)) this.anim.goToAndStop(currentFrame, true);
+        if (!wasPaused) this.anim.play();
+      }
     }
 
     /* Only drive playback when a playback prop asks for it. Re-rendering used
@@ -236,6 +287,10 @@ export default class Lottie extends React.Component {
 Lottie.propTypes = {
   eventListeners: PropTypes.arrayOf(PropTypes.object),
   options: PropTypes.object.isRequired,
+  colorFilters: PropTypes.arrayOf(PropTypes.shape({
+    keypath: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+  })),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isStopped: PropTypes.bool,
@@ -254,6 +309,7 @@ Lottie.propTypes = {
 
 Lottie.defaultProps = {
   eventListeners: [],
+  colorFilters: [],
   isStopped: false,
   isPaused: false,
   speed: 1,

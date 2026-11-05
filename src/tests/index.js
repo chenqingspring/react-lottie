@@ -85,6 +85,76 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('colorFilters', () => {
+      const filters = [{ keypath: 'Pin 1.Shape 2.Fill 1', color: '#00ff00' }];
+      const getFill = data => data.layers
+        .find(layer => layer.nm === 'Pin 1')
+        .shapes.find(shape => shape.nm === 'Shape 2')
+        .it.find(item => item.nm === 'Fill 1')
+        .c.k;
+
+      it('recolors animationData and leaves the source untouched', () => {
+        const original = getFill(pinjump);
+        const component = mount(
+          <ReactLottie options={defaultOptions} colorFilters={filters} />
+        );
+
+        expect(getFill(component.instance().anim.animationData)).to.deep.equal([0, 1, 0, 1]);
+        expect(getFill(pinjump)).to.deep.equal(original);
+        expect(component.html()).to.contain('rgb(0,255,0)');
+        component.unmount();
+      });
+
+      it('reloads when the filters change and keeps a paused frame', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        const first = component.instance().anim;
+
+        component.instance().goToAndStop(12, true);
+        expect(first.currentFrame).to.equal(12);
+
+        component.setProps({ colorFilters: filters });
+        const second = component.instance().anim;
+
+        expect(second).to.not.equal(first);
+        expect(second.currentFrame).to.equal(12);
+        expect(second.isPaused).to.equal(true);
+        expect(getFill(second.animationData)).to.deep.equal([0, 1, 0, 1]);
+        component.unmount();
+      });
+
+      it('keeps a playing animation running when the filters change', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+
+        component.instance().play();
+        component.setProps({ colorFilters: filters });
+
+        expect(component.instance().anim.isPaused).to.equal(false);
+        component.unmount();
+      });
+
+      it('does not reload when an equal filter array is re-created', () => {
+        const component = mount(
+          <ReactLottie options={defaultOptions} colorFilters={filters} />
+        );
+        const animation = component.instance().anim;
+
+        component.setProps({ colorFilters: filters.map(filter => ({ ...filter })) });
+        expect(component.instance().anim).to.equal(animation);
+        component.unmount();
+      });
+
+      it('restores the original colors when the filters are removed', () => {
+        const original = getFill(pinjump);
+        const component = mount(
+          <ReactLottie options={defaultOptions} colorFilters={filters} />
+        );
+
+        component.setProps({ colorFilters: [] });
+        expect(getFill(component.instance().anim.animationData)).to.deep.equal(original);
+        component.unmount();
+      });
+    });
+
     describe('renderer', () => {
       it('defaults to svg and passes an override to lottie-web', () => {
         const svg = mount(<ReactLottie options={defaultOptions} />);

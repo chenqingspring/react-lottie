@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/chenqingspring/react-lottie/compare/v2.1.0...v2.2.0) (2026-11-05)
+
+### Features
+
+* add a `colorFilters` prop that replaces the colors of fills, strokes and solid layers by keypath, mirroring lottie-react-native's API. The filters are applied to a copy of `animationData`; changing them reloads the animation while preserving the current frame and playback state ([#144](https://github.com/chenqingspring/react-lottie/issues/144))
+
 ## [2.1.0](https://github.com/chenqingspring/react-lottie/compare/v2.0.1...v2.1.0) (2026-11-05)
 
 ### Features
