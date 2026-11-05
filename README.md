@@ -37,6 +37,70 @@ npm install --save react-lottie
 > [GitHub](https://github.com/chenqingspring/react-lottie/issues) and Relay
 > will review and fix it.
 
+## Using from a CDN (no bundler)
+
+The published `dist/index.js` is a CommonJS build for bundlers and npm
+consumers. It uses `exports` and expects `react`, `prop-types` and `lottie-web`
+to be resolvable, so loading that file with a plain `<script>` tag fails with
+`Uncaught ReferenceError: exports is not defined`. The package does not ship a
+UMD/browser global build.
+
+To use react-lottie without a build step, load it as an ES module from a CDN
+and map `react` to the same copy the page uses. [esm.sh](https://esm.sh)
+supports `?external=react` for exactly this:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18",
+      "react-dom/client": "https://esm.sh/react-dom@18/client",
+      "react-lottie": "https://esm.sh/react-lottie@2?external=react"
+    }
+  }
+</script>
+<script type="module">
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+  import Lottie from 'react-lottie';
+
+  const options = {
+    path: '/animations/pinjump.json',
+    loop: true,
+    autoplay: true,
+  };
+
+  createRoot(document.getElementById('root')).render(
+    React.createElement(Lottie, { options, height: 400, width: 400 })
+  );
+</script>
+```
+
+Without a compiler for JSX, create elements with `React.createElement`, or add
+`htm`/Babel. Keeping `react` in the import map gives the page one React
+instance; a CDN build that bundles its own React (such as jsDelivr's `+esm`
+output) produces two copies, which breaks context and hooks.
+
+If you only need to play an animation and not the React wrapper, load
+lottie-web directly and skip React entirely:
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script>
+  lottie.loadAnimation({
+    container: document.getElementById('root'),
+    path: '/animations/pinjump.json',
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+  });
+</script>
+```
+
+An ESM CDN build still downloads React, React DOM, lottie-web and react-lottie,
+so it removes the build step but not the bytes. For production, a bundler that
+shares one React copy and tree-shakes lottie-web is smaller.
+
 ## Requirements
 
 React 16.8 or newer. The test suite runs against React 18; the component uses

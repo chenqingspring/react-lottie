@@ -34,6 +34,14 @@ describe('README', () => {
     expect(readme).to.contain("import('./pinjump.json')");
   });
 
+  // Issue #135: the published entry point is CommonJS, so a plain <script>
+  // tag fails with "exports is not defined"; document the ESM CDN path.
+  it('documents how to use the package from a CDN without a bundler', () => {
+    expect(readme).to.contain('## Using from a CDN (no bundler)');
+    expect(readme).to.contain('exports is not defined');
+    expect(readme).to.contain('https://esm.sh/react-lottie@2?external=react');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {
