@@ -96,13 +96,17 @@ export default class Lottie extends React.Component {
       this.colorFilters,
       this.props.colorFilters,
     );
+    /* The wrapper element is part of lottie-web's configuration, so a new
+       element means the animation has to be bound to the new node. */
+    const containerChanged = prevProps.as !== this.props.as;
 
-    if (dataChanged || pathChanged || colorFiltersChanged) {
+    if (dataChanged || pathChanged || colorFiltersChanged || containerChanged) {
       const currentFrame = this.anim ? this.anim.currentFrame : 0;
       const wasPaused = this.anim ? this.anim.isPaused : true;
-      /* lottie-web cannot recolor a loaded animation, so a filter change has to
-         load the data again. Only a filter-only change restores the frame. */
-      const colorOnlyChange = colorFiltersChanged && !dataChanged && !pathChanged;
+      /* lottie-web cannot recolor a loaded animation and cannot move one to
+         another node, so those changes load the same data again. Only then is
+         it worth restoring the frame and playback state. */
+      const reloadInPlace = !dataChanged && !pathChanged;
 
       this.deRegisterEvents(prevProps.eventListeners);
       this.destroy();
@@ -110,6 +114,9 @@ export default class Lottie extends React.Component {
       this.animationData = this.props.options.animationData;
       this.colorFilters = this.props.colorFilters;
       this.options = { ...this.options, ...this.props.options };
+      /* `options` is caller-owned and knows nothing about the wrapper, so the
+         ref (already pointing at the newly rendered node) wins. */
+      this.options.container = this.el;
       this.options.animationData = applyColorFilters(
         this.props.options.animationData,
         this.props.colorFilters,
@@ -117,9 +124,9 @@ export default class Lottie extends React.Component {
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(this.props.eventListeners);
 
-      /* Keep the frame and playback state so a theme change does not restart
-         a paused or half-played animation. */
-      if (colorOnlyChange) {
+      /* Keep the frame and playback state so a theme or element change does
+         not restart a paused or half-played animation. */
+      if (reloadInPlace) {
         if (this.props.segments) this.anim.playSegments(this.props.segments, true);
         if (Number.isFinite(currentFrame)) this.anim.goToAndStop(currentFrame, true);
         if (!wasPaused) this.anim.play();
@@ -240,6 +247,7 @@ export default class Lottie extends React.Component {
       isClickToPauseDisabled,
       title,
       tabIndex,
+      as: Container,
     } = this.props;
 
     const getSize = (initial) => {
@@ -269,7 +277,7 @@ export default class Lottie extends React.Component {
       // Click-to-pause is intentional and role="button" is set; keyboard control
       // is not part of the API yet.
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <div
+      <Container
         ref={(c) => {
           this.el = c;
         }}
@@ -305,6 +313,7 @@ Lottie.propTypes = {
   title: PropTypes.string,
   style: PropTypes.object,
   tabIndex: PropTypes.number,
+  as: PropTypes.elementType,
 };
 
 Lottie.defaultProps = {
@@ -319,4 +328,5 @@ Lottie.defaultProps = {
   isClickToPauseDisabled: false,
   title: '',
   tabIndex: 0,
+  as: 'div',
 };

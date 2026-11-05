@@ -283,6 +283,21 @@ frame and paused/playing state are preserved. Animations loaded from
 `options.path` are not recolored, since the JSON is fetched by lottie-web:
 load the JSON yourself and pass it as `animationData` instead.
 
+### Render inline inside a paragraph
+
+The container is a `div` by default, which is not a valid child of `<p>`. Pass
+`as` to choose the element (issue #73):
+
+```jsx
+<p>
+  Text <Lottie as="span" options={defaultOptions} ariaRole="img" /> more text
+</p>
+```
+
+`as` accepts a tag name or a component that forwards its `ref` to the DOM node
+lottie-web should render into. Changing `as` reloads the animation into the new
+element and keeps the current frame.
+
 ### Imperative control
 
 A `ref` to the component exposes `play()`, `pause()`, `stop()`,
@@ -403,6 +418,13 @@ layout defaults. Use it to override `overflow` or `margin`.
 **tabIndex** *optional* [default: `0`]
 Tab order of the rendered container. Pass `-1` for a purely presentational
 animation that should not receive keyboard focus.
+
+**as** *optional* [default: `div`]
+
+Element or component rendered as the animation container. Use `as="span"` when
+`<Lottie />` is a child of `<p>`, where a `div` is invalid HTML (issue #73). A
+custom component must forward its `ref` to a DOM element. See
+[Render inline inside a paragraph](#render-inline-inside-a-paragraph).
 
 ## Related Projects
 

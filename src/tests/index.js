@@ -155,6 +155,62 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('as', () => {
+      it('renders a div by default', () => {
+        const component = shallow(<ReactLottie options={defaultOptions} />);
+        expect(component.find('div')).to.have.length(1);
+      });
+
+      it('renders the requested element instead of a div', () => {
+        const component = mount(
+          <ReactLottie options={defaultOptions} as="span" />
+        );
+
+        expect(component.find('span')).to.have.length(1);
+        expect(component.find('div')).to.have.length(0);
+        expect(component.instance().el.tagName).to.equal('SPAN');
+        component.unmount();
+      });
+
+      it('can be nested in a paragraph without invalid DOM nesting (#73)', () => {
+        const component = mount(
+          <p><ReactLottie options={defaultOptions} as="span" /></p>
+        );
+
+        expect(component.find('p div')).to.have.length(0);
+        component.unmount();
+      });
+
+      it('supports a component that forwards its ref', () => {
+        const Span = React.forwardRef(function Span(props, ref) {
+          return <span ref={ref} {...props} />;
+        });
+        const component = mount(
+          <ReactLottie options={defaultOptions} as={Span} />
+        );
+
+        expect(component.find('span')).to.have.length(1);
+        expect(component.instance().el.tagName).to.equal('SPAN');
+        component.unmount();
+      });
+
+      it('rebinds the animation to the new element and keeps the frame', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        const first = component.instance().anim;
+        const destroy = sinon.spy(first, 'destroy');
+
+        component.instance().goToAndStop(12, true);
+        component.setProps({ as: 'span' });
+
+        expect(destroy.callCount).to.equal(1);
+        expect(component.instance().anim).to.not.equal(first);
+        expect(component.instance().el.tagName).to.equal('SPAN');
+        expect(component.instance().anim.currentFrame).to.equal(12);
+        expect(component.instance().anim.isPaused).to.equal(true);
+        component.unmount();
+      });
+    });
+
     describe('renderer', () => {
       it('defaults to svg and passes an override to lottie-web', () => {
         const svg = mount(<ReactLottie options={defaultOptions} />);

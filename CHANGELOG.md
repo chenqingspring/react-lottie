@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/chenqingspring/react-lottie/compare/v2.2.0...v2.3.0) (2026-11-05)
+
+### Features
+
+* add an `as` prop to choose the element rendered around the animation, so `<Lottie as="span" />` can be nested in a `<p>` without invalid HTML. Changing `as` rebinds the animation to the new node and keeps the current frame ([#73](https://github.com/chenqingspring/react-lottie/issues/73))
+
 ## [2.2.0](https://github.com/chenqingspring/react-lottie/compare/v2.1.0...v2.2.0) (2026-11-05)
 
 ### Features
