@@ -65,4 +65,35 @@ describe('React 18 rendering', () => {
 
     expect(element.querySelector('svg')).to.not.equal(null);
   });
+
+  /* Issue #137 reported a crash on unmount when the component was rendered
+     through React.lazy. Keep the lazy mount/unmount path covered. */
+  it('mounts and unmounts when wrapped in React.lazy', () => {
+    const LazyLottie = React.lazy(() => Promise.resolve({ default: ReactLottie }));
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
+
+    return new Promise((resolve, reject) => {
+      React.act(() => {
+        root.render(
+          <React.Suspense fallback={null}>
+            <LazyLottie options={options} width={100} height={100} />
+          </React.Suspense>
+        );
+      }).then(() => {
+        try {
+          expect(container.querySelector('svg')).to.not.equal(null);
+          React.act(() => {
+            root.unmount();
+          });
+          root = null;
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }, reject);
+    });
+  });
 });

@@ -217,12 +217,18 @@ export default class Lottie extends React.Component {
   }
 
   registerEvents(eventListeners) {
+    /* `eventListeners` is array-valued and defaults to `[]`, but a wrapper
+       component (React.lazy, an HOC, a prop spread with `null`) can hand us
+       something else. Treat anything that is not an array as "no listeners";
+       blindly calling forEach used to crash on mount and unmount (#137). */
+    if (!this.anim || !Array.isArray(eventListeners)) return;
     eventListeners.forEach((eventListener) => {
       this.anim.addEventListener(eventListener.eventName, eventListener.callback);
     });
   }
 
   deRegisterEvents(eventListeners) {
+    if (!this.anim || !Array.isArray(eventListeners)) return;
     eventListeners.forEach((eventListener) => {
       this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
     });

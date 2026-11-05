@@ -428,6 +428,42 @@ describe('react-lottie', () => {
     });
   });
 
+  describe('lazy loading (#137)', () => {
+    it('mounts and unmounts when eventListeners is null', () => {
+      const component = mount(
+        <ReactLottie options={defaultOptions} eventListeners={null} />
+      );
+
+      expect(component.instance().anim).to.not.equal(undefined);
+      expect(() => component.unmount()).to.not.throw();
+    });
+
+    it('tolerates eventListeners becoming null before a reload', () => {
+      const component = mount(
+        <ReactLottie
+          options={defaultOptions}
+          eventListeners={[{ eventName: 'complete', callback: () => {} }]}
+        />
+      );
+
+      expect(() => component.setProps({
+        eventListeners: null,
+        options: { ...defaultOptions, animationData: beatingHeart },
+      })).to.not.throw();
+      expect(component.instance().anim.animationData).to.equal(beatingHeart);
+
+      expect(() => component.unmount()).to.not.throw();
+    });
+
+    it('ignores another non-array value instead of throwing', () => {
+      const component = mount(
+        <ReactLottie options={defaultOptions} eventListeners={{}} />
+      );
+
+      expect(() => component.unmount()).to.not.throw();
+    });
+  });
+
   describe('component lifecycle', () => {
     describe('componentDidMount', () => {
       it('should register events', () => {
