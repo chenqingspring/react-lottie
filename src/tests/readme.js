@@ -98,6 +98,18 @@ describe('README', () => {
     expect(readme).to.contain("{ ssr: false }");
   });
 
+  // Issue #117 asks for a hooks-only rewrite and points at react-lottie-player.
+  // The answer is the "Hooks and alternatives" section: react-lottie keeps its
+  // class/ref API, a function component can still drive it declaratively, and
+  // hook-first users have three documented alternatives. Pin the section so the
+  // answer cannot disappear from the README again.
+  it('explains hooks usage and hook-first alternatives', () => {
+    expect(readme).to.contain('## Hooks and alternatives');
+    expect(readme).to.contain('https://github.com/mifi/react-lottie-player');
+    expect(readme).to.contain('https://github.com/Gamote/lottie-react');
+    expect(readme).to.contain('https://github.com/LottieFiles/lottie-react');
+  });
+
   // Issue #135: the published entry point is CommonJS, so a plain <script>
   // tag fails with "exports is not defined"; document the ESM CDN path.
   it('documents how to use the package from a CDN without a bundler', () => {

@@ -757,6 +757,50 @@ Element or component rendered as the animation container. Use `as="span"` when
 custom component must forward its `ref` to a DOM element. See
 [Render inline inside a paragraph](#render-inline-inside-a-paragraph).
 
+## Hooks and alternatives
+
+`react-lottie` is deliberately a thin class component over lottie-web. Its
+public API is the imperative instance on a `ref` (`play`, `pause`,
+`goToAndStop`, `goToAndPlay`, `playSegments`), so replacing the class with a
+hooks-only component would break every existing app without changing what is
+rendered. You do not need hooks to drive it declaratively, though: changing
+`options.animationData` or `options.path` reloads the animation, and changes to
+`segments`, `isPaused`, `isStopped`, `speed`, `direction` and `colorFilters`
+are applied to the running instance. A function component can hold the state
+around it (issue #117):
+
+```jsx
+import React, { useState } from 'react'
+import Lottie from 'react-lottie';
+import animationData from './pinjump.json'
+
+export default function Player() {
+  const [segment, setSegment] = useState([0, 30]);
+  const options = { animationData, loop: true };
+
+  return (
+    <div>
+      <Lottie options={options} segments={segment} width={240} height={240} />
+      <button onClick={() => setSegment([30, 60])}>next part</button>
+    </div>
+  );
+}
+```
+
+If you specifically want a hook-first API, use one of these wrappers instead:
+
+* [react-lottie-player](https://github.com/mifi/react-lottie-player) — the
+  `useLottie` hook, with `path` and `animationData` support (v2.1.0, last
+  published July 2024).
+* [lottie-react](https://github.com/Gamote/lottie-react) — actively
+  maintained, hooks-based API (v3.1.2).
+* [@lottiefiles/react-lottie-player](https://github.com/LottieFiles/lottie-react)
+  — LottieFiles' official wrapper, for LottieFiles-specific features
+  (v3.6.0).
+
+All of them wrap the same lottie-web runtime, so switching mostly changes the
+component API rather than how the animation is rendered.
+
 ## Related Projects
 
 * [lottie-web](https://github.com/airbnb/lottie-web) react-lottie is a wrapper of lottie-web
