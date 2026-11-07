@@ -373,7 +373,7 @@ describe('react-lottie', () => {
     });
 
     it('should reload the animation when the remote path changes', () => {
-      const animation = {
+      const createAnimation = () => ({
         addEventListener: sinon.stub(),
         removeEventListener: sinon.stub(),
         setSpeed: sinon.stub(),
@@ -384,16 +384,32 @@ describe('react-lottie', () => {
         play: sinon.stub(),
         playSegments: sinon.stub(),
         destroy: sinon.stub(),
-      };
-      const loadAnimation = sinon.stub(lottie, 'loadAnimation').returns(animation);
+      });
+      const firstAnimation = createAnimation();
+      const secondAnimation = createAnimation();
+      const loadAnimation = sinon.stub(lottie, 'loadAnimation');
+      loadAnimation.onFirstCall().returns(firstAnimation);
+      loadAnimation.onSecondCall().returns(secondAnimation);
+
       const component = mount(
         <ReactLottie options={{ loop: true, autoplay: true, path: 'a.json' }} />
       );
+
+      expect(component.instance().anim).to.equal(firstAnimation);
 
       component.setProps({ options: { loop: true, autoplay: true, path: 'b.json' } });
 
       expect(loadAnimation.callCount).to.equal(2);
       expect(loadAnimation.secondCall.args[0].path).to.equal('b.json');
+      /* No stale `animationData` may be handed to lottie-web; it would take
+         precedence over the new path and keep the old animation on screen. */
+      expect(loadAnimation.secondCall.args[0].animationData).to.equal(undefined);
+      /* The component has to play the newly loaded animation, not the one it
+         destroyed. */
+      expect(firstAnimation.destroy.callCount).to.equal(1);
+      expect(component.instance().anim).to.equal(secondAnimation);
+
+      component.unmount();
       loadAnimation.restore();
     });
 
