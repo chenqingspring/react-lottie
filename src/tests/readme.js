@@ -78,6 +78,15 @@ describe('README', () => {
     expect(readme).to.contain("asset.id === 'image_0' ? { ...asset, u: '', p: img0 }");
   });
 
+  // Issue #88: base64 images work; the `Invalid or unexpected token` error is
+  // thrown while lottie-web evals an expression (an encoded @JSXBIN@ blob on
+  // newer After Effects exports), not while decoding the image.
+  it('explains the expression error that looks like a base64 image failure', () => {
+    expect(readme).to.contain('### `Invalid or unexpected token` with embedded images');
+    expect(readme).to.contain('@JSXBIN@');
+    expect(readme).to.contain('Convert Expression to Keyframes');
+  });
+
   // Issue #79: importing react-lottie pulls in the full lottie-web build, which
   // is large because it contains every renderer and the expression engine.
   it('documents how to shrink the lottie-web bundle', () => {

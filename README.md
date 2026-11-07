@@ -363,6 +363,35 @@ keeps the animation self-contained, but it inflates the file by roughly a third
 and prevents the browser from caching the image separately, so prefer external
 images for anything large.
 
+### `Invalid or unexpected token` with embedded images
+
+Embedded base64 images do work: an asset with `"e": 1` and a `p` value that
+starts with `data:image/png;base64,` is decoded like any other image, and the
+layer only has to reference it through `refId`.
+
+The `Uncaught SyntaxError: Invalid or unexpected token` thrown from
+`eval (eval at initiateExpression ...)` is not about the image. It comes from an
+**expression** inside the animation. lottie-web compiles expressions with
+`eval` when the animation loads. Newer After Effects versions can save an
+expression in an encoded `@JSXBIN@…` form, which lottie-web cannot parse, so
+the `eval` throws while the layer's effects are prepared
+(`IImageElement.prepareProperties`). The same error can appear in animations
+with no images at all.
+
+Fixes, in order of preference:
+
+- Remove the expressions in After Effects, or bake them to keyframes
+  (**Animation → Keyframe Assistant → Convert Expression to Keyframes**), then
+  export again. The animation keeps looking the same without runtime
+  evaluation.
+- Keep the expression only if it is plain JavaScript, and make sure a Content
+  Security Policy is not blocking `eval` (it needs `'unsafe-eval'`). Otherwise
+  move that behaviour out of the animation.
+- If the expression is not needed for playback, alias `lottie-web` to one of
+  the [light builds](#shrinking-the-lottie-web-bundle): they have no expression
+  engine and skip expressions instead of throwing. They skip the effect's
+  behaviour too, so only do this when the visual result is acceptable.
+
 ### Shrinking the lottie-web bundle
 
 react-lottie imports the full `lottie-web` player (299 kB minified, 611 kB
