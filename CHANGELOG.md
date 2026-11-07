@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/chenqingspring/react-lottie/compare/v2.3.3...v2.4.0) (2026-11-08)
+
+### Features
+
+* apply `options.locationHref` before loading, so Safari keeps the masks, mattes, gradients and filters that lottie-web bakes into `url(#id)` references when the page uses a `<base>` tag or is served from a sub-path; changing it reloads the animation ([#111](https://github.com/chenqingspring/react-lottie/issues/111))
+* expose the container `margin` as a prop, accepting any CSS `margin` value or a number of pixels (default `0 auto`), applied before `style` so an explicit `style.margin` still wins ([#107](https://github.com/chenqingspring/react-lottie/issues/107))
+
+### Documentation
+
+* explain how to load animation data from a URL and why a URL belongs in `options.path`, not `animationData` ([#106](https://github.com/chenqingspring/react-lottie/issues/106))
+* explain the default click-to-pause behaviour and the `isClickToPauseDisabled` opt-out ([#110](https://github.com/chenqingspring/react-lottie/issues/110))
+* state that the `componentWill*` lifecycles deprecated in React 16.3 and removed in React 17 are not used ([#112](https://github.com/chenqingspring/react-lottie/issues/112), [#119](https://github.com/chenqingspring/react-lottie/issues/119))
+
 ## [2.3.3](https://github.com/chenqingspring/react-lottie/compare/v2.3.2...v2.3.3) (2026-11-08)
 
 ### Documentation
