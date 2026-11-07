@@ -502,6 +502,23 @@ describe('react-lottie', () => {
   });
 
   describe('component lifecycle', () => {
+    // Issue #119: React 16.3 deprecated the will* lifecycles and React 17 only
+    // honors the UNSAFE_ spelling. The data/path reload runs in
+    // componentDidUpdate instead, so neither name should reappear.
+    describe('deprecated lifecycles (#119)', () => {
+      it('does not use the lifecycles React 17 removed', () => {
+        [
+          'componentWillMount',
+          'componentWillReceiveProps',
+          'componentWillUpdate',
+        ].forEach((name) => {
+          expect(ReactLottie.prototype[name]).to.equal(undefined);
+          expect(ReactLottie.prototype[`UNSAFE_${name}`]).to.equal(undefined);
+        });
+        expect(ReactLottie.prototype.componentDidUpdate).to.be.a('function');
+      });
+    });
+
     describe('componentDidMount', () => {
       it('should register events', () => {
         const registerEventsSpy = sinon.stub();
