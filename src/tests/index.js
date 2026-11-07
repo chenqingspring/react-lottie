@@ -155,6 +155,43 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('animationData validation', () => {
+      it('accepts a namespace import by using its default export (#24, #65)', () => {
+        const namespace = { default: pinjump };
+        const component = mount(
+          <ReactLottie options={{ ...defaultOptions, animationData: namespace }} />
+        );
+
+        expect(component.instance().anim.animationData).to.equal(pinjump);
+        expect(component.html()).to.contain('<svg');
+        component.unmount();
+      });
+
+      it('clones a frozen animation object before handing it to lottie-web', () => {
+        const frozen = Object.freeze(JSON.parse(JSON.stringify(pinjump)));
+        const component = mount(
+          <ReactLottie options={{ ...defaultOptions, animationData: frozen }} />
+        );
+
+        expect(component.instance().anim.animationData).to.not.equal(frozen);
+        expect(component.instance().anim.animationData.layers)
+          .to.have.length(pinjump.layers.length);
+        component.unmount();
+      });
+
+      it('explains that a string belongs in options.path (#44)', () => {
+        expect(() => mount(
+          <ReactLottie options={{ ...defaultOptions, animationData: 'a.json' }} />
+        )).to.throw(/options\.path/);
+      });
+
+      it('explains that animationData or path is required', () => {
+        expect(() => mount(
+          <ReactLottie options={{ loop: true }} />
+        )).to.throw(/animationData.*path/);
+      });
+    });
+
     describe('as', () => {
       it('renders a div by default', () => {
         const component = shallow(<ReactLottie options={defaultOptions} />);

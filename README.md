@@ -159,7 +159,7 @@ export default class LottieControl extends React.Component {
     const defaultOptions = {
       loop: true,
       autoplay: true, 
-      animationData: animationData.default,
+      animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -179,6 +179,11 @@ export default class LottieControl extends React.Component {
 }
 
 ```
+
+Pass the parsed animation object as `options.animationData`. A file path or URL
+belongs in `options.path`; a namespace import
+(`import * as animationData`) is unwrapped automatically but the default import
+above is preferred.
 
 ### Loading animation data without bloating the bundle
 
@@ -275,7 +280,7 @@ export default class HoverLottie extends React.Component {
     const defaultOptions = {
       loop: false,
       autoplay: false,
-      animationData: animationData.default,
+      animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }

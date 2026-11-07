@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.2](https://github.com/chenqingspring/react-lottie/compare/v2.3.1...v2.3.2) (2026-11-07)
+
+### Bug Fixes
+
+* accept a namespace import (`import * as animationData`) by unwrapping its `default` export and clone frozen animation objects before handing them to lottie-web, so they no longer fail with `Cannot read property 'length' of undefined` (#24, #65)
+* throw an actionable error when `options.animationData` is a string or when neither `animationData` nor `path` is provided, instead of lottie-web's `Cannot create property 'tf' on string` / `Cannot read property 'length' of undefined` deep in the renderer (#44)
+* fix the README examples that read `.default` from a default import, which passed `undefined` as the animation data
+
 ## [2.3.1](https://github.com/chenqingspring/react-lottie/compare/v2.3.0...v2.3.1) (2026-11-05)
 
 ### Bug Fixes

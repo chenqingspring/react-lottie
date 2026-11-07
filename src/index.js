@@ -9,6 +9,44 @@ const segmentsAreEqual = (a, b) => {
   return a.every((value, index) => value === b[index]);
 };
 
+/* lottie-web crashes deep inside its renderer with "Cannot read property
+   'length' of undefined" when the data is not a plain animation object. Accept
+   the shapes users actually pass (a namespace import, a frozen ESM object) and
+   fail with an actionable message for the rest (#24, #44, #65). */
+const normalizeAnimationData = (animationData, path) => {
+  if (animationData === undefined || animationData === null) {
+    if (!path) {
+      throw new Error(
+        '[react-lottie] options must include `animationData` (the imported JSON) '
+        + 'or `path` (a URL to the JSON file).'
+      );
+    }
+    return animationData;
+  }
+
+  if (typeof animationData === 'string') {
+    throw new Error(
+      '[react-lottie] options.animationData must be an object, not a string. '
+      + 'Pass a file path or URL as options.path instead, or call JSON.parse() '
+      + 'on JSON text first.'
+    );
+  }
+
+  /* `import * as animationData` wraps the payload in a `default` property,
+     which lottie-web cannot read (#24, #65). */
+  if (!Array.isArray(animationData.layers) && animationData.default) {
+    return normalizeAnimationData(animationData.default, path);
+  }
+
+  /* lottie-web annotates the loaded animation (`__complete`), which throws on
+     the frozen objects produced by strict ESM bundlers (#24). */
+  if (Object.isFrozen(animationData)) {
+    return JSON.parse(JSON.stringify(animationData));
+  }
+
+  return animationData;
+};
+
 export default class Lottie extends React.Component {
   componentDidMount() {
     const {
@@ -30,7 +68,10 @@ export default class Lottie extends React.Component {
        whether either actually changed. */
     this.animationData = animationData;
     this.colorFilters = colorFilters;
-    const filteredAnimationData = applyColorFilters(animationData, colorFilters);
+    const filteredAnimationData = applyColorFilters(
+      normalizeAnimationData(animationData, options.path),
+      colorFilters,
+    );
 
     this.options = {
       container: this.el,
@@ -118,7 +159,10 @@ export default class Lottie extends React.Component {
          ref (already pointing at the newly rendered node) wins. */
       this.options.container = this.el;
       this.options.animationData = applyColorFilters(
-        this.props.options.animationData,
+        normalizeAnimationData(
+          this.props.options.animationData,
+          this.props.options.path,
+        ),
         this.props.colorFilters,
       );
       this.anim = lottie.loadAnimation(this.options);
@@ -162,7 +206,8 @@ export default class Lottie extends React.Component {
   componentWillUnmount() {
     this.deRegisterEvents(this.props.eventListeners);
     this.destroy();
-    this.options.animationData = null;
+    /* A failed loadAnimation (e.g. invalid animationData) leaves no options. */
+    if (this.options) this.options.animationData = null;
     this.anim = null;
   }
 
