@@ -581,6 +581,15 @@ something else:
 <Lottie options={defaultOptions} isClickToPauseDisabled />
 ```
 
+A decorative animation should also leave the tab order. Pair
+`isClickToPauseDisabled` with `tabIndex={-1}` so keyboard users do not land on
+an animation they cannot interact with (issue
+[#130](https://github.com/chenqingspring/react-lottie/issues/130)):
+
+```jsx
+<Lottie options={defaultOptions} isClickToPauseDisabled tabIndex={-1} />
+```
+
 The component has no `onClick` prop. Put your handler on a wrapper element
 instead; the click bubbles from the animation container to the wrapper:
 
@@ -652,7 +661,7 @@ The container is a `div` by default, which is not a valid child of `<p>`. Pass
 
 ```jsx
 <p>
-  Text <Lottie as="span" options={defaultOptions} ariaRole="img" /> more text
+  Text <Lottie as="span" options={defaultOptions} ariaRole="img" tabIndex={-1} /> more text
 </p>
 ```
 
@@ -892,7 +901,9 @@ Extra inline styles merged onto the container, after the `width`, `height`,
 
 **tabIndex** *optional* [default: `0`]
 Tab order of the rendered container. Pass `-1` for a purely presentational
-animation that should not receive keyboard focus.
+animation that should not receive keyboard focus (issue
+[#130](https://github.com/chenqingspring/react-lottie/issues/130)); combine it
+with `isClickToPauseDisabled` as shown in [Click to pause](#click-to-pause).
 
 **as** *optional* [default: `div`]
 
