@@ -253,6 +253,69 @@ Finally, the file itself can usually get smaller: export at a lower precision,
 remove unused layers and precompositions, avoid embedded raster images, and let
 gzip/Brotli compress the JSON. LottieFiles' optimizer automates the first steps.
 
+### Performance on iOS and low-end devices
+
+File size mostly affects how long an animation takes to download and parse, not
+its frame rate. Once playback starts, the cost of each frame comes from what the
+renderer has to draw: the number of layers and shapes, masks and mattes,
+expressions, effects, and the pixel size of the canvas. A multi-megabyte export
+is a good signal that there is a lot of that (issue #133).
+
+On iOS 14.5, Safari, Chrome and Firefox all run on WebKit, so they render at the
+same speed; measuring in Safari is representative. Phones are also much slower
+than a desktop, so an animation that is smooth on a laptop can drop frames on
+mobile.
+
+In rough order of impact:
+
+1. **Reduce the animation.** Remove hidden and unused layers, flatten
+   precompositions, simplify masks and mattes, drop expressions and effects, and
+   avoid embedded raster images. If one scene is still heavy, split it into
+   smaller files and play only the needed range with `segments`.
+2. **Draw it at the size it is displayed.** `width` and `height` set the
+   container size; rendering a 1200 px animation into a 300 px slot does more
+   work than necessary. With the canvas renderer, also cap the backing-store
+   resolution: at a device pixel ratio of 3, a 400 px canvas is rasterized at
+   1200 px unless you set `dpr`.
+3. **Compare the renderers.** `svg` (the default) is usually fastest for a few
+   large shapes and stays crisp at any size. `canvas` avoids updating hundreds
+   of DOM nodes and often wins for animations with many small shapes. Measure
+   both on the target device.
+4. **Stop off-screen animations.** lottie-web drives every playing animation
+   from the same `requestAnimationFrame` loop, so an animation scrolled out of
+   view still costs a frame. Pause it with `isPaused`, or with `pause()` on a
+   `ref`, driven by an `IntersectionObserver`.
+
+```jsx
+const defaultOptions = {
+  animationData,
+  loop: true,
+  autoplay: true,
+  renderer: 'canvas',
+  rendererSettings: {
+    dpr: 1, // render at CSS resolution; use 2 for a sharper middle ground
+  },
+};
+
+<Lottie options={defaultOptions} height={300} width={300} />
+```
+
+For the default `svg` renderer, `rendererSettings.progressiveLoad` builds the
+layers over several frames instead of blocking on the first one. It does not
+wait for the element to scroll into view; pause off-screen animations yourself:
+
+```jsx
+// `visible` is kept up to date by an IntersectionObserver on a wrapper element.
+<Lottie
+  options={{ animationData, loop: true, autoplay: false, rendererSettings: { progressiveLoad: true } }}
+  isPaused={!visible}
+/>
+```
+
+If a reduced file still drops frames, profile it: record a timeline in Safari's
+Web Inspector while the animation plays and check whether the time goes to
+lottie-web's frame update or to the browser painting and compositing the layers.
+
 ### Play on hover
 
 `eventListeners` takes lottie-web animation events (`complete`, `loopComplete`,
@@ -398,7 +461,7 @@ the object representing the animation settings that will be instantiated by body
 >
 >**path** *optional* — a URL (or path) to a JSON animation file. Mutually exclusive with `animationData`.
 >
->**renderer** *optional* [default: `svg`]
+>**renderer** *optional* [default: `svg`] — `svg`, `canvas` or `html`. See [Performance on iOS and low-end devices](#performance-on-ios-and-low-end-devices).
 >
 >**rendererSettings** *required* 
 

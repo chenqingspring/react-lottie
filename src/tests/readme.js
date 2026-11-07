@@ -34,6 +34,16 @@ describe('README', () => {
     expect(readme).to.contain("import('./pinjump.json')");
   });
 
+  // Issue #133: large animations drop frames on iOS regardless of browser
+  // (all of them are WebKit there); keep the renderer/size advice documented.
+  it('documents performance tuning for large animations on iOS', () => {
+    expect(readme).to.contain('### Performance on iOS and low-end devices');
+    expect(readme).to.contain("renderer: 'canvas'");
+    expect(readme).to.contain('dpr: 1');
+    expect(readme).to.contain('IntersectionObserver');
+    expect(readme).to.contain('progressiveLoad');
+  });
+
   // Issue #135: the published entry point is CommonJS, so a plain <script>
   // tag fails with "exports is not defined"; document the ESM CDN path.
   it('documents how to use the package from a CDN without a bundler', () => {
