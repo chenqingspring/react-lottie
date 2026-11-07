@@ -19,6 +19,15 @@ describe('README', () => {
     expect(readme).to.contain('https://chenqingspring.github.io/react-lottie');
   });
 
+  // Issue #155 (and the duplicate #139): "is this project still maintained?"
+  // keeps coming back because the repo went quiet for years. The README opens
+  // with the current status, so removing that line silently would revive the
+  // question; keep it pinned.
+  it('states that the project is actively maintained', () => {
+    expect(readme).to.contain('This project is fully maintained automatically by');
+    expect(readme).to.contain('[Relay](https://get-relay.cc)');
+  });
+
   // Issue #39: `segments` shipped in #31 without any documentation.
   // https://github.com/chenqingspring/react-lottie/issues/39
   it('documents how to play a segment', () => {
