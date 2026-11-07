@@ -108,6 +108,13 @@ React 16.8 or newer, including React 17, React 18 and React 19. The
 `--force`. The test suite runs against React 18; the component uses plain class
 components and works with React 17 and React 19 as well.
 
+The component is a class, but it only uses the lifecycles React still supports
+(`componentDidMount`, `componentDidUpdate`, `componentWillUnmount`). The
+`componentWill*` methods that React 16.3 deprecated and React 17 stopped
+calling were removed in 2.0.0, so React 17 and newer do not warn about legacy
+lifecycles or skip the data/`path` reload ([#77](https://github.com/chenqingspring/react-lottie/issues/77),
+[#119](https://github.com/chenqingspring/react-lottie/issues/119)).
+
 ## Local development
 
 Run the Storybook stories with `npm start` (port 9010) and the test suite with

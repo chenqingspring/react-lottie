@@ -110,6 +110,18 @@ describe('README', () => {
     expect(readme).to.contain('https://github.com/LottieFiles/lottie-react');
   });
 
+  // Issue #112: users concluded the package was abandoned because it used the
+  // componentWill* lifecycles React deprecated in 16.3 and stopped calling in
+  // 17. They were replaced with componentDidUpdate in 2.0.0 (#77, #119); keep
+  // the Requirements section saying so, and keep the regression test in
+  // index.js pinned to the same promise.
+  it('states that the deprecated React lifecycles are not used', () => {
+    expect(readme).to.contain('componentDidMount');
+    expect(readme).to.contain('componentWillUnmount');
+    expect(readme).to.contain('componentWill*');
+    expect(readme).to.contain('issues/119');
+  });
+
   // Issue #135: the published entry point is CommonJS, so a plain <script>
   // tag fails with "exports is not defined"; document the ESM CDN path.
   it('documents how to use the package from a CDN without a bundler', () => {
