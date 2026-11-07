@@ -103,8 +103,10 @@ shares one React copy and tree-shakes lottie-web is smaller.
 
 ## Requirements
 
-React 16.8 or newer. The test suite runs against React 18; the component uses
-plain class components and works with React 19 as well.
+React 16.8 or newer, including React 17, React 18 and React 19. The
+`react: ">=16.8.0"` peer dependency resolves without `--legacy-peer-deps` or
+`--force`. The test suite runs against React 18; the component uses plain class
+components and works with React 17 and React 19 as well.
 
 ## Local development
 

@@ -39,3 +39,28 @@ describe('runtime dependencies', () => {
     expect(undeclared).to.deep.equal([]);
   });
 });
+
+// Issue #125: 1.x pinned `react` to `^16.0.0`, so React 17 consumers had to
+// install with --legacy-peer-deps or --force. Keep the 2.x range open-ended so
+// React 17 and newer stay installable without flags.
+// https://github.com/chenqingspring/react-lottie/issues/125
+describe('react peer dependency', () => {
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(__dirname, '../../package.json'), 'utf8')
+  );
+
+  it('allows React 17 and newer', () => {
+    const range = pkg.peerDependencies.react;
+    expect(range, 'package.json declares a react peer dependency').to.be.a('string');
+
+    const lowerBound = /^>=\s*(\d+)\.(\d+)\.(\d+)$/.exec(range.trim());
+    expect(
+      lowerBound,
+      `react peer range should be open-ended (">=x.y.z"), got "${range}"`
+    ).to.not.equal(null);
+    expect(
+      Number(lowerBound[1]),
+      `react peer range "${range}" excludes React 17`
+    ).to.be.at.most(17);
+  });
+});
