@@ -426,6 +426,52 @@ If a reduced file still drops frames, profile it: record a timeline in Safari's
 Web Inspector while the animation plays and check whether the time goes to
 lottie-web's frame update or to the browser painting and compositing the layers.
 
+### Masks are missing in Safari
+
+Safari resolves the `url(#…)` references that lottie-web generates for masks,
+mattes, gradients and filters against the document's base URL. When the page
+has a `<base href>` tag, or the animation is served from a path the browser
+resolves differently, those references point at the wrong document and Safari
+renders the animation without its masks. Chrome and Firefox usually still find
+them.
+
+lottie-web's documented workaround is to call `lottie.setLocationHref()` before
+the animation is generated. react-lottie exposes it as `options.locationHref`:
+
+```jsx
+const defaultOptions = {
+  animationData,
+  loop: true,
+  autoplay: true,
+  locationHref: window.location.href,
+};
+
+<Lottie options={defaultOptions} height={400} width={400} />
+```
+
+Pass the URL the page is actually served from, without the `#` fragment.
+lottie-web joins the value with `#<id>` when it builds the references, so a
+fragment produces broken URLs. The value is global to lottie-web, so pass the
+same `locationHref` to every `<Lottie />` on the page. Changing it regenerates
+the animation, because the base URL is baked into the generated markup.
+
+If you already import lottie-web yourself, calling the function directly works
+too, as long as the bundler resolves it to the same copy react-lottie uses:
+
+```js
+import lottie from 'lottie-web';
+
+lottie.setLocationHref(window.location.href);
+```
+
+Run that before the first animation mounts, for example at application startup.
+
+If the masks are still missing with the correct href, the artwork is the likely
+cause: complex masks and alpha mattes are the least reliable part of the SVG
+renderer. Compare with the [canvas renderer](#performance-on-ios-and-low-end-devices),
+or open the same JSON in lottie-web's own preview to confirm the problem is
+renderer-level rather than a react-lottie bug.
+
 ### Play on hover
 
 `eventListeners` takes lottie-web animation events (`complete`, `loopComplete`,
@@ -670,6 +716,8 @@ the object representing the animation settings that will be instantiated by body
 >**renderer** *optional* [default: `svg`] — `svg`, `canvas` or `html`. See [Performance on iOS and low-end devices](#performance-on-ios-and-low-end-devices).
 >
 >**rendererSettings** *required* 
+>
+>**locationHref** *optional* — the base URL lottie-web writes into its SVG mask, matte, gradient and filter references, applied with `setLocationHref()` before the animation is generated. Use it when Safari drops masks because of a `<base>` tag. See [Masks are missing in Safari](#masks-are-missing-in-safari).
 
 **colorFilters** *optional* [default: `[]`]
 

@@ -130,6 +130,16 @@ describe('README', () => {
     expect(readme).to.contain('https://esm.sh/react-lottie@2?external=react');
   });
 
+  // Issue #111: Safari drops masks when a <base> tag changes how lottie-web's
+  // `url(#id)` references resolve, and the fix is lottie.setLocationHref()
+  // before the animation is generated. Keep it documented and pinned to the
+  // option that applies it.
+  it('documents the Safari mask fix', () => {
+    expect(readme).to.contain('### Masks are missing in Safari');
+    expect(readme).to.contain('locationHref: window.location.href');
+    expect(readme).to.contain('lottie.setLocationHref(window.location.href)');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {

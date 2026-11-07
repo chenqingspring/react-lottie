@@ -273,6 +273,64 @@ describe('react-lottie', () => {
         loadAnimation.restore();
       });
     });
+
+    describe('locationHref (#111)', () => {
+      const stubAnimation = () => ({
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        setSpeed: sinon.stub(),
+        setDirection: sinon.stub(),
+        setSubframe: sinon.stub(),
+        stop: sinon.stub(),
+        pause: sinon.stub(),
+        destroy: sinon.stub(),
+      });
+
+      it('applies options.locationHref before the animation is generated', () => {
+        const setLocationHref = sinon.stub(lottie, 'setLocationHref');
+        const loadAnimation = sinon.stub(lottie, 'loadAnimation').returns(stubAnimation());
+        const component = shallow(
+          <ReactLottie
+            options={{ ...defaultOptions, locationHref: 'https://example.com/app/' }}
+          />
+        );
+
+        component.instance().componentDidMount();
+
+        expect(setLocationHref.calledWith('https://example.com/app/')).to.equal(true);
+        expect(setLocationHref.calledBefore(loadAnimation)).to.equal(true);
+
+        setLocationHref.restore();
+        loadAnimation.restore();
+      });
+
+      it('leaves lottie-web alone when no locationHref is given', () => {
+        const setLocationHref = sinon.stub(lottie, 'setLocationHref');
+        const component = mount(<ReactLottie options={defaultOptions} />);
+
+        expect(setLocationHref.callCount).to.equal(0);
+
+        component.unmount();
+        setLocationHref.restore();
+      });
+
+      it('regenerates the animation when locationHref changes', () => {
+        const setLocationHref = sinon.spy(lottie, 'setLocationHref');
+        const component = mount(
+          <ReactLottie options={{ ...defaultOptions, locationHref: 'https://example.com/a/' }} />
+        );
+
+        component.setProps({
+          options: { ...defaultOptions, locationHref: 'https://example.com/b/' },
+        });
+
+        expect(setLocationHref.callCount).to.equal(2);
+        expect(setLocationHref.lastCall.args[0]).to.equal('https://example.com/b/');
+
+        component.unmount();
+        setLocationHref.restore();
+      });
+    });
   });
 
   describe('when props change', () => {

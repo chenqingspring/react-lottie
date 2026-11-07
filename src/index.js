@@ -68,6 +68,7 @@ export default class Lottie extends React.Component {
        whether either actually changed. */
     this.animationData = animationData;
     this.colorFilters = colorFilters;
+    this.locationHref = options.locationHref;
     const filteredAnimationData = applyColorFilters(
       normalizeAnimationData(animationData, options.path),
       colorFilters,
@@ -100,6 +101,10 @@ export default class Lottie extends React.Component {
         + 'animations loaded from options.path are not recolored.'
       );
     }
+
+    /* Must happen before the animation is generated: lottie-web bakes the base
+       URL into its mask, matte, gradient and filter references (issue #111). */
+    this.setLocationHref(options);
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
@@ -137,11 +142,14 @@ export default class Lottie extends React.Component {
       this.colorFilters,
       this.props.colorFilters,
     );
+    /* lottie-web bakes the base URL into each generated `url(#id)` reference,
+       so a new href only takes effect when the animation is generated again. */
+    const locationHrefChanged = this.locationHref !== this.props.options.locationHref;
     /* The wrapper element is part of lottie-web's configuration, so a new
        element means the animation has to be bound to the new node. */
     const containerChanged = prevProps.as !== this.props.as;
 
-    if (dataChanged || pathChanged || colorFiltersChanged || containerChanged) {
+    if (dataChanged || pathChanged || colorFiltersChanged || locationHrefChanged || containerChanged) {
       const currentFrame = this.anim ? this.anim.currentFrame : 0;
       const wasPaused = this.anim ? this.anim.isPaused : true;
       /* lottie-web cannot recolor a loaded animation and cannot move one to
@@ -154,6 +162,7 @@ export default class Lottie extends React.Component {
 
       this.animationData = this.props.options.animationData;
       this.colorFilters = this.props.colorFilters;
+      this.locationHref = this.props.options.locationHref;
       this.options = { ...this.options, ...this.props.options };
       /* `options` is caller-owned and knows nothing about the wrapper, so the
          ref (already pointing at the newly rendered node) wins. */
@@ -165,6 +174,7 @@ export default class Lottie extends React.Component {
         ),
         this.props.colorFilters,
       );
+      this.setLocationHref(this.options);
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(this.props.eventListeners);
 
@@ -224,6 +234,20 @@ export default class Lottie extends React.Component {
      on whole After Effects frames (issue #71). */
   setSubframe() {
     this.anim.setSubframe(this.props.isSubframe);
+  }
+
+  /* lottie-web writes its internal mask, matte, gradient and filter references
+     as `url(<locationHref>#id)`. Safari resolves them against the page's base
+     URL, so a `<base href>` (or a mismatched asset URL) makes it drop the
+     masks; other browsers are more forgiving. lottie-web's documented fix is
+     the global `setLocationHref()`, which has to run before the animation is
+     generated (issue #111). Passing `options.locationHref` lets callers do
+     that without importing lottie-web themselves, which also works when the
+     bundler gives them a different copy of the player. */
+  setLocationHref(options) {
+    if (options.locationHref != null) {
+      lottie.setLocationHref(options.locationHref);
+    }
   }
 
   play() {
