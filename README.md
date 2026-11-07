@@ -430,6 +430,48 @@ The container is a `div` by default, which is not a valid child of `<p>`. Pass
 lottie-web should render into. Changing `as` reloads the animation into the new
 element and keeps the current frame.
 
+### Switch between several animations
+
+Each `<Lottie>` owns one lottie-web instance, so an app can render two
+animations side by side or keep one animation per page. To choose which one is
+shown, keep the animation data in a map and pass the entry for the current page
+as `options.animationData` (issue #128):
+
+```jsx
+import homeData from './animations/home.json';
+import aboutData from './animations/about.json';
+
+const animations = { home: homeData, about: aboutData };
+
+const PageAnimation = ({ page }) => (
+  <Lottie
+    options={{
+      loop: true,
+      autoplay: true,
+      animationData: animations[page],
+    }}
+    height={300}
+    width={300}
+  />
+);
+```
+
+Changing `options.animationData` reloads the animation into the same container,
+so a `key` is not required. Keep the JSON modules stable: copying the data in
+`render` (`animationData: { ...animations[page] }`) hands the component a new
+object on every render and reloads the animation each time. If you do want to
+start over — to replay an intro, for example — give the component a `key` so
+React unmounts and remounts it:
+
+```jsx
+<Lottie key={page} options={{ ...defaultOptions, animationData: animations[page] }} />
+```
+
+Unmounting destroys the lottie-web instance, so only the visible page animates.
+When the files are large, load them with `options.path` and fetch the JSON for
+the next page ahead of time instead of shipping every animation in one bundle;
+see [Loading animation data without bloating the bundle](#loading-animation-data-without-bloating-the-bundle).
+
 ### Animations and page navigation
 
 react-lottie creates a lottie-web instance when the component mounts and calls

@@ -44,6 +44,15 @@ describe('README', () => {
     expect(readme).to.contain('progressiveLoad');
   });
 
+  // Issue #128: render one of several animations depending on the page.
+  // Changing options.animationData reloads in place; a new object on every
+  // render reloads every time, and a `key` forces a full remount.
+  it('documents how to switch between several animations', () => {
+    expect(readme).to.contain('### Switch between several animations');
+    expect(readme).to.contain('animationData: animations[page]');
+    expect(readme).to.contain('<Lottie key={page}');
+  });
+
   // Issue #129: navigating back and forth in a Gatsby app accumulated animation
   // nodes. The default `div` container was nested in a `<p>`, which the browser
   // reparents while parsing server-rendered HTML; keep the navigation and
