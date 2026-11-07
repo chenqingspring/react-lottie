@@ -44,6 +44,16 @@ describe('README', () => {
     expect(readme).to.contain('progressiveLoad');
   });
 
+  // Issue #129: navigating back and forth in a Gatsby app accumulated animation
+  // nodes. The default `div` container was nested in a `<p>`, which the browser
+  // reparents while parsing server-rendered HTML; keep the navigation and
+  // hydration advice documented.
+  it('documents page navigation and the nested-container hydration trap', () => {
+    expect(readme).to.contain('### Animations and page navigation');
+    expect(readme).to.contain('validateDOMNesting');
+    expect(readme).to.contain('<Lottie as="span" options={defaultOptions} />');
+  });
+
   // Issue #135: the published entry point is CommonJS, so a plain <script>
   // tag fails with "exports is not defined"; document the ESM CDN path.
   it('documents how to use the package from a CDN without a bundler', () => {

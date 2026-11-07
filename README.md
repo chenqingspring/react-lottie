@@ -430,6 +430,32 @@ The container is a `div` by default, which is not a valid child of `<p>`. Pass
 lottie-web should render into. Changing `as` reloads the animation into the new
 element and keeps the current frame.
 
+### Animations and page navigation
+
+react-lottie creates a lottie-web instance when the component mounts and calls
+`destroy()` on unmount, so client-side navigation is safe as long as the page
+really unmounts. A layout that renders every page at once (or keeps pages
+mounted when switching tabs) keeps every animation running; mount only the
+visible one.
+
+One non-obvious trap on SSR frameworks such as Gatsby or Next.js: the wrapper is
+a `div` by default, and a `div` inside a `p` is invalid HTML. The browser moves
+the `div` out of the paragraph while parsing the server-rendered page, React
+reports a hydration mismatch (`validateDOMNesting`), and the animation node ends
+up outside the page subtree. Navigating back and forth can then leave animation
+nodes behind. Render the animation with `as="span"` (issue #73) or move it
+outside the paragraph:
+
+```jsx
+<p>
+  Text <Lottie as="span" options={defaultOptions} /> more text
+</p>
+```
+
+If animations still accumulate, confirm that each page unmounts (React DevTools
+shows the component tree changing), and pause off-screen instances as described
+in [Performance on iOS and low-end devices](#performance-on-ios-and-low-end-devices).
+
 ### Imperative control
 
 A `ref` to the component exposes `play()`, `pause()`, `stop()`,
