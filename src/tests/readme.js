@@ -43,6 +43,24 @@ describe('README', () => {
     expect(readme).to.contain("import('./pinjump.json')");
   });
 
+  // Issues #49 and #59: animations exported with bitmap layers reference files
+  // from the JSON's `assets` array, and the relative `u`/`p` paths break once
+  // the app is served from a sub-path. Keep the assetsPath and import advice.
+  it('documents how to ship animations that reference raster images', () => {
+    expect(readme).to.contain('### Animations with raster images');
+    expect(readme).to.contain("assetsPath: '/animations/images/'");
+    expect(readme).to.contain('"e": 0');
+    expect(readme).to.contain("asset.id === 'image_0' ? { ...asset, u: '', p: img0 }");
+  });
+
+  // Issue #79: importing react-lottie pulls in the full lottie-web build, which
+  // is large because it contains every renderer and the expression engine.
+  it('documents how to shrink the lottie-web bundle', () => {
+    expect(readme).to.contain('### Shrinking the lottie-web bundle');
+    expect(readme).to.contain("'lottie-web': 'lottie-web/build/player/lottie_light.js'");
+    expect(readme).to.contain('lottie_light_canvas.js');
+  });
+
   // Issue #133: large animations drop frames on iOS regardless of browser
   // (all of them are WebKit there); keep the renderer/size advice documented.
   it('documents performance tuning for large animations on iOS', () => {
@@ -70,6 +88,14 @@ describe('README', () => {
     expect(readme).to.contain('### Animations and page navigation');
     expect(readme).to.contain('validateDOMNesting');
     expect(readme).to.contain('<Lottie as="span" options={defaultOptions} />');
+  });
+
+  // Issue #17: importing the package outside a browser used to throw
+  // "ReferenceError: window is not defined". Keep the SSR guidance pinned.
+  it('documents server-side rendering', () => {
+    expect(readme).to.contain('### Server-side rendering');
+    expect(readme).to.contain('ReferenceError: window is not defined');
+    expect(readme).to.contain("{ ssr: false }");
   });
 
   // Issue #135: the published entry point is CommonJS, so a plain <script>

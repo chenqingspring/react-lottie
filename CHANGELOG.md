@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.3](https://github.com/chenqingspring/react-lottie/compare/v2.3.2...v2.3.3) (2026-11-08)
+
+### Documentation
+
+* document animations that reference raster images: the `assets` array, the `assetsPath` option and rewriting assets to bundler-hashed URLs ([#49](https://github.com/chenqingspring/react-lottie/issues/49), [#59](https://github.com/chenqingspring/react-lottie/issues/59))
+* document aliasing `lottie-web` to `lottie_light`, `lottie_light_canvas` or `lottie_light_html` to cut the bundled player by about 45% ([#79](https://github.com/chenqingspring/react-lottie/issues/79))
+* document server-side rendering and add a regression test that renders the component in a Node process without a DOM ([#17](https://github.com/chenqingspring/react-lottie/issues/17))
+
 ## [2.3.2](https://github.com/chenqingspring/react-lottie/compare/v2.3.1...v2.3.2) (2026-11-07)
 
 ### Bug Fixes

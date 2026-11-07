@@ -255,6 +255,107 @@ Finally, the file itself can usually get smaller: export at a lower precision,
 remove unused layers and precompositions, avoid embedded raster images, and let
 gzip/Brotli compress the JSON. LottieFiles' optimizer automates the first steps.
 
+### Animations with raster images
+
+An After Effects export that contains bitmap layers references those files from
+the animation's `assets` array. Each entry carries a directory (`u`), a file name
+(`p`) and an embedded flag (`e`):
+
+```json
+{ "id": "image_0", "w": 720, "h": 720, "u": "images/", "p": "img_0.png", "e": 0 }
+```
+
+With `"e": 0` lottie-web loads the file separately and resolves `u + p` relative
+to the page, which breaks as soon as the app is served from a sub-path or
+navigates client-side. Set `options.assetsPath` to the directory where the
+images are deployed instead; react-lottie forwards unknown options to
+lottie-web:
+
+```jsx
+const defaultOptions = {
+  path: '/animations/cypher.json',
+  assetsPath: '/animations/images/', // trailing slash required
+  loop: true,
+  autoplay: true,
+};
+
+<Lottie options={defaultOptions} height={400} width={400} />
+```
+
+Copy the images next to the JSON in `public/animations/images/` so they are
+served as static files instead of being bundled. `assetsPath` works with both
+`path` and `animationData`, and it applies to every image in the animation.
+
+If you want the bundler to hash and inline the images, import them yourself and
+rewrite the asset entries before passing the data. Don't mutate the imported
+JSON in place when it is a frozen ESM object:
+
+```jsx
+import img0 from './images/img_0.png';
+import animationData from './cypher.json';
+
+const data = {
+  ...animationData,
+  assets: animationData.assets.map((asset) => (
+    asset.id === 'image_0' ? { ...asset, u: '', p: img0 } : asset
+  )),
+};
+
+<Lottie options={{ animationData: data, loop: true, autoplay: true }} />
+```
+
+`"e": 1` means the image is embedded in the JSON as a base64 data URI. That
+keeps the animation self-contained, but it inflates the file by roughly a third
+and prevents the browser from caching the image separately, so prefer external
+images for anything large.
+
+### Shrinking the lottie-web bundle
+
+react-lottie imports the full `lottie-web` player (299 kB minified, 611 kB
+unminified in lottie-web 5.13), which includes the expression engine and every
+renderer. If your animations don't use expressions and you only need one
+renderer, alias `lottie-web` to a smaller build; react-lottie keeps working
+because those builds expose the same `loadAnimation` API.
+
+Vite:
+
+```js
+// vite.config.js
+export default defineConfig({
+  resolve: {
+    alias: {
+      'lottie-web': 'lottie-web/build/player/lottie_light.js',
+    },
+  },
+});
+```
+
+webpack (Create React App, Next.js):
+
+```js
+// next.config.js
+module.exports = {
+  webpack(config) {
+    config.resolve.alias['lottie-web'] = require.resolve(
+      'lottie-web/build/player/lottie_light.js'
+    );
+    return config;
+  },
+};
+```
+
+The light builds are about 45% smaller (164 kB vs 299 kB minified):
+
+* `lottie_light.js` — SVG renderer only, no expressions; shapes and raster
+  images still work.
+* `lottie_light_canvas.js` — canvas renderer only, no expressions.
+* `lottie_light_html.js` — HTML renderer only, no expressions.
+
+Pick the build that matches `options.renderer`: `lottie_light` only registers
+the SVG renderer, so pass `renderer: 'svg'` (the default); use
+`lottie_light_canvas` with `renderer: 'canvas'`. Don't alias when an animation
+uses expressions or effects, because the light builds silently skip them.
+
 ### Performance on iOS and low-end devices
 
 File size mostly affects how long an animation takes to download and parse, not
@@ -473,6 +574,34 @@ Unmounting destroys the lottie-web instance, so only the visible page animates.
 When the files are large, load them with `options.path` and fetch the JSON for
 the next page ahead of time instead of shipping every animation in one bundle;
 see [Loading animation data without bloating the bundle](#loading-animation-data-without-bloating-the-bundle).
+
+### Server-side rendering
+
+`<Lottie />` renders only a sized container element on the server; lottie-web is
+imported but instantiated in `componentDidMount` only, so `renderToString` (and
+Next.js/Gatsby prerendering) works and the animation starts after hydration:
+
+```jsx
+// server output: <div style="width:400px;height:400px;..."></div>
+<Lottie options={defaultOptions} height={400} width={400} />
+```
+
+Importing the package outside a browser no longer throws
+`ReferenceError: window is not defined`; lottie-web guards its DOM access at
+module load. If your bundler still evaluates the player on the server, load the
+component without SSR:
+
+```jsx
+// Next.js
+import dynamic from 'next/dynamic';
+
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
+```
+
+Animations loaded from `options.path` are fetched by lottie-web after mount, so
+nothing is requested during the server render. Avoid the hydration trap
+described in [Animations and page navigation](#animations-and-page-navigation)
+when the container is nested in a `<p>`.
 
 ### Animations and page navigation
 
