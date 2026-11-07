@@ -194,6 +194,53 @@ belongs in `options.path`; a namespace import
 (`import * as animationData`) is unwrapped automatically but the default import
 above is preferred.
 
+### Loading animation data from a URL
+
+Put the URL in `options.path`, not `options.animationData`. `animationData` is
+the parsed JSON object; lottie-web cannot fetch a string, so react-lottie throws
+an explanatory error if you pass one (issue #106):
+
+```jsx
+const defaultOptions = {
+  path: 'https://someurl.com/animationData.json',
+  loop: true,
+  autoplay: true,
+};
+
+<Lottie options={defaultOptions} width="1293px" height="300px" />
+```
+
+`path` accepts an absolute URL, a site-root path or a relative path. lottie-web
+fetches it after mount (nothing is requested during server rendering), and
+changing `path` reloads the animation. Because lottie-web owns the request,
+`colorFilters` is not applied — fetch the JSON yourself and pass the parsed
+object as `animationData` if you need to recolor it or send request headers:
+
+```jsx
+import { useEffect, useState } from 'react';
+
+function RemoteAnimation() {
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('https://someurl.com/animationData.json')
+      .then((response) => response.json())
+      .then((data) => { if (!cancelled) setAnimationData(data); });
+    return () => { cancelled = true; };
+  }, []);
+
+  if (!animationData) return null;
+
+  return (
+    <Lottie options={{ animationData, loop: true, autoplay: true }} height={300} />
+  );
+}
+```
+
+See [Loading animation data without bloating the bundle](#loading-animation-data-without-bloating-the-bundle)
+for the bundle-size trade-offs between these approaches.
+
 ### Loading animation data without bloating the bundle
 
 A static import like `import animationData from './pinjump.json'` (the example
@@ -759,6 +806,17 @@ pixel value for containers width.
 
 pixel value for containers height.
 
+**margin** *optional* [default: `0 auto`]
+
+Margin of the container. Accepts any CSS `margin` value (`'20px'`,
+`'10px auto'`, `'1rem 2rem'`) or a number of pixels. Use it instead of
+`style.margin` when the default `0 auto` misbehaves in a browser (issue #107).
+`style` is merged after this prop, so an explicit `style.margin` still wins.
+
+```jsx
+<Lottie options={defaultOptions} margin="10px auto" />
+```
+
 **isStopped** *optional* [default: `false`]
 
 Stops the animation and resets it to the first frame. Setting it back to `false`
@@ -829,8 +887,8 @@ Accessible name of the container.
 
 **style** *optional*
 
-Extra inline styles merged onto the container, after the `width`, `height` and
-layout defaults. Use it to override `overflow` or `margin`.
+Extra inline styles merged onto the container, after the `width`, `height`,
+`margin` and layout defaults. Use it to override `overflow`, for example.
 
 **tabIndex** *optional* [default: `0`]
 Tab order of the rendered container. Pass `-1` for a purely presentational

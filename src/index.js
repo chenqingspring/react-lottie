@@ -317,6 +317,7 @@ export default class Lottie extends React.Component {
     const {
       width,
       height,
+      margin,
       ariaRole,
       ariaLabel,
       isClickToPauseDisabled,
@@ -341,7 +342,9 @@ export default class Lottie extends React.Component {
       width: getSize(width),
       height: getSize(height),
       overflow: 'hidden',
-      margin: '0 auto',
+      /* `margin` is a prop so callers do not have to fight the default through
+         `style` on browsers where centring with `0 auto` misbehaves (#107). */
+      margin: getSize(margin),
       outline: 'none',
       ...this.props.style,
     };
@@ -376,6 +379,7 @@ Lottie.propTypes = {
   })),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isStopped: PropTypes.bool,
   isPaused: PropTypes.bool,
   speed: PropTypes.number,
@@ -404,4 +408,5 @@ Lottie.defaultProps = {
   title: '',
   tabIndex: 0,
   as: 'div',
+  margin: '0 auto',
 };

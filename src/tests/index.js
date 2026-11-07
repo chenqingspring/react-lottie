@@ -74,6 +74,27 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('margin', () => {
+      it('defaults to centring and accepts a custom value (#107)', () => {
+        const component = shallow(<ReactLottie options={defaultOptions} />);
+        expect(component.find('div').prop('style').margin).to.equal('0 auto');
+
+        component.setProps({ margin: '10px auto' });
+        expect(component.find('div').prop('style').margin).to.equal('10px auto');
+
+        component.setProps({ margin: 20 });
+        expect(component.find('div').prop('style').margin).to.equal('20px');
+      });
+
+      it('still lets style override margin', () => {
+        const component = shallow(
+          <ReactLottie options={defaultOptions} margin="0 auto" style={{ margin: 0 }} />
+        );
+
+        expect(component.find('div').prop('style').margin).to.equal(0);
+      });
+    });
+
     describe('tabIndex', () => {
       it('defaults to 0 and can be removed from the tab order', () => {
         const component = mount(<ReactLottie options={defaultOptions} />);
@@ -179,10 +200,12 @@ describe('react-lottie', () => {
         component.unmount();
       });
 
-      it('explains that a string belongs in options.path (#44)', () => {
-        expect(() => mount(
-          <ReactLottie options={{ ...defaultOptions, animationData: 'a.json' }} />
-        )).to.throw(/options\.path/);
+      it('explains that a string or URL belongs in options.path (#44, #106)', () => {
+        ['a.json', 'https://someurl.com/animationData.json'].forEach((animationData) => {
+          expect(() => mount(
+            <ReactLottie options={{ ...defaultOptions, animationData }} />
+          )).to.throw(/options\.path/);
+        });
       });
 
       it('explains that animationData or path is required', () => {

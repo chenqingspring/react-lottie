@@ -35,6 +35,13 @@ describe('README', () => {
     expect(readme).to.contain('segments={[45, 90]}');
   });
 
+  // Issue #107: the container margin was hardcoded to `0 auto`, which broke in
+  // some browsers. Expose it as a prop and keep it documented.
+  it('documents the margin prop', () => {
+    expect(readme).to.contain('**margin** *optional* [default: `0 auto`]');
+    expect(readme).to.contain("margin=\"10px auto\"");
+  });
+
   // Issue #110: clicking an animation pauses it, but the behaviour was only
   // discoverable in the props table, so users thought their animation had
   // broken. Keep the default behaviour, the opt-out and the wrapper-onClick
@@ -43,6 +50,14 @@ describe('README', () => {
     expect(readme).to.contain('### Click to pause');
     expect(readme).to.contain('isClickToPauseDisabled />');
     expect(readme).to.contain('<div onClick={() => openDetails()}>');
+  });
+
+  // Issue #106: users tried to pass a remote URL as `animationData`. A URL
+  // belongs in `options.path`; keep that answer and its example documented.
+  it('documents how to load animation data from a URL', () => {
+    expect(readme).to.contain('### Loading animation data from a URL');
+    expect(readme).to.contain("path: 'https://someurl.com/animationData.json'");
+    expect(readme).to.contain('width="1293px"');
   });
 
   // Issue #142: a static JSON import inlines the animation into the JS bundle.
