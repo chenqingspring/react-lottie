@@ -520,6 +520,33 @@ export default class HoverLottie extends React.Component {
 
 ```
 
+### Click to pause
+
+Clicking or tapping the animation pauses it, and clicking again resumes it.
+This is on by default: the container also has `ariaRole="button"`, so an
+animation that looks decorative is still an interactive control (issue
+[#110](https://github.com/chenqingspring/react-lottie/issues/110)).
+
+Disable it when the animation is decorative, or when you want a click to do
+something else:
+
+```jsx
+<Lottie options={defaultOptions} isClickToPauseDisabled />
+```
+
+The component has no `onClick` prop. Put your handler on a wrapper element
+instead; the click bubbles from the animation container to the wrapper:
+
+```jsx
+<div onClick={() => openDetails()}>
+  <Lottie options={defaultOptions} isClickToPauseDisabled />
+</div>
+```
+
+Without `isClickToPauseDisabled` both run: playback toggles and the wrapper's
+handler still fires after it. Leave the prop out when you want click-to-pause as
+well.
+
 ### Play a segment
 
 Pass `segments` to play a frame range instead of the whole animation. The
@@ -781,7 +808,11 @@ eventListeners=[
 ```
 
 **isClickToPauseDisabled** *optional* [default: `false`]
-When this props is left unspecified or is set to `false` animations are paused or resumed when a user clicks or taps them. If you do not want this behaviour set this prop to `true`.
+
+When this prop is left unspecified or is set to `false`, animations are paused
+or resumed when a user clicks or taps them. If you do not want this behaviour,
+set this prop to `true`. See [Click to pause](#click-to-pause) for a custom
+click handler.
 
 **ariaRole** *optional* [default: `button`]
 

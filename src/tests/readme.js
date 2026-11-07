@@ -35,6 +35,16 @@ describe('README', () => {
     expect(readme).to.contain('segments={[45, 90]}');
   });
 
+  // Issue #110: clicking an animation pauses it, but the behaviour was only
+  // discoverable in the props table, so users thought their animation had
+  // broken. Keep the default behaviour, the opt-out and the wrapper-onClick
+  // advice documented together.
+  it('documents the default click-to-pause behaviour', () => {
+    expect(readme).to.contain('### Click to pause');
+    expect(readme).to.contain('isClickToPauseDisabled />');
+    expect(readme).to.contain('<div onClick={() => openDetails()}>');
+  });
+
   // Issue #142: a static JSON import inlines the animation into the JS bundle.
   // https://github.com/chenqingspring/react-lottie/issues/142
   it('documents how to avoid bundling large animation data', () => {
