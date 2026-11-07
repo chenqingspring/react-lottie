@@ -96,12 +96,16 @@ describe('react-lottie', () => {
     });
 
     describe('tabIndex', () => {
-      it('defaults to 0 and can be removed from the tab order', () => {
+      it('defaults to 0 and can be removed from the tab order (#130)', () => {
         const component = mount(<ReactLottie options={defaultOptions} />);
         expect(component.find('div').at(0).prop('tabIndex')).to.equal(0);
+        expect(component.find('div').at(0).getDOMNode().getAttribute('tabindex'))
+          .to.equal('0');
 
         component.setProps({ tabIndex: -1 });
         expect(component.find('div').at(0).prop('tabIndex')).to.equal(-1);
+        expect(component.find('div').at(0).getDOMNode().getAttribute('tabindex'))
+          .to.equal('-1');
         component.unmount();
       });
     });
