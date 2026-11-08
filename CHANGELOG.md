@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.1](https://github.com/chenqingspring/react-lottie/compare/v2.4.0...v2.4.1) (2026-11-08)
+
+### Documentation
+
+* explain that `rendererSettings` belongs inside `options`, not on `<Lottie />`, and how `preserveAspectRatio` fits (`meet`), crops (`slice`) or stretches (`none`) an animation ([#98](https://github.com/chenqingspring/react-lottie/issues/98))
+* explain why an embedded base64 image can raise `Invalid or unexpected token` from an `eval` inside a lottie expression, and how to find the offending expression ([#88](https://github.com/chenqingspring/react-lottie/issues/88))
+* document taking a presentational animation out of the tab order and exposing it to screen readers with `tabIndex`, `ariaRole` and `ariaLabel` ([#130](https://github.com/chenqingspring/react-lottie/issues/130))
+* add a Storybook demo of the `preserveAspectRatio` modes on a square animation in a wide container
+
 ## [2.4.0](https://github.com/chenqingspring/react-lottie/compare/v2.3.3...v2.4.0) (2026-11-08)
 
 ### Features
