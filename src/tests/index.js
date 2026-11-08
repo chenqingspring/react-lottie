@@ -110,6 +110,36 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('rendererSettings', () => {
+      it('forwards preserveAspectRatio to the rendered SVG (issue #98)', () => {
+        const component = mount(
+          <ReactLottie
+            options={{
+              ...defaultOptions,
+              rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
+            }}
+            height={200}
+            width={400}
+          />
+        );
+        const svg = component.getDOMNode().querySelector('svg');
+
+        expect(svg.getAttribute('preserveAspectRatio')).to.equal('xMidYMid slice');
+        component.unmount();
+      });
+
+      it('keeps lottie-web\'s letterboxing default without rendererSettings', () => {
+        const { loop, autoplay, animationData } = defaultOptions;
+        const component = mount(
+          <ReactLottie options={{ loop, autoplay, animationData }} />
+        );
+        const svg = component.getDOMNode().querySelector('svg');
+
+        expect(svg.getAttribute('preserveAspectRatio')).to.equal('xMidYMid meet');
+        component.unmount();
+      });
+    });
+
     describe('colorFilters', () => {
       const filters = [{ keypath: 'Pin 1.Shape 2.Fill 1', color: '#00ff00' }];
       const getFill = data => data.layers
