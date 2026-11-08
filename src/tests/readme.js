@@ -174,6 +174,16 @@ describe('README', () => {
     expect(readme).to.contain('lottie.setLocationHref(window.location.href)');
   });
 
+  // Issue #98: `preserveAspectRatio` looked like it was not reaching the SVG.
+  // It belongs inside `options`, not on `<Lottie />`, and `meet`/`slice` only
+  // differ when the container's aspect ratio differs from the animation's.
+  it('documents how to fit or crop an animation with preserveAspectRatio', () => {
+    expect(readme).to.contain('### Fit or crop an animation (preserveAspectRatio)');
+    expect(readme).to.contain("preserveAspectRatio: 'xMidYMid slice'");
+    expect(readme).to.contain('A `rendererSettings` prop on `<Lottie />` itself is ignored');
+    expect(readme).to.contain('height={200} width={400}');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {

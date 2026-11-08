@@ -502,6 +502,48 @@ If a reduced file still drops frames, profile it: record a timeline in Safari's
 Web Inspector while the animation plays and check whether the time goes to
 lottie-web's frame update or to the browser painting and compositing the layers.
 
+### Fit or crop an animation (preserveAspectRatio)
+
+The SVG that lottie-web generates has its own `viewBox`, and the browser scales
+it to the container according to `preserveAspectRatio`. lottie-web's default is
+`xMidYMid meet`, which letterboxes the animation. Use `xMidYMid slice` to fill
+the container and crop the overflow instead, or `none` to stretch it.
+
+`rendererSettings` belongs **inside `options`**, next to `animationData` or
+`path`. A `rendererSettings` prop on `<Lottie />` itself is ignored, because the
+component only forwards `options` to `lottie.loadAnimation()`:
+
+```jsx
+const defaultOptions = {
+  animationData,
+  loop: true,
+  autoplay: true,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
+
+// A wide box for a square animation, so `slice` has something to crop.
+<Lottie options={defaultOptions} height={200} width={400} />
+```
+
+Two things make a working setting look broken:
+
+- `meet` and `slice` render identically when the container has the same aspect
+  ratio as the animation. Sizing a square animation with `height={400}
+  width={400}` leaves nothing to crop or letterbox.
+- The value is applied when the animation loads. Changing
+  `options.rendererSettings` on a mounted component does not re-apply it;
+  remount the animation (or change its `key`) to pick up a new value.
+
+If the `<svg>` in the inspector still lacks `preserveAspectRatio`, check what
+you pass as `options.animationData`. An ES module namespace
+(`import * as animationData`) is unwrapped for you, but any payload lottie-web
+cannot read leaves it without a `viewBox`, so the attribute has nothing to
+scale. See [Usage](#usage).
+
+The canvas renderer reads `preserveAspectRatio` too.
+
 ### Masks are missing in Safari
 
 Safari resolves the `url(#…)` references that lottie-web generates for masks,
@@ -827,7 +869,7 @@ the object representing the animation settings that will be instantiated by body
 >
 >**renderer** *optional* [default: `svg`] — `svg`, `canvas` or `html`. See [Performance on iOS and low-end devices](#performance-on-ios-and-low-end-devices).
 >
->**rendererSettings** *required* 
+>**rendererSettings** *optional* — settings forwarded to lottie-web's renderer, such as `preserveAspectRatio`, `progressiveLoad`, `className` and `id`. Must be inside `options`, not a prop on `<Lottie />`. Read once when the animation loads. See [Fit or crop an animation](#fit-or-crop-an-animation-preserveaspectratio).
 >
 >**locationHref** *optional* — the base URL lottie-web writes into its SVG mask, matte, gradient and filter references, applied with `setLocationHref()` before the animation is generated. Use it when Safari drops masks because of a `<base>` tag. See [Masks are missing in Safari](#masks-are-missing-in-safari).
 
