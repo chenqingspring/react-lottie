@@ -40,6 +40,25 @@ describe('runtime dependencies', () => {
   });
 });
 
+// Issue #87: 1.x declared `"engines": { "npm": "^3.0.0" }`, so npm 6 and newer
+// printed an `Unsupported engine` warning for every consumer. 2.x removed the
+// field; keep it absent so installing with a modern npm stays clean.
+// https://github.com/chenqingspring/react-lottie/issues/87
+describe('npm engine constraint', () => {
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(__dirname, '../../package.json'), 'utf8')
+  );
+
+  it('does not restrict the npm version', () => {
+    const npmRange = pkg.engines && pkg.engines.npm;
+
+    expect(
+      npmRange,
+      `package.json should not declare an npm engine, got "${npmRange}"`
+    ).to.equal(undefined);
+  });
+});
+
 // Issue #125: 1.x pinned `react` to `^16.0.0`, so React 17 consumers had to
 // install with --legacy-peer-deps or --force. Keep the 2.x range open-ended so
 // React 17 and newer stay installable without flags.
