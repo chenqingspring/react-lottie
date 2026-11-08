@@ -108,6 +108,12 @@ React 16.8 or newer, including React 17, React 18 and React 19. The
 `--force`. The test suite runs against React 18; the component uses plain class
 components and works with React 17 and React 19 as well.
 
+There is no npm version requirement. 1.x declared
+`"engines": { "npm": "^3.0.0" }`, so npm 6 and newer printed an
+`Unsupported engine` warning on install; that field was removed before 2.0.0
+([#87](https://github.com/chenqingspring/react-lottie/issues/87)). Install with
+any npm version that can resolve the React peer dependency.
+
 The component is a class, but it only uses the lifecycles React still supports
 (`componentDidMount`, `componentDidUpdate`, `componentWillUnmount`). The
 `componentWill*` methods that React 16.3 deprecated and React 17 stopped

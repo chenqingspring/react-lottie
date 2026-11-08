@@ -156,6 +156,14 @@ describe('README', () => {
     expect(readme).to.contain('issues/119');
   });
 
+  // Issue #87: 1.x declared `engines.npm: "^3.0.0"`, which made npm 6 and newer
+  // print an `Unsupported engine` warning. 2.x has no npm requirement; keep the
+  // answer where people installing the package will find it.
+  it('states that there is no npm version requirement', () => {
+    expect(readme).to.contain('There is no npm version requirement.');
+    expect(readme).to.contain('issues/87');
+  });
+
   // Issue #135: the published entry point is CommonJS, so a plain <script>
   // tag fails with "exports is not defined"; document the ESM CDN path.
   it('documents how to use the package from a CDN without a bundler', () => {
