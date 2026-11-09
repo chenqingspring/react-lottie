@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.2](https://github.com/chenqingspring/react-lottie/compare/v2.4.1...v2.4.2) (2026-11-09)
+
+### Documentation
+
+* state that there is no npm version requirement, and why 1.x printed an `Unsupported engine` warning with npm 6 and newer ([#87](https://github.com/chenqingspring/react-lottie/issues/87))
+
 ## [2.4.1](https://github.com/chenqingspring/react-lottie/compare/v2.4.0...v2.4.1) (2026-11-08)
 
 ### Documentation
