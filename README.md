@@ -538,9 +538,11 @@ Two things make a working setting look broken:
 - `meet` and `slice` render identically when the container has the same aspect
   ratio as the animation. Sizing a square animation with `height={400}
   width={400}` leaves nothing to crop or letterbox.
-- The value is applied when the animation loads. Changing
-  `options.rendererSettings` on a mounted component does not re-apply it;
-  remount the animation (or change its `key`) to pick up a new value.
+- The value is applied when the renderer is generated. Changing
+  `options.rendererSettings` on a mounted component regenerates the animation
+  and keeps the current frame and playback state, so a live toggle works; a
+  render that recreates an object with the same values does not reload
+  anything. See [Fit or crop, live](#fit-or-crop-live).
 
 If the `<svg>` in the inspector still lacks `preserveAspectRatio`, check what
 you pass as `options.animationData`. An ES module namespace
@@ -549,6 +551,27 @@ cannot read leaves it without a `viewBox`, so the attribute has nothing to
 scale. See [Usage](#usage).
 
 The canvas renderer reads `preserveAspectRatio` too.
+
+#### Fit or crop, live
+
+`rendererSettings` can be switched after mount. The animation is regenerated
+with the new settings and the current frame plus play/pause state are restored,
+so a `meet`/`slice` toggle does not restart a half-played animation:
+
+```jsx
+const [mode, setMode] = useState('xMidYMid meet');
+
+<Lottie
+  options={{ animationData, loop: true, autoplay: true, rendererSettings: { preserveAspectRatio: mode } }}
+  height={200}
+  width={400}
+/>
+<button onClick={() => setMode(mode === 'xMidYMid meet' ? 'xMidYMid slice' : 'xMidYMid meet')}>
+  toggle fit / crop
+</button>
+```
+
+The Storybook story `lottie-renderer-settings` demonstrates the same toggle.
 
 ### Masks are missing in Safari
 
@@ -875,7 +898,7 @@ the object representing the animation settings that will be instantiated by body
 >
 >**renderer** *optional* [default: `svg`] — `svg`, `canvas` or `html`. See [Performance on iOS and low-end devices](#performance-on-ios-and-low-end-devices).
 >
->**rendererSettings** *optional* — settings forwarded to lottie-web's renderer, such as `preserveAspectRatio`, `progressiveLoad`, `className` and `id`. Must be inside `options`, not a prop on `<Lottie />`. Read once when the animation loads. See [Fit or crop an animation](#fit-or-crop-an-animation-preserveaspectratio).
+>**rendererSettings** *optional* — settings forwarded to lottie-web's renderer, such as `preserveAspectRatio`, `progressiveLoad`, `className` and `id`. Must be inside `options`, not a prop on `<Lottie />`. Changing it regenerates the animation and keeps the current frame and playback state. See [Fit or crop an animation](#fit-or-crop-an-animation-preserveaspectratio).
 >
 >**locationHref** *optional* — the base URL lottie-web writes into its SVG mask, matte, gradient and filter references, applied with `setLocationHref()` before the animation is generated. Use it when Safari drops masks because of a `<base>` tag. See [Masks are missing in Safari](#masks-are-missing-in-safari).
 

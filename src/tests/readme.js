@@ -192,6 +192,15 @@ describe('README', () => {
     expect(readme).to.contain('height={200} width={400}');
   });
 
+  // rendererSettings used to be read only when the animation loaded, so the
+  // README told people to remount. A changed value now regenerates the
+  // animation in place; keep that documented so the old advice cannot come back.
+  it('documents that rendererSettings can be changed on a mounted component', () => {
+    expect(readme).to.contain('Fit or crop, live');
+    expect(readme).to.contain('keeps the current frame and playback state');
+    expect(readme).to.not.contain('does not re-apply it');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {

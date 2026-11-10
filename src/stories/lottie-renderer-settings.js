@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Lottie from '../index';
 import animationData from './pinjump.json';
 
@@ -28,8 +28,43 @@ const modes = [
 ];
 
 export default function LottieRendererSettings() {
+  const [liveMode, setLiveMode] = useState('xMidYMid meet');
+
   return (
     <div>
+      <div style={panelStyle}>
+        <Lottie
+          options={{
+            animationData,
+            loop: true,
+            autoplay: true,
+            rendererSettings: { preserveAspectRatio: liveMode },
+          }}
+          height={180}
+          width={320}
+          style={boxStyle}
+        />
+        <p>Live: {liveMode}</p>
+        <p>
+          {modes.map(mode => (
+            <button
+              key={mode.value}
+              type="button"
+              onClick={() => setLiveMode(mode.value)}
+              disabled={mode.value === liveMode}
+            >
+              {mode.value}
+            </button>
+          ))}
+        </p>
+        <p>
+          Switching keeps the current frame and play state; the animation is
+          regenerated with the new setting instead of restarting.
+        </p>
+      </div>
+      <p style={{ ...panelStyle, display: 'block', marginBottom: 0 }}>
+        Reference: each mode on its own component
+      </p>
       {modes.map(mode => (
         <div key={mode.value} style={panelStyle}>
           <Lottie

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/chenqingspring/react-lottie/compare/v2.4.2...v2.5.0) (2026-11-10)
+
+### Features
+
+* regenerate the animation when `options.rendererSettings` changes, so `preserveAspectRatio` and the other renderer settings can be switched on a mounted component; the current frame and play/pause state are kept, and recreating an equal object does not reload anything ([#98](https://github.com/chenqingspring/react-lottie/issues/98))
+* Storybook demo of the live `preserveAspectRatio` toggle next to the three static modes
+
+### Documentation
+
+* document switching `rendererSettings` on a mounted component instead of remounting the animation ([#98](https://github.com/chenqingspring/react-lottie/issues/98))
+
 ## [2.4.2](https://github.com/chenqingspring/react-lottie/compare/v2.4.1...v2.4.2) (2026-11-09)
 
 ### Documentation

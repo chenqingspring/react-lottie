@@ -9,6 +9,21 @@ const segmentsAreEqual = (a, b) => {
   return a.every((value, index) => value === b[index]);
 };
 
+/* `rendererSettings` is usually written as an object literal inside `options`,
+   so a re-render creates a new object even when nothing changed. Compare the
+   values, not the identity, to avoid reloading the animation on every render
+   while still reacting to a real change (issue #98). */
+const rendererSettingsAreEqual = (a, b) => {
+  if (a === b) return true;
+  if (a == null || b == null) return a == null && b == null;
+  if (typeof a !== 'object' || typeof b !== 'object') return false;
+  const keys = Object.keys(a);
+  if (keys.length !== Object.keys(b).length) return false;
+  return keys.every(key => (
+    Object.prototype.hasOwnProperty.call(b, key) && a[key] === b[key]
+  ));
+};
+
 /* lottie-web crashes deep inside its renderer with "Cannot read property
    'length' of undefined" when the data is not a plain animation object. Accept
    the shapes users actually pass (a namespace import, a frozen ESM object) and
@@ -69,6 +84,7 @@ export default class Lottie extends React.Component {
     this.animationData = animationData;
     this.colorFilters = colorFilters;
     this.locationHref = options.locationHref;
+    this.rendererSettings = rendererSettings;
     const filteredAnimationData = applyColorFilters(
       normalizeAnimationData(animationData, options.path),
       colorFilters,
@@ -145,11 +161,25 @@ export default class Lottie extends React.Component {
     /* lottie-web bakes the base URL into each generated `url(#id)` reference,
        so a new href only takes effect when the animation is generated again. */
     const locationHrefChanged = this.locationHref !== this.props.options.locationHref;
+    /* `preserveAspectRatio`, `progressiveLoad` and the other renderer settings
+       are read by lottie-web when it generates the renderer, so a change has to
+       regenerate the animation too (issue #98). */
+    const rendererSettingsChanged = !rendererSettingsAreEqual(
+      this.rendererSettings,
+      this.props.options.rendererSettings,
+    );
     /* The wrapper element is part of lottie-web's configuration, so a new
        element means the animation has to be bound to the new node. */
     const containerChanged = prevProps.as !== this.props.as;
 
-    if (dataChanged || pathChanged || colorFiltersChanged || locationHrefChanged || containerChanged) {
+    if (
+      dataChanged
+      || pathChanged
+      || colorFiltersChanged
+      || locationHrefChanged
+      || rendererSettingsChanged
+      || containerChanged
+    ) {
       const currentFrame = this.anim ? this.anim.currentFrame : 0;
       const wasPaused = this.anim ? this.anim.isPaused : true;
       /* lottie-web cannot recolor a loaded animation and cannot move one to
@@ -163,10 +193,14 @@ export default class Lottie extends React.Component {
       this.animationData = this.props.options.animationData;
       this.colorFilters = this.props.colorFilters;
       this.locationHref = this.props.options.locationHref;
+      this.rendererSettings = this.props.options.rendererSettings;
       this.options = { ...this.options, ...this.props.options };
       /* `options` is caller-owned and knows nothing about the wrapper, so the
          ref (already pointing at the newly rendered node) wins. */
       this.options.container = this.el;
+      /* Spreading does not delete a key the caller dropped, so a removed
+         rendererSettings would otherwise keep its old value. */
+      this.options.rendererSettings = this.props.options.rendererSettings;
       this.options.animationData = applyColorFilters(
         normalizeAnimationData(
           this.props.options.animationData,

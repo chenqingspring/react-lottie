@@ -138,6 +138,61 @@ describe('react-lottie', () => {
         expect(svg.getAttribute('preserveAspectRatio')).to.equal('xMidYMid meet');
         component.unmount();
       });
+
+      it('re-applies a changed preserveAspectRatio on a mounted component (#98)', () => {
+        const component = mount(
+          <ReactLottie
+            options={{
+              ...defaultOptions,
+              rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
+            }}
+            height={200}
+            width={400}
+          />
+        );
+        const first = component.instance().anim;
+
+        component.setProps({
+          options: {
+            ...defaultOptions,
+            rendererSettings: { preserveAspectRatio: 'none' },
+          },
+        });
+
+        expect(component.instance().anim).to.not.equal(first);
+        /* lottie-web clears the container with `innerText = ''`, which jsdom
+           does not implement, so the stale <svg> stays in the test DOM; the
+           freshly generated one is last. A real browser removes the old node. */
+        const svgs = component.getDOMNode().querySelectorAll('svg');
+        expect(svgs[svgs.length - 1].getAttribute('preserveAspectRatio')).to.equal('none');
+        component.unmount();
+      });
+
+      it('does not reload when an equal rendererSettings object is recreated', () => {
+        const component = mount(
+          <ReactLottie
+            options={{
+              ...defaultOptions,
+              rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
+            }}
+            height={200}
+            width={400}
+          />
+        );
+        const first = component.instance().anim;
+        const destroy = sinon.spy(first, 'destroy');
+
+        component.setProps({
+          options: {
+            ...defaultOptions,
+            rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
+          },
+        });
+
+        expect(destroy.callCount).to.equal(0);
+        expect(component.instance().anim).to.equal(first);
+        component.unmount();
+      });
     });
 
     describe('colorFilters', () => {
