@@ -450,6 +450,57 @@ describe('react-lottie', () => {
       });
     });
 
+    describe('loop', () => {
+      it('applies a changed options.loop without reloading the animation', () => {
+        const component = mount(<ReactLottie options={defaultOptions} />);
+        const animation = component.instance().anim;
+
+        expect(animation.loop).to.equal(true);
+
+        component.setProps({ options: { ...defaultOptions, loop: false } });
+
+        expect(component.instance().anim).to.equal(animation);
+        expect(animation.loop).to.equal(false);
+
+        component.setProps({ options: { ...defaultOptions, loop: true } });
+        expect(animation.loop).to.equal(true);
+
+        component.unmount();
+      });
+
+      it('applies a repeat count set through options.loop', () => {
+        const component = mount(
+          <ReactLottie options={{ ...defaultOptions, loop: 2 }} />
+        );
+        const animation = component.instance().anim;
+
+        expect(animation.loop).to.equal(2);
+
+        component.setProps({ options: { ...defaultOptions, loop: 3 } });
+        expect(component.instance().anim).to.equal(animation);
+        expect(animation.loop).to.equal(3);
+
+        component.unmount();
+      });
+
+      it('falls back to looping when options.loop is dropped', () => {
+        const component = mount(
+          <ReactLottie options={{ ...defaultOptions, loop: false }} />
+        );
+        const animation = component.instance().anim;
+        const optionsWithoutLoop = { ...defaultOptions };
+        delete optionsWithoutLoop.loop;
+
+        expect(animation.loop).to.equal(false);
+
+        component.setProps({ options: optionsWithoutLoop });
+        expect(component.instance().anim).to.equal(animation);
+        expect(animation.loop).to.equal(true);
+
+        component.unmount();
+      });
+    });
+
     describe('locationHref (#111)', () => {
       const stubAnimation = () => ({
         addEventListener: sinon.stub(),

@@ -28,6 +28,18 @@ const rendererSettingsAreEqual = (a, b) => {
    so compare the value it actually ends up with. */
 const rendererOf = options => (options && options.renderer ? options.renderer : 'svg');
 
+/* lottie-web normalises `loop` in setParams(): absent, empty, `null` and `true`
+   all mean "loop forever", `false` means "play once", and anything else is a
+   repeat count. `AnimationItem#setLoop()` stores its argument as-is, so
+   normalise the option here to reach the same value lottie-web would have
+   picked at load time. */
+const loopOf = (options) => {
+  const loop = options ? options.loop : undefined;
+  if (loop === false) return false;
+  if (loop === true || loop === '' || loop == null) return true;
+  return parseInt(loop, 10);
+};
+
 /* lottie-web crashes deep inside its renderer with "Cannot read property
    'length' of undefined" when the data is not a plain animation object. Accept
    the shapes users actually pass (a namespace import, a frozen ESM object) and
@@ -90,6 +102,7 @@ export default class Lottie extends React.Component {
     this.locationHref = options.locationHref;
     this.rendererSettings = rendererSettings;
     this.renderer = rendererOf(options);
+    this.loop = loopOf(options);
     const filteredAnimationData = applyColorFilters(
       normalizeAnimationData(animationData, options.path),
       colorFilters,
@@ -205,6 +218,7 @@ export default class Lottie extends React.Component {
       this.locationHref = this.props.options.locationHref;
       this.rendererSettings = this.props.options.rendererSettings;
       this.renderer = rendererOf(this.props.options);
+      this.loop = loopOf(this.props.options);
       this.options = { ...this.options, ...this.props.options };
       /* `options` is caller-owned and knows nothing about the wrapper, so the
          ref (already pointing at the newly rendered node) wins. */
@@ -257,6 +271,7 @@ export default class Lottie extends React.Component {
     this.setSpeed();
     this.setDirection();
     this.setSubframe();
+    this.setLoop();
   }
 
   componentWillUnmount() {
@@ -269,6 +284,17 @@ export default class Lottie extends React.Component {
 
   setSpeed() {
     this.anim.setSpeed(this.props.speed);
+  }
+
+  /* `loop` is read on every frame, so a change can be applied to the running
+     animation instead of loading it again. It used to be read only on mount,
+     which left an animation looping (the default) after the caller turned it
+     off, and ignored a repeat count set later. */
+  setLoop() {
+    const loop = loopOf(this.props.options);
+    if (this.loop === loop) return;
+    this.loop = loop;
+    this.anim.setLoop(loop);
   }
 
   setDirection() {

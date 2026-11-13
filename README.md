@@ -750,6 +750,28 @@ A segment also has to be reachable with `loop`/`autoplay` as usual: with
 `loop: false` and `autoplay: false` the range only plays once you flip
 `isStopped` or pass a new `segments` value.
 
+### Play once or loop
+
+`loop` belongs inside `options` and defaults to `true`, like lottie-web, so an
+animation keeps repeating unless you say otherwise. `false` plays it once and a
+number plays it that many times:
+
+```jsx
+const [loop, setLoop] = useState(false);
+
+<Lottie options={{ animationData, autoplay: true, loop }} height={200} width={200} />
+<button onClick={() => setLoop(!loop)}>toggle loop</button>
+```
+
+Changing `options.loop` on a mounted component takes effect immediately. The
+animation is not reloaded, so it keeps its current frame and play state, and the
+new value decides what happens at the end of the current pass — a running
+animation can be allowed to loop, or stopped after it finishes once. To replay
+an animation that already finished with `loop: false`, call
+`goToAndPlay(0, true)` through a ref (see [Imperative control](#imperative-control)).
+
+The Storybook story `lottie-loop` demonstrates the toggle.
+
 ### Recolor an animation
 
 `colorFilters` replaces the colors of fills, strokes and solid layers named by
@@ -912,9 +934,9 @@ The `<Lottie />` Component supports the following props:
 
 the object representing the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported:
 
->**loop** *options* [default: `false`]
+>**loop** *options* [default: `true`] — `true` loops forever, `false` plays once, a number plays that many times. Changing it on a mounted component takes effect without reloading the animation. See [Play once or loop](#play-once-or-loop).
 >
->**autoplay** *options* [default: `false`]
+>**autoplay** *options* [default: `true`] — whether playback starts as soon as the animation loads. Load-time only: use `isPaused`/`isStopped` to control a mounted animation.
 >
 >**animationData** *optional* — the exported animation data. Mutually exclusive with `path`.
 >

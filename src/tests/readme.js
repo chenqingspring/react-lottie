@@ -210,6 +210,16 @@ describe('README', () => {
     expect(readme).to.contain('registers a single renderer');
   });
 
+  // `loop` used to be read only on mount, so turning it off on a running
+  // animation was silently ignored. Keep the live behaviour and the real
+  // defaults (both options default to `true`, matching lottie-web) documented.
+  it('documents changing loop on a mounted component', () => {
+    expect(readme).to.contain('### Play once or loop');
+    expect(readme).to.contain('Changing `options.loop` on a mounted component');
+    expect(readme).to.contain('**loop** *options* [default: `true`]');
+    expect(readme).to.contain('**autoplay** *options* [default: `true`]');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {
