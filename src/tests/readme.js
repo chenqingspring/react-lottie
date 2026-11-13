@@ -201,6 +201,15 @@ describe('README', () => {
     expect(readme).to.not.contain('does not re-apply it');
   });
 
+  // `renderer` used to be read only on mount, so a change was silently ignored.
+  // Keep the fix and its escape hatch (a light build registers one renderer)
+  // documented.
+  it('documents switching renderers on a mounted component', () => {
+    expect(readme).to.contain('### Switch renderers (svg, canvas, html)');
+    expect(readme).to.contain('Changing `options.renderer` on a mounted component');
+    expect(readme).to.contain('registers a single renderer');
+  });
+
   // Guards the props table against drifting away from the component: every
   // prop in Lottie.propTypes must appear as a bold entry in the README.
   it('documents every prop the component accepts', () => {

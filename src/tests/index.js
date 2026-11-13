@@ -384,6 +384,70 @@ describe('react-lottie', () => {
         expect(loadAnimation.firstCall.args[0].renderer).to.equal('canvas');
         loadAnimation.restore();
       });
+
+      /* The canvas renderer needs a real 2D context, which jsdom does not
+         provide, so these tests stub lottie-web and inspect what it is asked
+         to load instead of the rendered node. */
+      const fakeAnimation = () => ({
+        addEventListener() {},
+        removeEventListener() {},
+        destroy() {},
+        setSpeed() {},
+        setDirection() {},
+        setSubframe() {},
+        goToAndStop() {},
+        isPaused: true,
+        currentFrame: 0,
+      });
+
+      const mountWithRenderer = renderer => mount(
+        <ReactLottie options={{ ...defaultOptions, renderer }} />
+      );
+
+      it('regenerates the animation when options.renderer changes', () => {
+        const loadAnimation = sinon.stub(lottie, 'loadAnimation').callsFake(fakeAnimation);
+        try {
+          const component = mountWithRenderer('svg');
+          expect(loadAnimation.callCount).to.equal(1);
+
+          component.setProps({ options: { ...defaultOptions, renderer: 'canvas' } });
+
+          expect(loadAnimation.callCount).to.equal(2);
+          expect(loadAnimation.secondCall.args[0].renderer).to.equal('canvas');
+          component.unmount();
+        } finally {
+          loadAnimation.restore();
+        }
+      });
+
+      it('falls back to the svg renderer when the key is dropped', () => {
+        const loadAnimation = sinon.stub(lottie, 'loadAnimation').callsFake(fakeAnimation);
+        try {
+          const component = mountWithRenderer('canvas');
+
+          component.setProps({ options: { ...defaultOptions } });
+
+          expect(loadAnimation.callCount).to.equal(2);
+          expect(loadAnimation.secondCall.args[0].renderer).to.equal('svg');
+          component.unmount();
+        } finally {
+          loadAnimation.restore();
+        }
+      });
+
+      it('does not reload when a re-render keeps the same renderer', () => {
+        const loadAnimation = sinon.stub(lottie, 'loadAnimation').callsFake(fakeAnimation);
+        try {
+          const component = mountWithRenderer('svg');
+
+          component.setProps({ options: { ...defaultOptions, renderer: 'svg' } });
+
+          expect(loadAnimation.callCount).to.equal(1);
+          component.unmount();
+        } finally {
+          loadAnimation.restore();
+        }
+      });
     });
 
     describe('locationHref (#111)', () => {

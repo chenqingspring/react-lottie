@@ -24,6 +24,10 @@ const rendererSettingsAreEqual = (a, b) => {
   ));
 };
 
+/* lottie-web falls back to the SVG renderer when `options.renderer` is absent,
+   so compare the value it actually ends up with. */
+const rendererOf = options => (options && options.renderer ? options.renderer : 'svg');
+
 /* lottie-web crashes deep inside its renderer with "Cannot read property
    'length' of undefined" when the data is not a plain animation object. Accept
    the shapes users actually pass (a namespace import, a frozen ESM object) and
@@ -85,6 +89,7 @@ export default class Lottie extends React.Component {
     this.colorFilters = colorFilters;
     this.locationHref = options.locationHref;
     this.rendererSettings = rendererSettings;
+    this.renderer = rendererOf(options);
     const filteredAnimationData = applyColorFilters(
       normalizeAnimationData(animationData, options.path),
       colorFilters,
@@ -168,6 +173,10 @@ export default class Lottie extends React.Component {
       this.rendererSettings,
       this.props.options.rendererSettings,
     );
+    /* `renderer` selects the engine that generates the animation (`svg`,
+       `canvas` or `html`), so it can only change by loading again. A change
+       used to be ignored, which left the animation on the old engine. */
+    const rendererChanged = this.renderer !== rendererOf(this.props.options);
     /* The wrapper element is part of lottie-web's configuration, so a new
        element means the animation has to be bound to the new node. */
     const containerChanged = prevProps.as !== this.props.as;
@@ -178,6 +187,7 @@ export default class Lottie extends React.Component {
       || colorFiltersChanged
       || locationHrefChanged
       || rendererSettingsChanged
+      || rendererChanged
       || containerChanged
     ) {
       const currentFrame = this.anim ? this.anim.currentFrame : 0;
@@ -194,13 +204,15 @@ export default class Lottie extends React.Component {
       this.colorFilters = this.props.colorFilters;
       this.locationHref = this.props.options.locationHref;
       this.rendererSettings = this.props.options.rendererSettings;
+      this.renderer = rendererOf(this.props.options);
       this.options = { ...this.options, ...this.props.options };
       /* `options` is caller-owned and knows nothing about the wrapper, so the
          ref (already pointing at the newly rendered node) wins. */
       this.options.container = this.el;
       /* Spreading does not delete a key the caller dropped, so a removed
-         rendererSettings would otherwise keep its old value. */
+         rendererSettings or renderer would otherwise keep its old value. */
       this.options.rendererSettings = this.props.options.rendererSettings;
+      this.options.renderer = this.renderer;
       this.options.animationData = applyColorFilters(
         normalizeAnimationData(
           this.props.options.animationData,

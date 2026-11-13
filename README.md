@@ -472,7 +472,8 @@ In rough order of impact:
 3. **Compare the renderers.** `svg` (the default) is usually fastest for a few
    large shapes and stays crisp at any size. `canvas` avoids updating hundreds
    of DOM nodes and often wins for animations with many small shapes. Measure
-   both on the target device.
+   both on the target device; a mounted component can switch between them
+   (see [Switch renderers](#switch-renderers-svg-canvas-html)).
 4. **Stop off-screen animations.** lottie-web drives every playing animation
    from the same `requestAnimationFrame` loop, so an animation scrolled out of
    view still costs a frame. Pause it with `isPaused`, or with `pause()` on a
@@ -572,6 +573,29 @@ const [mode, setMode] = useState('xMidYMid meet');
 ```
 
 The Storybook story `lottie-renderer-settings` demonstrates the same toggle.
+
+### Switch renderers (svg, canvas, html)
+
+`renderer` selects the engine lottie-web uses to draw the animation and belongs
+inside `options`. It defaults to `svg`; `canvas` and `html` are the other
+choices.
+
+```jsx
+const [renderer, setRenderer] = useState('svg');
+
+<Lottie options={{ animationData, loop: true, autoplay: true, renderer }} height={200} width={200} />
+<button onClick={() => setRenderer(renderer === 'svg' ? 'canvas' : 'svg')}>
+  switch renderer
+</button>
+```
+
+Changing `options.renderer` on a mounted component regenerates the animation
+with the new engine and keeps the current frame and play/pause state, so the
+toggle does not restart it. Dropping the key falls back to `svg` again. This
+needs the full `lottie-web` player: a [light build](#shrinking-the-lottie-web-bundle)
+registers a single renderer, so switching to another one fails to start.
+
+The Storybook story `lottie-renderer` demonstrates the toggle.
 
 ### Masks are missing in Safari
 
