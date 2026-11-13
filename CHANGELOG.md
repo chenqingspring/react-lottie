@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.1](https://github.com/chenqingspring/react-lottie/compare/v2.5.0...v2.5.1) (2026-11-13)
+
+### Bug Fixes
+
+* regenerate the animation when `options.renderer` changes, so a mounted component can switch between the `svg`, `canvas` and `html` engines and keeps its current frame and play/pause state; dropping the key falls back to `svg` (a change used to be silently ignored)
+
+### Documentation
+
+* document switching `options.renderer` on a mounted component, and that a light `lottie-web` build registers one renderer only
+* Storybook demo `lottie-renderer` with a live `svg` / `canvas` toggle next to both engines on their own component
+
 ## [2.5.0](https://github.com/chenqingspring/react-lottie/compare/v2.4.2...v2.5.0) (2026-11-10)
 
 ### Features
