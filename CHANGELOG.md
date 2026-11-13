@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.2](https://github.com/chenqingspring/react-lottie/compare/v2.5.1...v2.5.2) (2026-11-13)
+
+### Bug Fixes
+
+* apply a changed `options.loop` to the running animation instead of ignoring it until the next load: `false` now plays once and a number plays that many times even when set after mount, and the current frame and play/pause state are kept (a change used to be silently ignored)
+
+### Documentation
+
+* document changing `options.loop` on a mounted component, and correct the props table: `loop` and `autoplay` default to `true`, matching lottie-web
+* Storybook demo `lottie-loop` with a live loop / play-once / repeat-count toggle and a restart button
+
 ## [2.5.1](https://github.com/chenqingspring/react-lottie/compare/v2.5.0...v2.5.1) (2026-11-13)
 
 ### Bug Fixes
