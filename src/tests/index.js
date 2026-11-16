@@ -483,6 +483,34 @@ describe('react-lottie', () => {
         component.unmount();
       });
 
+      it('resumes looping after a play-once finish when options.loop goes back to true', () => {
+        const options = { ...defaultOptions, autoplay: false, loop: false };
+        const component = mount(<ReactLottie options={options} />);
+        const animation = component.instance().anim;
+
+        /* Drive the animation past its last frame: with loop off it stops and
+           fires `complete`, which is the state a caller is in when they turn
+           looping back on. */
+        animation.play();
+        animation.advanceTime(10000);
+        expect(animation.isPaused).to.equal(true);
+        expect(animation.currentFrame).to.equal(animation.totalFrames - 1);
+        expect(animation.loop).to.equal(false);
+
+        component.setProps({ options: { ...options, loop: true } });
+
+        /* Replaying has to wrap around now. Before setLoop() was applied to a
+           mounted animation this stayed paused here, because lottie-web reads
+           `loop` while advancing frames. */
+        animation.play();
+        animation.advanceTime(10000);
+        expect(animation.isPaused).to.equal(false);
+        expect(animation.currentFrame).to.be.below(animation.totalFrames - 1);
+        expect(animation.playCount).to.equal(1);
+
+        component.unmount();
+      });
+
       it('falls back to looping when options.loop is dropped', () => {
         const component = mount(
           <ReactLottie options={{ ...defaultOptions, loop: false }} />
