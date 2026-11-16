@@ -54,9 +54,6 @@
     "cheerio": "1.0.0-rc.12",
     "minimatch@^10.2.2": "11.0.4"
   },
-  "resolutions": {
-    "cheerio": "1.0.0-rc.12"
-  },
   "dependencies": {
     "lottie-web": "^5.12.2",
     "prop-types": "^15.8.1"
