@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
+        node-version: [22.x, 24.x, 26.x]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -24,3 +24,17 @@ jobs:
         run: npm run prepublish
       - name: Verify Storybook builds
         run: npm run build-storybook
+
+  package-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+      - run: npm ci
+      - name: Build the package
+        run: npm run prepublish
+      - name: Smoke-test the packed tarball with the newest React 19
+        run: npm run smoke:packed
