@@ -17,6 +17,7 @@
     "testonly": "mocha --require .scripts/mocha_runner.js src/**/tests/**/*.js",
     "test": "npm run lint && npm run testonly",
     "test-watch": "npm run testonly -- --watch --watch-extensions js",
+    "smoke:packed": "node .scripts/smoke_packed.js",
     "start": "storybook dev -p 9010",
     "build-storybook": "storybook build -o .out",
     "publish-storybook": "bash .scripts/publish_storybook.sh",
